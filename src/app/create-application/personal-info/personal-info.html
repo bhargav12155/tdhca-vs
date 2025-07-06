@@ -3,29 +3,32 @@
 
         <!-- Name Fields -->
         <div class="name-fields">
-            <mat-form-field appearance="fill" style="margin: 10px;">
+            <mat-form-field appearance="fill" style="margin: 10px;"
+                matTooltip="Enter your legal first name as it appears on your ID" matTooltipPosition="above">
                 <mat-label>First Name</mat-label>
-                <input matInput formControlName="firstName" required
-                    matTooltip="Enter your legal first name as it appears on your ID">
+                <input matInput formControlName="firstName" required placeholder="First Name">
                 <mat-error *ngIf="personalForm.get('firstName')?.hasError('required')">First Name is
                     required</mat-error>
             </mat-form-field>
 
-            <mat-form-field appearance="fill" class="middle-initial" style="margin: 10px;">
+            <mat-form-field appearance="fill" class="middle-initial" style="margin: 10px;"
+                matTooltip="Middle initial (optional)" matTooltipPosition="above">
                 <mat-label>MI</mat-label>
-                <input matInput formControlName="middleInitial">
+                <input matInput formControlName="middleInitial" placeholder="MI">
             </mat-form-field>
 
-            <mat-form-field appearance="fill" style="margin: 10px;">
+            <mat-form-field appearance="fill" style="margin: 10px;"
+                matTooltip="Enter your legal last name as it appears on your ID" matTooltipPosition="above">
                 <mat-label>Last Name</mat-label>
-                <input matInput formControlName="lastName" required>
+                <input matInput formControlName="lastName" required placeholder="Last Name">
                 <mat-error *ngIf="personalForm.get('lastName')?.hasError('required')">Last Name is required</mat-error>
             </mat-form-field>
         </div>
 
         <!-- Other Personal Info -->
         <div class="form-row prefix-suffix">
-            <mat-form-field appearance="fill" style="margin: 10px;">
+            <mat-form-field appearance="fill" style="margin: 10px;" matTooltip="Select a prefix (optional)"
+                matTooltipPosition="above">
                 <mat-label>Prefix</mat-label>
                 <mat-select formControlName="prefix">
                     <mat-option value="">-- Select --</mat-option>
@@ -39,7 +42,8 @@
                 </mat-select>
             </mat-form-field>
 
-            <mat-form-field appearance="fill" style="margin: 10px;">
+            <mat-form-field appearance="fill" style="margin: 10px;" matTooltip="Select a suffix (optional)"
+                matTooltipPosition="above">
                 <mat-label>Suffix</mat-label>
                 <mat-select formControlName="suffix">
                     <mat-option value="">-- Select --</mat-option>
@@ -55,15 +59,17 @@
         </div>
 
         <div class="form-row">
-            <mat-form-field appearance="fill" style="margin: 10px;">
+            <mat-form-field appearance="fill" style="margin: 10px;" matTooltip="Enter your date of birth"
+                matTooltipPosition="above">
                 <mat-label>Date of Birth</mat-label>
                 <input matInput type="date" formControlName="dob" [max]="maxDate" [min]="minDate" required
-                    pattern="\\d{4}-\\d{2}-\\d{2}">
+                    pattern="\\d{4}-\\d{2}-\\d{2}" placeholder="YYYY-MM-DD">
                 <mat-hint>Must be 18 years or older</mat-hint>
                 <mat-error>{{getDOBErrorMessage()}}</mat-error>
             </mat-form-field>
 
-            <mat-form-field appearance="fill" style="margin: 10px;">
+            <mat-form-field appearance="fill" style="margin: 10px;" matTooltip="Select your gender"
+                matTooltipPosition="above">
                 <mat-label>Gender</mat-label>
                 <mat-select formControlName="gender" required>
                     <mat-option value="">-- Select --</mat-option>
@@ -79,7 +85,8 @@
         <h3>Contact Information</h3>
         <div formArrayName="phones">
             <div *ngFor="let phone of phones.controls; let i = index" [formGroupName]="i" class="form-row">
-                <mat-form-field appearance="fill" style="margin: 10px;">
+                <mat-form-field appearance="fill" style="margin: 10px;" matTooltip="Select the type of phone number"
+                    matTooltipPosition="above">
                     <mat-label>Phone Type</mat-label>
                     <mat-select formControlName="type" required>
                         <mat-option value="">-- Select --</mat-option>
@@ -89,17 +96,19 @@
                     </mat-select>
                 </mat-form-field>
 
-                <mat-form-field appearance="fill" style="margin: 10px;">
+                <mat-form-field appearance="fill" style="margin: 10px;" matTooltip="Enter the 10-digit phone number"
+                    matTooltipPosition="above">
                     <mat-label>Phone Number</mat-label>
-                    <input matInput formControlName="number" required maxlength="10">
+                    <input matInput formControlName="number" required maxlength="10" placeholder="10-digit number">
                     <mat-error *ngIf="phone.get('number')?.hasError('required')">Phone Number is required</mat-error>
                     <mat-error *ngIf="phone.get('number')?.hasError('pattern')">Enter a valid 10-digit
                         number</mat-error>
                 </mat-form-field>
 
-                <mat-form-field appearance="fill" style="margin: 10px;">
+                <mat-form-field appearance="fill" style="margin: 10px;" matTooltip="Enter the extension number (if any)"
+                    matTooltipPosition="above">
                     <mat-label>Extension</mat-label>
-                    <input matInput formControlName="extension">
+                    <input matInput formControlName="extension" placeholder="Extension">
                 </mat-form-field>
 
                 <mat-checkbox formControlName="isPrimary">Is Primary</mat-checkbox>
@@ -113,9 +122,10 @@
         </div>
 
         <!-- Email -->
-        <mat-form-field appearance="fill" class="full-width" style="margin: 10px;">
+        <mat-form-field appearance="fill" class="full-width" style="margin: 10px;" matTooltip="Enter your email address"
+            matTooltipPosition="above">
             <mat-label>Email Address</mat-label>
-            <input matInput formControlName="email" required>
+            <input matInput formControlName="email" required placeholder="Email Address">
             <mat-error *ngIf="personalForm.get('email')?.hasError('required')">Email is required</mat-error>
             <mat-error *ngIf="personalForm.get('email')?.hasError('email')">Enter a valid email</mat-error>
         </mat-form-field>
@@ -125,22 +135,26 @@
         <div class="address-section">
             <div [formGroup]="mailingAddress">
                 <h4>Mailing Address</h4>
-                <mat-form-field appearance="fill" style="margin: 10px;">
+                <mat-form-field appearance="fill" style="margin: 10px;"
+                    matTooltip="Enter the first line of your mailing address" matTooltipPosition="above">
                     <mat-label>Address Line 1</mat-label>
-                    <input matInput formControlName="address1" required>
+                    <input matInput formControlName="address1" required placeholder="Address Line 1">
                 </mat-form-field>
 
-                <mat-form-field appearance="fill" style="margin: 10px;">
+                <mat-form-field appearance="fill" style="margin: 10px;"
+                    matTooltip="Enter the second line of your mailing address (optional)" matTooltipPosition="above">
                     <mat-label>Address Line 2</mat-label>
-                    <input matInput formControlName="address2">
+                    <input matInput formControlName="address2" placeholder="Address Line 2">
                 </mat-form-field>
 
-                <mat-form-field appearance="fill" style="margin: 10px;">
+                <mat-form-field appearance="fill" style="margin: 10px;" matTooltip="Enter your city"
+                    matTooltipPosition="above">
                     <mat-label>City</mat-label>
-                    <input matInput formControlName="city" required>
+                    <input matInput formControlName="city" required placeholder="City">
                 </mat-form-field>
 
-                <mat-form-field appearance="fill" style="margin: 10px;">
+                <mat-form-field appearance="fill" style="margin: 10px;" matTooltip="Select your state"
+                    matTooltipPosition="above">
                     <mat-label>State</mat-label>
                     <mat-select formControlName="state" required>
                         <mat-option value="">-- Select State --</mat-option>
@@ -148,14 +162,16 @@
                     </mat-select>
                 </mat-form-field>
 
-                <mat-form-field appearance="fill" style="margin: 10px;">
+                <mat-form-field appearance="fill" style="margin: 10px;" matTooltip="Enter your zip code"
+                    matTooltipPosition="above">
                     <mat-label>Zip Code</mat-label>
-                    <input matInput formControlName="zip" required>
+                    <input matInput formControlName="zip" required placeholder="Zip Code">
                 </mat-form-field>
 
-                <mat-form-field appearance="fill" style="margin: 10px;">
+                <mat-form-field appearance="fill" style="margin: 10px;" matTooltip="Enter your county"
+                    matTooltipPosition="above">
                     <mat-label>County</mat-label>
-                    <input matInput formControlName="county" required>
+                    <input matInput formControlName="county" required placeholder="County">
                 </mat-form-field>
             </div>
 
@@ -163,22 +179,26 @@
 
             <div [formGroup]="billingAddress">
                 <h4>Billing Address</h4>
-                <mat-form-field appearance="fill" style="margin: 10px;">
+                <mat-form-field appearance="fill" style="margin: 10px;"
+                    matTooltip="Enter the first line of your billing address" matTooltipPosition="above">
                     <mat-label>Address Line 1</mat-label>
-                    <input matInput formControlName="address1" required>
+                    <input matInput formControlName="address1" required placeholder="Address Line 1">
                 </mat-form-field>
 
-                <mat-form-field appearance="fill" style="margin: 10px;">
+                <mat-form-field appearance="fill" style="margin: 10px;"
+                    matTooltip="Enter the second line of your billing address (optional)" matTooltipPosition="above">
                     <mat-label>Address Line 2</mat-label>
-                    <input matInput formControlName="address2">
+                    <input matInput formControlName="address2" placeholder="Address Line 2">
                 </mat-form-field>
 
-                <mat-form-field appearance="fill" style="margin: 10px;">
+                <mat-form-field appearance="fill" style="margin: 10px;" matTooltip="Enter your city"
+                    matTooltipPosition="above">
                     <mat-label>City</mat-label>
-                    <input matInput formControlName="city" required>
+                    <input matInput formControlName="city" required placeholder="City">
                 </mat-form-field>
 
-                <mat-form-field appearance="fill" style="margin: 10px;">
+                <mat-form-field appearance="fill" style="margin: 10px;" matTooltip="Select your state"
+                    matTooltipPosition="above">
                     <mat-label>State</mat-label>
                     <mat-select formControlName="state" required>
                         <mat-option value="">-- Select State --</mat-option>
@@ -186,14 +206,16 @@
                     </mat-select>
                 </mat-form-field>
 
-                <mat-form-field appearance="fill" style="margin: 10px;">
+                <mat-form-field appearance="fill" style="margin: 10px;" matTooltip="Enter your zip code"
+                    matTooltipPosition="above">
                     <mat-label>Zip Code</mat-label>
-                    <input matInput formControlName="zip" required>
+                    <input matInput formControlName="zip" required placeholder="Zip Code">
                 </mat-form-field>
 
-                <mat-form-field appearance="fill" style="margin: 10px;">
+                <mat-form-field appearance="fill" style="margin: 10px;" matTooltip="Enter your county"
+                    matTooltipPosition="above">
                     <mat-label>County</mat-label>
-                    <input matInput formControlName="county" required>
+                    <input matInput formControlName="county" required placeholder="County">
                 </mat-form-field>
             </div>
         </div>

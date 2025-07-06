@@ -16,6 +16,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -35,6 +36,7 @@ import { CommonModule } from '@angular/common';
     MatIconModule,
     MatCardModule,
     MatListModule,
+    MatTooltipModule,
   ],
 })
 export class PersonalInfoComponent {
