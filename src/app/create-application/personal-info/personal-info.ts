@@ -17,7 +17,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-personal-info',
@@ -37,6 +39,7 @@ import { CommonModule } from '@angular/common';
     MatCardModule,
     MatListModule,
     MatTooltipModule,
+    MatSnackBarModule,
   ],
 })
 export class PersonalInfoComponent {
@@ -44,7 +47,7 @@ export class PersonalInfoComponent {
   maxDate: string;
   minDate: string;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private snackBar: MatSnackBar) {
     // Calculate min and max dates
     const today = new Date();
     const maxDate = new Date();
@@ -185,6 +188,13 @@ export class PersonalInfoComponent {
     } else {
       this.personalForm.markAllAsTouched();
     }
+  }
+
+  onCancel() {
+    this.snackBar.open('Changes canceled', 'Close', {
+      duration: 2500,
+      verticalPosition: 'top',
+    });
   }
 
   // Helper function to get error message

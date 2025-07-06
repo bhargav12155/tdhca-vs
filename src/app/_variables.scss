@@ -8,11 +8,35 @@ $font-color-accent: #1976d2;
 $font-color-error: #d32f2f;
 $font-color-success: #388e3c;
 
-// TDHCA color palette as CSS custom properties
+// TDHCA color palette as SCSS variables and CSS custom properties
+$tdhca-blue: #002855;
+$tdhca-blue-light: #0072ce;
+$tdhca-gold: #ffd100;
+$tdhca-gray-bg: #f2f2f2;
+$white: #ffffff;
+$gray-bg-light: #f8fafc;
+$gray-border: #e2e8f0;
+$blue-dark: #1e293b;
+$blue-label: #475569;
+$error-red: #dc3545;
+$gray-checkbox: #ced4da;
+$success-green: #22c55e;
+$success-green-light: #86efac;
+$primary-accent: #818cf8;
+$gray-bg-gradient: #f1f5f9;
+$step-active-bg: #eef2ff;
+$step-completed-bg: #f0fdf4;
+$step-hover-bg: #f1f5f9;
+$step-border: #e2e8f0;
+$step-icon-bg: #f1f5f9;
+$step-icon-border: #cbd5e1;
+$step-label: #475569;
+
 :root {
   --tdhca-blue: #002855;
   --tdhca-blue-light: #0072ce;
-  // ...add more as needed
+  --tdhca-gold: #ffd100;
+  --tdhca-gray-bg: #f2f2f2;
 }
 
 // Responsive breakpoints

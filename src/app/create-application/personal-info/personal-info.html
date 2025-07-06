@@ -225,7 +225,7 @@
                 <button mat-raised-button type="submit">Save and Continue</button>
             </div>
             <div class="right-actions">
-                <button mat-stroked-button type="reset">Cancel</button>
+                <button mat-stroked-button type="reset" (click)="onCancel()">Cancel</button>
                 <button mat-flat-button type="button" routerLink="../household-members">Next</button>
             </div>
         </div>

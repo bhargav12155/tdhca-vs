@@ -1,7 +1,9 @@
+@use '../_variables.scss' as *;
+
 :host {
   display: block;
   min-height: 100vh;
-  background: linear-gradient(to bottom, #f8fafc, #f1f5f9);
+  background: linear-gradient(to bottom, $gray-bg-light, $gray-bg-gradient);
 }
 
 .layout {
@@ -16,7 +18,7 @@
 .side-nav.stepper-nav {
   width: 340px;
   flex-shrink: 0;
-  background: #ffffff;
+  background: $white;
   border-radius: 16px;
   box-shadow: 
     0 1px 3px rgba(0, 40, 85, 0.05),
@@ -27,8 +29,8 @@
   max-height: calc(100vh - 4rem);
 
   h2 {
-    background: var(--tdhca-blue, #002855);
-    color: #ffffff;
+    background: var(--tdhca-blue, $tdhca-blue);
+    color: $white;
     padding: 1.5rem 1.75rem;
     font-size: 1.25rem;
     font-weight: 600;
@@ -49,8 +51,8 @@
 // Enhanced step items
 .step-1 {
   position: relative;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
+  background: $gray-bg-light;
+  border: 1px solid $step-border;
   border-radius: 12px;
   padding: 1rem 1.25rem;
   display: flex;
@@ -60,35 +62,35 @@
   cursor: pointer;
   
   &:hover {
-    background: #f1f5f9;
+    background: $step-hover-bg;
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(0, 40, 85, 0.05);
   }
 
   &.active {
-    background: #eef2ff;
-    border-color: #818cf8;
+    background: $step-active-bg;
+    border-color: $primary-accent;
     
     .step-icon1 {
-      background: var(--tdhca-blue, #002855);
-      color: #ffffff;
-      border-color: #818cf8;
+      background: var(--tdhca-blue, $tdhca-blue);
+      color: $white;
+      border-color: $primary-accent;
     }
     
     .step-label1 {
-      color: var(--tdhca-blue, #002855);
+      color: var(--tdhca-blue, $tdhca-blue);
       font-weight: 600;
     }
   }
 
   &.completed {
-    background: #f0fdf4;
-    border-color: #86efac;
+    background: $step-completed-bg;
+    border-color: $success-green-light;
     
     .step-icon1 {
-      background: #22c55e;
-      color: #ffffff;
-      border-color: #86efac;
+      background: $success-green;
+      color: $white;
+      border-color: $success-green-light;
     }
   }
 }
@@ -97,9 +99,9 @@
   width: 2.5rem;
   height: 2.5rem;
   border-radius: 50%;
-  background: #f1f5f9;
-  border: 2px solid #cbd5e1;
-  color: #475569;
+  background: $step-icon-bg;
+  border: 2px solid $step-icon-border;
+  color: $step-label;
   font-size: 1.125rem;
   font-weight: 600;
   display: flex;
@@ -110,7 +112,7 @@
 }
 
 .step-label1 {
-  color: #475569;
+  color: $step-label;
   font-size: 1.125rem;
   line-height: 1.4;
   font-weight: 500;
@@ -121,7 +123,7 @@
 // Main content area
 main {
   flex: 1;
-  background: #ffffff;
+  background: $white;
   border-radius: 16px;
   box-shadow: 
     0 1px 3px rgba(0, 40, 85, 0.05),
