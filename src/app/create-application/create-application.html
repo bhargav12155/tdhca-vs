@@ -4,10 +4,15 @@
         <ul>
             <li *ngFor="let step of steps; let i = index">
                 <a [routerLink]="step.route" routerLinkActive="active"
-                    [ngClass]="{'active': isActiveStep(step.route), 'completed': isStepCompleted(i)}"><span
-                        class="step-icon"><span *ngIf="isStepCompleted(i)" class="step-check">&#10003;</span><span
-                            *ngIf="!isStepCompleted(i)">{{ i + 1 }}</span></span><span class="step-label">{{
-                        step.label }}</span></a><span *ngIf="i < steps.length - 1" class="step-connector"></span>
+                    [ngClass]="{'active': isActiveStep(step.route), 'completed': isStepCompleted(i)}">
+                    <div class="step-1">
+                        <div class="step-icon1">
+                            <span *ngIf="isStepCompleted(i)" class="step-check">&#10003;</span>
+                            <span *ngIf="!isStepCompleted(i)">{{ i + 1 }}</span>
+                        </div>
+                        <div class="step-label1">{{ step.label }}</div>
+                    </div>
+                </a><span *ngIf="i < steps.length - 1" class="step-connector"></span>
             </li>
         </ul>
     </nav>

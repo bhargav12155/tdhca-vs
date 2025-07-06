@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatListModule } from '@angular/material/list';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatButtonModule } from '@angular/material/button';
@@ -37,7 +37,6 @@ export class CreateApplicationComponent {
   isLinear = false;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
-  private _formBuilder = inject(FormBuilder);
 
   // Stepper configuration for sidebar
   steps = [
@@ -56,7 +55,7 @@ export class CreateApplicationComponent {
     { label: 'Application Submission', route: 'application-submission' },
   ];
 
-  constructor() {
+  constructor(private _formBuilder: FormBuilder, private router: Router) {
     this.firstFormGroup = this._formBuilder.group({
       firstCtrl: ['', Validators.required],
     });
@@ -66,8 +65,8 @@ export class CreateApplicationComponent {
   }
 
   isActiveStep(route: string): boolean {
-    // Checks if the current route matches the step route
-    return location.pathname.endsWith(route);
+    // Use Angular Router to check the current route
+    return this.router.url.endsWith(route);
   }
 
   isStepCompleted(index: number): boolean {
