@@ -12,11 +12,12 @@
   <mat-sidenav-container class="tdhca-sidenav-container">
     <mat-sidenav #sidenav mode="over" fixedInViewport="true" class="tdhca-sidenav">
       <mat-nav-list>
-        <a mat-list-item routerLink="/" (click)="sidenav.close()">Home</a>
-        <a mat-list-item routerLink="/create-application" (click)="sidenav.close()">Create Application</a>
-        <a mat-list-item routerLink="/account" (click)="sidenav.close()">My Account</a>
-        <a mat-list-item routerLink="/help" (click)="sidenav.close()">Help</a>
-        <a mat-list-item routerLink="/login" (click)="sidenav.close()">Login</a>
+        <a mat-list-item routerLink="/home" (click)="sidenav.close(); logNavigation('Home')">Home</a>
+        <a mat-list-item routerLink="/createapplication"
+          (click)="sidenav.close(); logNavigation('Create Application')">Create Application</a>
+        <a mat-list-item routerLink="/account" (click)="sidenav.close(); logNavigation('My Account')">My Account</a>
+        <a mat-list-item routerLink="/help" (click)="sidenav.close(); logNavigation('Help')">Help</a>
+        <a mat-list-item routerLink="/login" (click)="sidenav.close(); logNavigation('Login')">Login</a>
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>

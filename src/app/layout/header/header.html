@@ -12,18 +12,20 @@
     <nav class="main-nav" aria-label="Primary navigation">
         <ul class="nav-list">
             <li>
-                <a mat-icon-button routerLink="/" class="mobile-only" aria-label="Home"><mat-icon>home</mat-icon></a>
-                <a mat-button routerLink="/" class="desktop-only">Home</a>
+                <a mat-icon-button routerLink="/home" (click)="logNavigation('Home')" class="mobile-only"
+                    aria-label="Home"><mat-icon>home</mat-icon></a>
+                <a mat-button routerLink="/home" (click)="logNavigation('Home')" class="desktop-only">Home</a>
             </li>
             <li>
-                <a mat-icon-button (click)="openCreateAccountDialog()" class="mobile-only"
-                    aria-label="Create Account"><mat-icon>person_add</mat-icon></a>
-                <a mat-button (click)="openCreateAccountDialog()" class="desktop-only">Create Account</a>
+                <button mat-icon-button (click)="openCreateAccountDialog(); logNavigation('Create Account')"
+                    class="mobile-only" aria-label="Create Account"><mat-icon>person_add</mat-icon></button>
+                <button mat-button (click)="openCreateAccountDialog(); logNavigation('Create Account')"
+                    class="desktop-only">Create Account</button>
             </li>
             <li>
-                <a mat-icon-button routerLink="/help" class="mobile-only"
+                <a mat-icon-button routerLink="/help" (click)="logNavigation('Help')" class="mobile-only"
                     aria-label="Help"><mat-icon>help_outline</mat-icon></a>
-                <a mat-button routerLink="/help" class="desktop-only">Help</a>
+                <a mat-button routerLink="/help" (click)="logNavigation('Help')" class="desktop-only">Help</a>
             </li>
             <li>
                 <button mat-icon-button [matMenuTriggerFor]="langMenu" aria-label="Select language"

@@ -4,12 +4,19 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
+import { RouterModule } from '@angular/router';
 import { CreateAccountModal } from '../../create-account-modal/create-account-modal';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [MatToolbarModule, MatButtonModule, MatMenuModule, MatIconModule],
+  imports: [
+    MatToolbarModule,
+    MatButtonModule,
+    MatMenuModule,
+    MatIconModule,
+    RouterModule,
+  ],
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })
@@ -28,5 +35,10 @@ export class Header {
 
   onMenuClick() {
     this.menuClick.emit();
+  }
+
+  logNavigation(page: string) {
+    console.log(`Header navigation - Navigating to: ${page}`);
+    console.log(`Current URL: ${window.location.href}`);
   }
 }
