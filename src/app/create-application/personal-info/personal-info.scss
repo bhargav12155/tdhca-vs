@@ -1,217 +1,218 @@
 app-personal-info {
   display: block;
-  padding: 1rem;
+  padding: 1.5rem;
 
   ::ng-deep {
     mat-card {
       background: #ffffff;
-      border-radius: 16px;
-      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-      max-width: 960px;
-      margin: 1.5rem auto;
-      padding: 2rem;
-    }
+      border-radius: 20px;
+      box-shadow: 0 4px 24px rgba(0, 40, 85, 0.06);
+      max-width: 1080px;
+      margin: 1rem auto;
+      padding: 2.5rem;
 
-    // Form field styling
-    mat-form-field {
-      width: 100%;
-      margin-bottom: 1rem;
+      mat-form-field {
+        width: calc(100% - 20px);
+        margin: 10px !important;
+        flex: 1 1 auto;
+        min-width: 250px;
 
-      .mat-form-field-wrapper {
-        padding-bottom: 0.5rem;
+        &.middle-initial {
+          min-width: 100px;
+          max-width: 120px;
+        }
+
+        .mat-form-field-wrapper {
+          padding-bottom: 0.5rem;
+          margin: 0;
+        }
+
+        .mat-form-field-flex {
+          background: #f8fafc;
+          padding: 0.875rem 1.25rem !important;
+          border-radius: 10px;
+          border: 1px solid #e2e8f0;
+          transition: all 0.2s ease;
+        }
+
+        .mat-form-field-underline {
+          display: none;
+        }
+
+        .mat-form-field-infix {
+          padding: 0.5rem 0;
+          border-top: 0;
+        }
+
+        .mat-form-field-label-wrapper {
+          top: -1.2rem;
+        }
+
+        &.mat-focused .mat-form-field-flex {
+          background: #fff;
+          border-color: var(--tdhca-blue, #002855);
+          box-shadow: 0 0 0 3px rgba(0, 40, 85, 0.08);
+        }
       }
 
-      .mat-form-field-flex {
-        background: #f8f9fa;
-        padding: 0.75rem 1rem !important;
-        border-radius: 8px;
-        border: 1px solid #e9ecef;
-        transition: all 0.2s ease;
+      .mat-input-element {
+        font-size: 1.05rem;
+        line-height: 1.5;
+        color: #1e293b;
       }
 
-      .mat-form-field-underline {
-        display: none;
+      .mat-form-field-label {
+        color: #475569;
+        font-size: 0.95rem;
+        font-weight: 500;
       }
 
-      .mat-form-field-infix {
-        padding: 0.5rem 0;
-        border-top: 0;
+      mat-error {
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+        color: #dc3545;
       }
 
-      .mat-form-field-label-wrapper {
-        top: -1.2rem;
+      mat-checkbox {
+        margin: 1rem 0;
+        .mat-checkbox-frame {
+          border-color: #ced4da;
+        }
       }
-
-      &.mat-focused .mat-form-field-flex {
-        background: #fff;
-        border-color: var(--tdhca-blue, #002855);
-        box-shadow: 0 0 0 4px rgba(0, 40, 85, 0.1);
-      }
-    }
-
-    // Input text styling
-    .mat-input-element {
-      font-size: 1rem;
-      line-height: 1.5;
-      color: #212529;
-    }
-
-    // Label styling
-    .mat-form-field-label {
-      color: #495057;
-      font-size: 0.95rem;
     }
   }
 
   // Form layout
   .form-row {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    margin: -10px;
     margin-bottom: 2rem;
+  }
+
+  // Name fields specific layout
+  .name-fields {
+    display: grid;
+    grid-template-columns: minmax(200px, 2fr) minmax(80px, 0.5fr) minmax(200px, 2fr);
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  // Prefix, Suffix, DOB, Gender row
+  .prefix-suffix {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  // Form sections
+  .form-section {
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #e2e8f0;
+
+    &:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
   }
 
   // Section headers
   h3, h4 {
     color: var(--tdhca-blue, #002855);
-    font-size: 1.25rem;
+    font-size: 1.375rem;
     font-weight: 600;
-    margin: 2rem 0 1.5rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 2px solid #e9ecef;
+    margin: 2.5rem 0 2rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #e2e8f0;
+    letter-spacing: 0.3px;
   }
 
   // Address sections
   .address-section {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin: 1.5rem 0;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 3rem;
+    margin: 2rem 0;
 
     > div {
-      background: #f8f9fa;
-      border: 1px solid #e9ecef;
-      border-radius: 12px;
-      padding: 1.5rem;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 2rem;
 
       h4 {
-        margin-top: 0;
-        border-bottom: none;
+        color: #1e293b;
+        font-size: 1.25rem;
+        margin: 0 0 1.5rem 0;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #e2e8f0;
       }
     }
   }
 
   // Phone number section
   [formArrayName="phones"] {
+    margin-top: 1.5rem;
+
     .form-row {
-      background: #f8f9fa;
-      border: 1px solid #e9ecef;
-      border-radius: 12px;
-      padding: 1.5rem;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 1.75rem;
       margin: 1rem 0;
       position: relative;
-      
+
       &:not(:last-child) {
-        margin-bottom: 1rem;
+        margin-bottom: 1.5rem;
       }
     }
   }
 
-  // Action buttons
+  // Add / Remove phone buttons
   .add-phone-btn, .remove-phone-btn {
-    min-width: 40px;
-    height: 40px;
-    border-radius: 20px;
-    margin: 0.5rem;
-    background: #f8f9fa;
+    min-width: 42px;
+    height: 42px;
+    border-radius: 21px;
+    margin: 0.75rem;
+    background: #f8fafc;
     color: var(--tdhca-blue, #002855);
-    border: 1px solid #e9ecef;
-    
+    border: 1px solid #e2e8f0;
+    transition: all 0.2s ease;
+
     &:hover {
       background: var(--tdhca-blue, #002855);
       color: white;
+      transform: translateY(-1px);
     }
   }
 
-  // Form actions
-  .form-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 1rem;
-    margin-top: 2.5rem;
-    padding-top: 1.5rem;
-    border-top: 2px solid #e9ecef;
 
-    button {
-      min-width: 120px;
-      padding: 0.75rem 1.5rem;
-      border-radius: 8px;
-      font-weight: 500;
-    }
+}
+.button-container {
+  display: flex;
+  align-items: center;
+  margin: 0 0 10px 10px;
+  gap: 1rem;
+}
+
+.right-actions {
+  margin-left: auto; // pushes it to the right
+  display: flex;
+  gap: 0.75rem;
+}
+
+@media (max-width: 600px) {
+  .button-container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
   }
-
-  // Error messages
-  ::ng-deep mat-error {
-    font-size: 0.875rem;
-    margin-top: 0.25rem;
-    color: #dc3545;
-  }
-
-  // Checkbox styling
-  ::ng-deep mat-checkbox {
-    margin: 1rem 0;
-    .mat-checkbox-frame {
-      border-color: #ced4da;
-    }
-  }
-
-  // Responsive adjustments
-  @media (max-width: 768px) {
-    ::ng-deep mat-card {
-      padding: 1.5rem;
-      margin: 1rem 0;
-    }
-
-    .form-row {
-      grid-template-columns: 1fr;
-      gap: 1rem;
-    }
-
-    .address-section {
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-    }
-
-    .form-actions {
-      flex-direction: column;
-      
-      button {
-        width: 100%;
-        margin: 0;
-      }
-    }
-
-    h3, h4 {
-      font-size: 1.1rem;
-      margin: 1.5rem 0 1rem;
-    }
-  }
-
-  // Small screen adjustments
-  @media (max-width: 480px) {
-    padding: 0.5rem;
-
-    ::ng-deep mat-card {
-      padding: 1rem;
-      border-radius: 12px;
-    }
-
-    .address-section > div {
-      padding: 1rem;
-    }
-
-    [formArrayName="phones"] .form-row {
-      padding: 1rem;
-    }
+  .right-actions {
+    margin-left: 0;
+    flex-direction: column;
+    gap: 0.5rem;
   }
 }
