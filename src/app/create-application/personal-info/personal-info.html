@@ -5,7 +5,8 @@
         <div class="name-fields">
             <mat-form-field appearance="fill" style="margin: 10px;">
                 <mat-label>First Name</mat-label>
-                <input matInput formControlName="firstName" required>
+                <input matInput formControlName="firstName" required
+                    matTooltip="Enter your legal first name as it appears on your ID">
                 <mat-error *ngIf="personalForm.get('firstName')?.hasError('required')">First Name is
                     required</mat-error>
             </mat-form-field>
