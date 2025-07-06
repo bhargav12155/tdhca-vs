@@ -1,0 +1,25 @@
+<h2 mat-dialog-title>Create Account</h2>
+<div mat-dialog-content>
+  <form>
+    <mat-form-field appearance="fill" style="width: 100%;">
+      <mat-label>First Name</mat-label>
+      <input matInput placeholder="Enter your first name" value="John">
+    </mat-form-field>
+    <mat-form-field appearance="fill" style="width: 100%;">
+      <mat-label>Last Name</mat-label>
+      <input matInput placeholder="Enter your last name" value="Doe">
+    </mat-form-field>
+    <mat-form-field appearance="fill" style="width: 100%;">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" placeholder="Enter your email" value="john.doe@email.com">
+    </mat-form-field>
+    <mat-form-field appearance="fill" style="width: 100%;">
+      <mat-label>Password</mat-label>
+      <input matInput type="password" placeholder="Enter a password" value="password123">
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-raised-button color="primary">Create Account</button>
+</div>

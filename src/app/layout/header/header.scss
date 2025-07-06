@@ -1,0 +1,181 @@
+@use '../../_variables.scss' as *;
+
+.tdhca-header, ::ng-deep .mat-toolbar.tdhca-header {
+  background-color: var(--tdhca-blue) !important;
+  color: var(--tdhca-white) !important;
+  padding: 1rem 0;
+  font-family: Roboto, 'Helvetica Neue', Arial, sans-serif;
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.tdhca-header * {
+  color: var(--tdhca-white) !important;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.tdhca-logo {
+  margin-right: 20px;
+  margin-left: 8px;
+  border-radius: 4px;
+  width: 48px;
+  height: 48px;
+}
+
+.site-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--mat-toolbar-text-color, #fff);
+  font-family: Roboto, 'Helvetica Neue', Arial, sans-serif;
+  text-decoration: none;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: unset;
+  max-width: none;
+}
+
+.main-nav {
+  display: flex;
+  align-items: center;
+  flex: 1 1 auto;
+  justify-content: flex-end;
+}
+
+.nav-list {
+  display: flex;
+  gap: 0.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex-direction: row;
+  align-items: center;
+}
+
+.nav-list li {
+  display: flex;
+  align-items: center;
+}
+
+.lang-menu-btn {
+  display: flex;
+  align-items: center;
+  color: var(--tdhca-white) !important;
+}
+
+.lang-menu-label {
+  margin-right: 0.25rem;
+}
+
+.desktop-only {
+  display: inline-flex;
+}
+.mobile-only {
+  display: none;
+}
+
+.menu-btn {
+  margin-right: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  @media (min-width: 601px) {
+    display: inline-flex;
+  }
+  @media (max-width: 600px) {
+    display: inline-flex;
+  }
+}
+
+@media (max-width: 900px) {
+  .main-nav {
+    flex: 1 1 100%;
+    justify-content: flex-end;
+  }
+  .site-name {
+    font-size: 1rem;
+    max-width: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .tdhca-header {
+    flex-direction: row;
+    align-items: center;
+    padding: 0.5rem 0;
+    flex-wrap: nowrap;
+  }
+  .header-left {
+    width: auto;
+    justify-content: flex-start;
+  }
+  .main-nav {
+    width: auto;
+    justify-content: flex-end;
+    position: static;
+  }
+  .nav-list {
+    flex-direction: row;
+    width: auto;
+    background: none;
+    position: static;
+    box-shadow: none;
+    border-radius: 0;
+    padding: 0;
+    justify-content: flex-end;
+  }
+  .nav-list li {
+    width: auto;
+    justify-content: center;
+    padding: 0 0.25rem;
+  }
+  .tdhca-logo {
+    width: 36px;
+    height: 36px;
+  }
+  .site-name {
+    font-size: 0.85rem;
+    max-width: none;
+    padding: 0 0.5rem;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+  }
+  .desktop-only {
+    display: none !important;
+  }
+  .mobile-only {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+  }
+}
+
+.tdhca-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.tdhca-sidenav-container {
+  margin-top: 72px; // Height of the header (adjust if your header is taller/shorter)
+  height: calc(100vh - 72px);
+}
+
+@media (max-width: 600px) {
+  .tdhca-sidenav-container {
+    margin-top: 56px; // Shorter header on mobile
+    height: calc(100vh - 56px);
+  }
+}

@@ -1,0 +1,40 @@
+// _variables.scss
+// Shared SCSS variables and mixins for TDHCA
+
+// Color variables
+$font-color-primary: #222;
+$font-color-secondary: #666;
+$font-color-accent: #1976d2;
+$font-color-error: #d32f2f;
+$font-color-success: #388e3c;
+
+// TDHCA color palette as CSS custom properties
+:root {
+  --tdhca-blue: #002855;
+  --tdhca-blue-light: #0072ce;
+  // ...add more as needed
+}
+
+// Responsive breakpoints
+$breakpoint-mobile: 600px;
+$breakpoint-tablet: 900px;
+$breakpoint-desktop: 1200px;
+
+// Mixin for mobile
+@mixin mobile {
+  @media (max-width: #{$breakpoint-mobile}) {
+    @content;
+  }
+}
+// Mixin for tablet
+@mixin tablet {
+  @media (min-width: #{$breakpoint-mobile + 1}) and (max-width: #{$breakpoint-tablet}) {
+    @content;
+  }
+}
+// Mixin for desktop
+@mixin desktop {
+  @media (min-width: #{$breakpoint-tablet + 1}) {
+    @content;
+  }
+}

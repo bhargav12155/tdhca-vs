@@ -1,0 +1,174 @@
+<mat-card>
+    <form [formGroup]="personalForm" (ngSubmit)="onSubmit()">
+        <div class="form-row">
+            <mat-form-field appearance="fill">
+                <mat-label>First Name</mat-label>
+                <input matInput formControlName="firstName" required>
+                <mat-error *ngIf="personalForm.get('firstName')?.hasError('required')">First Name is
+                    required</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>MI</mat-label>
+                <input matInput formControlName="middleInitial">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Last Name</mat-label>
+                <input matInput formControlName="lastName" required>
+                <mat-error *ngIf="personalForm.get('lastName')?.hasError('required')">Last Name is required</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Prefix</mat-label>
+                <mat-select formControlName="prefix">
+                    <mat-option value="">-- Select --</mat-option>
+                    <mat-option value="Mr">Mr.</mat-option>
+                    <mat-option value="Mrs">Mrs.</mat-option>
+                    <mat-option value="Ms">Ms.</mat-option>
+                    <mat-option value="Miss">Miss</mat-option>
+                    <mat-option value="Dr">Dr.</mat-option>
+                    <mat-option value="Prof">Prof.</mat-option>
+                    <mat-option value="Rev">Rev.</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Suffix</mat-label>
+                <mat-select formControlName="suffix">
+                    <mat-option value="">-- Select --</mat-option>
+                    <mat-option value="Jr">Jr.</mat-option>
+                    <mat-option value="Sr">Sr.</mat-option>
+                    <mat-option value="II">II</mat-option>
+                    <mat-option value="III">III</mat-option>
+                    <mat-option value="IV">IV</mat-option>
+                    <mat-option value="V">V</mat-option>
+                    <mat-option value="VI">VI</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Date of Birth</mat-label>
+                <input matInput type="date" formControlName="dob" required>
+                <mat-error *ngIf="personalForm.get('dob')?.hasError('required')">Date of Birth is required</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Gender</mat-label>
+                <mat-select formControlName="gender" required>
+                    <mat-option value="">-- Select --</mat-option>
+                    <mat-option value="Male">Male</mat-option>
+                    <mat-option value="Female">Female</mat-option>
+                    <mat-option value="Others">Others</mat-option>
+                </mat-select>
+                <mat-error *ngIf="personalForm.get('gender')?.hasError('required')">Gender is required</mat-error>
+            </mat-form-field>
+        </div>
+
+        <h3>Contact Information</h3>
+        <div formArrayName="phones">
+            <div *ngFor="let phone of phones.controls; let i = index" [formGroupName]="i" class="form-row">
+                <mat-form-field appearance="fill">
+                    <mat-label>Phone Type</mat-label>
+                    <mat-select formControlName="type" required>
+                        <mat-option value="">-- Select --</mat-option>
+                        <mat-option value="Mobile">Mobile</mat-option>
+                        <mat-option value="Home">Landline</mat-option>
+                        <mat-option value="Work">Work</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Phone Number</mat-label>
+                    <input matInput formControlName="number" required maxlength="10">
+                    <mat-error *ngIf="phone.get('number')?.hasError('required')">Phone Number is required</mat-error>
+                    <mat-error *ngIf="phone.get('number')?.hasError('pattern')">Enter a valid 10-digit
+                        number</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Extension</mat-label>
+                    <input matInput formControlName="extension">
+                </mat-form-field>
+                <mat-checkbox formControlName="isPrimary">Is Primary</mat-checkbox>
+                <button mat-icon-button color="warn" type="button" (click)="removePhone(i)" *ngIf="phones.length > 1">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </div>
+            <button mat-stroked-button color="primary" type="button" (click)="addPhone()">Add Phone</button>
+        </div>
+
+        <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Email Address</mat-label>
+            <input matInput formControlName="email" required>
+            <mat-error *ngIf="personalForm.get('email')?.hasError('required')">Email is required</mat-error>
+            <mat-error *ngIf="personalForm.get('email')?.hasError('email')">Enter a valid email</mat-error>
+        </mat-form-field>
+
+        <h3>Address Information</h3>
+        <div class="address-section">
+            <div [formGroup]="mailingAddress">
+                <h4>Mailing Address</h4>
+                <mat-form-field appearance="fill">
+                    <mat-label>Address Line 1</mat-label>
+                    <input matInput formControlName="address1" required>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Address Line 2</mat-label>
+                    <input matInput formControlName="address2">
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>City</mat-label>
+                    <input matInput formControlName="city" required>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>State</mat-label>
+                    <mat-select formControlName="state" required>
+                        <mat-option value="">-- Select State --</mat-option>
+                        <mat-option value="TX">Texas</mat-option>
+                        <!-- Add other states as needed -->
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Zip Code</mat-label>
+                    <input matInput formControlName="zip" required>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>County</mat-label>
+                    <input matInput formControlName="county" required>
+                </mat-form-field>
+            </div>
+            <mat-checkbox formControlName="billingSame">Billing Address - Same as Mailing?</mat-checkbox>
+            <div [formGroup]="billingAddress">
+                <h4>Billing Address</h4>
+                <mat-form-field appearance="fill">
+                    <mat-label>Address Line 1</mat-label>
+                    <input matInput formControlName="address1" required>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Address Line 2</mat-label>
+                    <input matInput formControlName="address2">
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>City</mat-label>
+                    <input matInput formControlName="city" required>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>State</mat-label>
+                    <mat-select formControlName="state" required>
+                        <mat-option value="">-- Select State --</mat-option>
+                        <mat-option value="TX">Texas</mat-option>
+                        <!-- Add other states as needed -->
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Zip Code</mat-label>
+                    <input matInput formControlName="zip" required>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>County</mat-label>
+                    <input matInput formControlName="county" required>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button mat-raised-button color="primary" type="submit">Save and Continue</button>
+            <button mat-stroked-button color="accent" type="reset">Cancel</button>
+            <button mat-flat-button color="primary" type="button" routerLink="../household-members"
+                style="float:right; margin-left: 1rem;">Next</button>
+        </div>
+    </form>
+</mat-card>

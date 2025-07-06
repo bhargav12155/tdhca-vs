@@ -1,0 +1,146 @@
+app-personal-info {
+  display: block;
+
+  mat-card {
+    padding: 2.5rem;
+    margin: 2rem auto;
+    max-width: 960px;
+    box-shadow: 0 2px 18px rgba(0, 40, 85, 0.08);
+    border-radius: 20px;
+    background: #fff;
+  }
+
+  form {
+    width: 100%;
+  }
+
+  .form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem 2rem; /* More space between fields horizontally and vertically */
+    margin-bottom: 2.5rem;
+  }
+
+  mat-form-field {
+    flex: 1 1 220px;
+    min-width: 160px;
+    margin-bottom: 2rem; /* More space below each field */
+    margin-right: 2rem;  /* More space to the right of each field */
+    font-size: 1.08rem;
+  }
+
+  mat-checkbox {
+    margin: 1.2rem 0 1.2rem 0.5rem;
+  }
+
+  .address-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-bottom: 2rem;
+
+    > div {
+      flex: 1 1 340px;
+      min-width: 220px;
+      background: #f7f9fb;
+      padding: 1.5rem;
+      border-radius: 14px;
+      box-shadow: 0 2px 8px rgba(0, 40, 85, 0.06);
+      margin-bottom: 1.5rem;
+    }
+  }
+
+  .form-actions {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: flex-end;
+    margin-top: 3rem;
+  }
+
+  mat-error {
+    font-size: 0.98rem;
+    color: #d32f2f;
+    margin-top: 0.2rem;
+  }
+
+  h3, h4 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: #002855;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+
+  .full-width {
+    width: 100%;
+  }
+
+  // Phones Section specific
+  [formArrayName="phones"] .form-row {
+    align-items: center;
+  }
+
+  // Media Queries
+  @media (max-width: 900px) {
+    mat-card {
+      padding: 1.5rem;
+      max-width: 100%;
+      margin: 1rem auto;
+      border-radius: 14px;
+    }
+
+    .form-row {
+      flex-direction: column;
+      gap: 1.2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .address-section {
+      flex-direction: column;
+      gap: 1.5rem;
+
+      > div {
+        padding: 1rem;
+        min-width: 0;
+        border-radius: 12px;
+      }
+    }
+
+    .form-actions {
+      flex-direction: column;
+      gap: 1rem;
+      align-items: stretch;
+      margin-top: 2rem;
+
+      button {
+        width: 100%;
+        min-width: 0;
+        font-size: 1.1rem;
+        padding: 1rem 0.5rem;
+      }
+    }
+
+    mat-form-field {
+      min-width: 120px;
+      font-size: 1rem;
+    }
+  }
+
+  @media (max-width: 600px) {
+    mat-card {
+      padding: 1rem;
+      margin: 0.5rem auto;
+      border-radius: 10px;
+    }
+
+    .address-section > div {
+      padding: 0.75rem;
+      border-radius: 10px;
+    }
+
+    mat-form-field {
+      min-width: 100px;
+      font-size: 0.95rem;
+    }
+  }
+}

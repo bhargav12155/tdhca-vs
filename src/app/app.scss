@@ -1,0 +1,28 @@
+.tdhca-sidenav-container {
+  height: 100vh;
+  min-height: 100vh;
+}
+
+.tdhca-sidenav {
+  width: 260px;
+  max-width: 80vw;
+  background: var(--tdhca-blue, #003366);
+  color: var(--tdhca-white, #fff);
+  height: 100%;
+}
+
+.tdhca-sidenav .mat-list-item,
+.tdhca-sidenav .mat-list-item .mat-list-item-content,
+.tdhca-sidenav .mat-list-item .mat-list-text {
+  color: var(--tdhca-white, #fff) !important;
+}
+
+.tdhca-sidenav .mat-list-item:hover,
+.tdhca-sidenav .mat-list-item:focus {
+  background: rgba(255,255,255,0.08);
+}
+
+.mat-sidenav-content {
+  min-height: 100vh;
+  background: #f8f9fa;
+}

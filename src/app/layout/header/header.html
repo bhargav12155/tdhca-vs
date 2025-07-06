@@ -1,0 +1,50 @@
+<mat-toolbar color="primary" class="tdhca-header">
+    <button mat-icon-button (click)="onMenuClick()" aria-label="Open menu" class="menu-btn">
+        <mat-icon>menu</mat-icon>
+    </button>
+    <div class="header-left">
+        <img src="assets/images/footer-logo.png" alt="TDHCA Logo" class="tdhca-logo" />
+        <a mat-button routerLink="/" class="site-name desktop-only" accesskey="2"
+            aria-label="Texas Department of Housing and Community Affairs">
+            Texas Department of Housing &amp; Community Affairs
+        </a>
+    </div>
+    <nav class="main-nav" aria-label="Primary navigation">
+        <ul class="nav-list">
+            <li>
+                <a mat-icon-button routerLink="/" class="mobile-only" aria-label="Home"><mat-icon>home</mat-icon></a>
+                <a mat-button routerLink="/" class="desktop-only">Home</a>
+            </li>
+            <li>
+                <a mat-icon-button (click)="openCreateAccountDialog()" class="mobile-only"
+                    aria-label="Create Account"><mat-icon>person_add</mat-icon></a>
+                <a mat-button (click)="openCreateAccountDialog()" class="desktop-only">Create Account</a>
+            </li>
+            <li>
+                <a mat-icon-button routerLink="/help" class="mobile-only"
+                    aria-label="Help"><mat-icon>help_outline</mat-icon></a>
+                <a mat-button routerLink="/help" class="desktop-only">Help</a>
+            </li>
+            <li>
+                <button mat-icon-button [matMenuTriggerFor]="langMenu" aria-label="Select language"
+                    class="lang-menu-btn mobile-only">
+                    <mat-icon>language</mat-icon>
+                </button>
+                <button mat-button [matMenuTriggerFor]="langMenu" aria-label="Select language"
+                    class="lang-menu-btn desktop-only">
+                    <span class="lang-menu-label">Language</span>
+                    <mat-icon>expand_more</mat-icon>
+                </button>
+                <mat-menu #langMenu="matMenu">
+                    <button mat-menu-item>English</button>
+                    <button mat-menu-item>Spanish</button>
+                </mat-menu>
+            </li>
+            <li>
+                <a mat-icon-button routerLink="/login" class="mobile-only"
+                    aria-label="Login"><mat-icon>login</mat-icon></a>
+                <a mat-button routerLink="/login" class="desktop-only">Login</a>
+            </li>
+        </ul>
+    </nav>
+</mat-toolbar>

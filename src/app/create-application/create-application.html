@@ -1,0 +1,17 @@
+<div class="layout">
+    <nav class="side-nav stepper-nav">
+        <h2>Application Steps</h2>
+        <ul>
+            <li *ngFor="let step of steps; let i = index">
+                <a [routerLink]="step.route" routerLinkActive="active"
+                    [ngClass]="{'active': isActiveStep(step.route), 'completed': isStepCompleted(i)}"><span
+                        class="step-icon"><span *ngIf="isStepCompleted(i)" class="step-check">&#10003;</span><span
+                            *ngIf="!isStepCompleted(i)">{{ i + 1 }}</span></span><span class="step-label">{{
+                        step.label }}</span></a><span *ngIf="i < steps.length - 1" class="step-connector"></span>
+            </li>
+        </ul>
+    </nav>
+    <main>
+        <router-outlet></router-outlet>
+    </main>
+</div>

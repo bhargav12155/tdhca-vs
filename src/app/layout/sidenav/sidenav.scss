@@ -1,0 +1,25 @@
+.tdhca-sidenav-container {
+  height: 100vh;
+}
+
+.tdhca-sidenav {
+  width: 250px;
+  background: var(--tdhca-blue, #003366) !important;
+  color: var(--tdhca-white, #fff);
+  padding-top: 72px; // Push content below header
+}
+
+@media (max-width: 600px) {
+  .tdhca-sidenav {
+    padding-top: 56px; // Shorter header on mobile
+  }
+}
+
+::ng-deep .tdhca-sidenav .mat-list-item .mdc-list-item__primary-text {
+  color: var(--tdhca-white, #fff) !important;
+}
+
+::ng-deep .tdhca-sidenav .mat-list-item:hover,
+::ng-deep .tdhca-sidenav .mat-list-item:focus {
+  background: rgba(255, 255, 255, 0.08) !important;
+}
