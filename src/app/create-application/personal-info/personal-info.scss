@@ -199,9 +199,25 @@ app-personal-info {
 }
 
 .right-actions {
-  margin-left: auto; // pushes it to the right
+  margin-left: auto;
   display: flex;
   gap: 0.75rem;
+}
+
+// Keep phone row actions (isPrimary and trashcan) aligned in a row
+[formArrayName="phones"] .form-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+}
+[formArrayName="phones"] .form-row mat-checkbox {
+  margin: 0 0.5rem 0 1rem;
+  align-self: center;
+}
+[formArrayName="phones"] .form-row button[mat-icon-button] {
+  margin-left: 0.5rem;
+  align-self: center;
 }
 
 @media (max-width: 600px) {
@@ -214,5 +230,15 @@ app-personal-info {
     margin-left: 0;
     flex-direction: column;
     gap: 0.5rem;
+  }
+  [formArrayName="phones"] .form-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+  [formArrayName="phones"] .form-row mat-checkbox,
+  [formArrayName="phones"] .form-row button[mat-icon-button] {
+    margin-left: 0;
+    align-self: flex-start;
   }
 }
