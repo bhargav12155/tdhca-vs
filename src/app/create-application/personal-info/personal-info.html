@@ -1,6 +1,6 @@
 <mat-card>
     <form [formGroup]="personalForm" (ngSubmit)="onSubmit()">
-
+        <h3>Head of Household Information</h3>
         <!-- Name Fields -->
         <div class="name-fields">
             <mat-form-field appearance="fill" style="margin: 10px;"
@@ -23,6 +23,21 @@
                 <input matInput formControlName="lastName" required placeholder="Last Name">
                 <mat-error *ngIf="personalForm.get('lastName')?.hasError('required')">Last Name is required</mat-error>
             </mat-form-field>
+
+            <mat-form-field appearance="fill" style="margin: 10px;" matTooltip="Select a suffix (optional)"
+                matTooltipPosition="above">
+                <mat-label>Suffix</mat-label>
+                <mat-select formControlName="suffix">
+                    <mat-option value="">-- Select --</mat-option>
+                    <mat-option value="Jr">Jr.</mat-option>
+                    <mat-option value="Sr">Sr.</mat-option>
+                    <mat-option value="II">II</mat-option>
+                    <mat-option value="III">III</mat-option>
+                    <mat-option value="IV">IV</mat-option>
+                    <mat-option value="V">V</mat-option>
+                    <mat-option value="VI">VI</mat-option>
+                </mat-select>
+            </mat-form-field>
         </div>
 
         <!-- Other Personal Info -->
@@ -39,21 +54,6 @@
                     <mat-option value="Dr">Dr.</mat-option>
                     <mat-option value="Prof">Prof.</mat-option>
                     <mat-option value="Rev">Rev.</mat-option>
-                </mat-select>
-            </mat-form-field>
-
-            <mat-form-field appearance="fill" style="margin: 10px;" matTooltip="Select a suffix (optional)"
-                matTooltipPosition="above">
-                <mat-label>Suffix</mat-label>
-                <mat-select formControlName="suffix">
-                    <mat-option value="">-- Select --</mat-option>
-                    <mat-option value="Jr">Jr.</mat-option>
-                    <mat-option value="Sr">Sr.</mat-option>
-                    <mat-option value="II">II</mat-option>
-                    <mat-option value="III">III</mat-option>
-                    <mat-option value="IV">IV</mat-option>
-                    <mat-option value="V">V</mat-option>
-                    <mat-option value="VI">VI</mat-option>
                 </mat-select>
             </mat-form-field>
         </div>
@@ -116,13 +116,18 @@
                 <button mat-icon-button color="warn" type="button" (click)="removePhone(i)" *ngIf="phones.length > 1">
                     <mat-icon>delete</mat-icon>
                 </button>
-            </div>
 
-            <button mat-stroked-button color="primary" type="button" (click)="addPhone()">Add Phone</button>
+
+                <button mat-icon-button color="primary" type="button" (click)="addPhone()"
+                    *ngIf="i === phones.length - 1">
+                    <mat-icon>add_circle</mat-icon>
+                </button>
+            </div>
         </div>
 
         <!-- Email -->
-        <mat-form-field appearance="fill" class="full-width" style="margin: 10px;" matTooltip="Enter your email address"
+        <mat-form-field appearance="fill" class="full-width email-large"
+            style="margin: 10px; min-width: 400px; width: 45%;" matTooltip="Enter your email address"
             matTooltipPosition="above">
             <mat-label>Email Address</mat-label>
             <input matInput formControlName="email" required placeholder="Email Address">
