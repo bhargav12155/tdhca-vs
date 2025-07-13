@@ -260,7 +260,7 @@
 
         <!-- Household Members Section -->
         <h3>Household Members</h3>
-        <div class="household-members-section">
+        <div class="household-members-section ">
             <div class="household-members-actions">
                 <button mat-stroked-button color="primary" type="button" (click)="copyApplicantToHousehold()"
                     matTooltip="Add applicant as household member (Self)"
@@ -284,23 +284,27 @@
                             </button>
                         </div>
                         <div class="member-fields member-fields-grid" *ngIf="expandedMembers[i]">
-                            <!-- Row 1: Name and Relationship -->
+                            <!-- Row 1: First Name, Middle Name, Last Name, Relationship -->
                             <div class="form-row name-fields">
-                                <mat-form-field appearance="fill" matTooltip="First Name" matTooltipPosition="above">
+                                <mat-form-field appearance="fill" matTooltip="First Name" matTooltipPosition="above"
+                                    style="margin: 10px; user-select: none; -webkit-user-drag: none; touch-action: none; -webkit-tap-highlight-color: transparent;">
                                     <mat-label>First Name</mat-label>
                                     <input matInput formControlName="firstName" required placeholder="First Name">
                                 </mat-form-field>
                                 <mat-form-field appearance="fill" class="middle-initial"
-                                    matTooltip="Middle Name (optional)" matTooltipPosition="above">
-                                    <mat-label>Middle</mat-label>
-                                    <input matInput formControlName="middleName" placeholder="Middle">
+                                    matTooltip="Middle Name (optional)" matTooltipPosition="above"
+                                    style="margin: 10px; user-select: none; -webkit-user-drag: none; touch-action: none; -webkit-tap-highlight-color: transparent;">
+                                    <mat-label>Middle Name</mat-label>
+                                    <input matInput formControlName="middleName" placeholder="Middle Name">
                                 </mat-form-field>
-                                <mat-form-field appearance="fill" matTooltip="Last Name" matTooltipPosition="above">
+                                <mat-form-field appearance="fill" matTooltip="Last Name" matTooltipPosition="above"
+                                    style="margin: 10px; user-select: none; -webkit-user-drag: none; touch-action: none; -webkit-tap-highlight-color: transparent;">
                                     <mat-label>Last Name</mat-label>
                                     <input matInput formControlName="lastName" required placeholder="Last Name">
                                 </mat-form-field>
                                 <mat-form-field appearance="fill" matTooltip="Relationship to Head of Household"
-                                    matTooltipPosition="above">
+                                    matTooltipPosition="above"
+                                    style="margin: 10px; user-select: none; -webkit-user-drag: none; touch-action: none; -webkit-tap-highlight-color: transparent;">
                                     <mat-label>Relationship</mat-label>
                                     <mat-select formControlName="relationship" required>
                                         <mat-option *ngFor="let rel of relationshipOptions"
@@ -308,9 +312,10 @@
                                     </mat-select>
                                 </mat-form-field>
                             </div>
-                            <!-- Row 2: Gender, DOB, Race, Ethnicity -->
+                            <!-- Row 2: Gender, Date of Birth, Race, Ethnicity -->
                             <div class="form-row name-fields">
-                                <mat-form-field appearance="fill" matTooltip="Gender" matTooltipPosition="above">
+                                <mat-form-field appearance="fill" matTooltip="Gender" matTooltipPosition="above"
+                                    style="margin: 10px; user-select: none; -webkit-user-drag: none; touch-action: none; -webkit-tap-highlight-color: transparent;">
                                     <mat-label>Gender</mat-label>
                                     <mat-select formControlName="gender" required>
                                         <mat-option value="">-- Select --</mat-option>
@@ -319,18 +324,21 @@
                                         <mat-option value="Other">Other</mat-option>
                                     </mat-select>
                                 </mat-form-field>
-                                <mat-form-field appearance="fill" matTooltip="Date of Birth" matTooltipPosition="above">
+                                <mat-form-field appearance="fill" matTooltip="Date of Birth" matTooltipPosition="above"
+                                    style="margin: 10px; user-select: none; -webkit-user-drag: none; touch-action: none; -webkit-tap-highlight-color: transparent;">
                                     <mat-label>Date of Birth</mat-label>
                                     <input matInput type="date" formControlName="dob" required placeholder="YYYY-MM-DD">
                                 </mat-form-field>
-                                <mat-form-field appearance="fill" matTooltip="Race" matTooltipPosition="above">
+                                <mat-form-field appearance="fill" matTooltip="Race" matTooltipPosition="above"
+                                    style="margin: 10px; user-select: none; -webkit-user-drag: none; touch-action: none; -webkit-tap-highlight-color: transparent;">
                                     <mat-label>Race</mat-label>
                                     <mat-select formControlName="race" required>
                                         <mat-option *ngFor="let race of raceOptions"
                                             [value]="race.value">{{race.label}}</mat-option>
                                     </mat-select>
                                 </mat-form-field>
-                                <mat-form-field appearance="fill" matTooltip="Ethnicity" matTooltipPosition="above">
+                                <mat-form-field appearance="fill" matTooltip="Ethnicity" matTooltipPosition="above"
+                                    style="margin: 10px; user-select: none; -webkit-user-drag: none; touch-action: none; -webkit-tap-highlight-color: transparent;">
                                     <mat-label>Ethnicity</mat-label>
                                     <mat-select formControlName="ethnicity" required>
                                         <mat-option *ngFor="let eth of ethnicityOptions"
@@ -338,10 +346,11 @@
                                     </mat-select>
                                 </mat-form-field>
                             </div>
-                            <!-- Row 3: Education, Employment, Military, Seasonal Work -->
+                            <!-- Row 3: Education Status, Employment Status, Military Status, Seasonal Work -->
                             <div class="form-row name-fields">
                                 <mat-form-field appearance="fill" matTooltip="Education Status"
-                                    matTooltipPosition="above">
+                                    matTooltipPosition="above"
+                                    style="margin: 10px; user-select: none; -webkit-user-drag: none; touch-action: none; -webkit-tap-highlight-color: transparent;">
                                     <mat-label>Education Status</mat-label>
                                     <mat-select formControlName="educationStatus">
                                         <mat-option *ngFor="let edu of educationOptions"
@@ -349,7 +358,8 @@
                                     </mat-select>
                                 </mat-form-field>
                                 <mat-form-field appearance="fill" matTooltip="Employment Status"
-                                    matTooltipPosition="above">
+                                    matTooltipPosition="above"
+                                    style="margin: 10px; user-select: none; -webkit-user-drag: none; touch-action: none; -webkit-tap-highlight-color: transparent;">
                                     <mat-label>Employment Status</mat-label>
                                     <mat-select formControlName="employmentStatus">
                                         <mat-option *ngFor="let emp of employmentOptions"
@@ -357,7 +367,8 @@
                                     </mat-select>
                                 </mat-form-field>
                                 <mat-form-field appearance="fill" matTooltip="Military Status"
-                                    matTooltipPosition="above">
+                                    matTooltipPosition="above"
+                                    style="margin: 10px; user-select: none; -webkit-user-drag: none; touch-action: none; -webkit-tap-highlight-color: transparent;">
                                     <mat-label>Military Status</mat-label>
                                     <mat-select formControlName="militaryStatus">
                                         <mat-option *ngFor="let mil of militaryOptions"
@@ -365,24 +376,43 @@
                                     </mat-select>
                                 </mat-form-field>
                                 <mat-checkbox formControlName="seasonalWork"
-                                    style="margin: 1.5rem 0 0 1.5rem; align-self: center;"
+                                    style="margin: 1.5rem 0 0 1.5rem; align-self: center; user-select: none; -webkit-user-drag: none; touch-action: none; -webkit-tap-highlight-color: transparent;"
                                     matTooltip="Seasonal Work">Seasonal Work
                                 </mat-checkbox>
                             </div>
-                            <!-- Row 4: Citizenship, Identity, Upload, Save/Reset -->
+                            <!-- Row 4: Citizenship, Identity, Disability Status, Upload Document, Save/Reset Buttons -->
                             <div class="form-row name-fields" style="align-items: flex-end;">
                                 <mat-form-field appearance="fill" matTooltip="Citizenship Status"
-                                    matTooltipPosition="above">
+                                    matTooltipPosition="above"
+                                    style="margin: 10px; user-select: none; -webkit-user-drag: none; touch-action: none; -webkit-tap-highlight-color: transparent;">
                                     <mat-label>Citizenship</mat-label>
                                     <input matInput formControlName="citizenship" placeholder="Citizenship Status">
                                 </mat-form-field>
                                 <mat-form-field appearance="fill" matTooltip="Identity Document Type"
-                                    matTooltipPosition="above">
+                                    matTooltipPosition="above"
+                                    style="margin: 10px; user-select: none; -webkit-user-drag: none; touch-action: none; -webkit-tap-highlight-color: transparent;">
                                     <mat-label>Identity</mat-label>
                                     <input matInput formControlName="identity" placeholder="Identity Document Type">
                                 </mat-form-field>
+                                <mat-form-field appearance="fill" matTooltip="Disability Status"
+                                    matTooltipPosition="above"
+                                    style="margin: 10px; user-select: none; -webkit-user-drag: none; touch-action: none; -webkit-tap-highlight-color: transparent;">
+                                    <mat-label>Disability Status</mat-label>
+                                    <mat-select formControlName="disabilityStatus">
+                                        <mat-option value="">-- Select --</mat-option>
+                                        <mat-option value="None">None</mat-option>
+                                        <mat-option value="Physical">Physical Disability</mat-option>
+                                        <mat-option value="Cognitive">Cognitive Disability</mat-option>
+                                        <mat-option value="Sensory">Sensory Disability</mat-option>
+                                        <mat-option value="Mental">Mental Health Disability</mat-option>
+                                        <mat-option value="Multiple">Multiple Disabilities</mat-option>
+                                        <mat-option value="Other">Other</mat-option>
+                                        <mat-option value="PreferNotToSay">Prefer Not to Say</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
                                 <mat-form-field appearance="fill" matTooltip="Upload Document"
-                                    matTooltipPosition="above">
+                                    matTooltipPosition="above"
+                                    style="margin: 10px; user-select: none; -webkit-user-drag: none; touch-action: none; -webkit-tap-highlight-color: transparent;">
                                     <mat-label>Upload Document</mat-label>
                                     <input type="file" hidden [id]="'memberFileInput' + i"
                                         (change)="onMemberFileChange($event, i)" accept=".pdf,.jpg,.jpeg,.png"
@@ -394,8 +424,9 @@
                                         <mat-icon>attach_file</mat-icon>
                                     </button>
                                 </mat-form-field>
-                                <div style="margin-left:auto; display:flex; gap:0.75rem;">
-                                    <button mat-stroked-button color="primary" type="button"
+                                <div
+                                    style="margin-left:auto; display:flex; gap:0.75rem; margin-top: 10px; margin-bottom: 20px;">
+                                    <button mat-flat-button color="accent" type="button"
                                         (click)="saveHouseholdMember(i)">
                                         Save
                                     </button>

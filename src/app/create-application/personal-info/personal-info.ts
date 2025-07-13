@@ -279,6 +279,7 @@ export class PersonalInfoComponent {
       identity: [data?.identity || ''],
       fileName: [data?.fileName || ''],
       file: [data?.file || null],
+      disabilityStatus: [data?.disabilityStatus || '', Validators.required],
     });
     group.get('dob')?.valueChanges.subscribe((dob) => {
       group.get('age')?.setValue(this.calculateAge(dob), { emitEvent: false });
