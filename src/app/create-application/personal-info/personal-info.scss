@@ -4,9 +4,9 @@ app-personal-info {
   display: block;
   padding: 1.5rem;
 
-::ng-deep {
+
   mat-card {
-    background: $white;
+    background: red !important;
     border-radius: 20px;
     box-shadow: 0 4px 24px rgba(0, 40, 85, 0.06);
     max-width: 1080px;
@@ -85,7 +85,6 @@ app-personal-info {
       }
     }
   }
-}
 
 
   // Form layout

@@ -108,7 +108,27 @@ export class HouseholdMembersComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.applicationDataService.currentPersonalInfo.subscribe(
+      (applicantData) => {
+        if (applicantData && !this.hasSelfMember()) {
+          const memberForm = this.createHouseholdMember();
+          memberForm.patchValue({
+            firstName: applicantData.firstName,
+            middleName: applicantData.middleInitial,
+            lastName: applicantData.lastName,
+            relationship: 'Self',
+            gender: applicantData.gender,
+            dob: applicantData.dob,
+            isSelf: true,
+          });
+          this.householdMembers.insert(0, memberForm);
+          this.expandedMembers.unshift(true);
+          this.updateRelationshipOptions();
+        }
+      }
+    );
+  }
 
   get householdMembers(): FormArray {
     return this.householdForm.get('householdMembers') as FormArray;
@@ -154,49 +174,6 @@ export class HouseholdMembersComponent implements OnInit {
   removeHouseholdMember(index: number): void {
     this.householdMembers.removeAt(index);
     this.expandedMembers.splice(index, 1);
-  }
-
-  copyApplicantToHousehold(): void {
-    if (this.householdMembers.length >= 20) {
-      this.snackBar.open(
-        'You have reached the maximum of 20 household members.',
-        'Close',
-        { duration: 3000 }
-      );
-      return;
-    }
-    if (this.hasSelfMember()) {
-      this.snackBar.open(
-        'Applicant has already been added as a household member.',
-        'Close',
-        { duration: 3000 }
-      );
-      return;
-    }
-
-    this.applicationDataService.currentPersonalInfo.subscribe(
-      (applicantData) => {
-        if (applicantData) {
-          const memberForm = this.createHouseholdMember();
-          memberForm.patchValue({
-            firstName: applicantData.firstName,
-            middleName: applicantData.middleInitial,
-            lastName: applicantData.lastName,
-            relationship: 'Self',
-            gender: applicantData.gender,
-            dob: applicantData.dob,
-            isSelf: true,
-          });
-          this.householdMembers.insert(0, memberForm); // Insert at the beginning
-          this.expandedMembers.unshift(true);
-          this.updateRelationshipOptions();
-        } else {
-          this.snackBar.open('Applicant data is not available.', 'Close', {
-            duration: 3000,
-          });
-        }
-      }
-    );
   }
 
   hasSelfMember(): boolean {

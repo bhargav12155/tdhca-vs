@@ -3,11 +3,6 @@
     <h3>Household Members</h3>
     <div class="household-members-section">
         <div class="household-members-actions">
-            <button mat-stroked-button color="primary" type="button" (click)="copyApplicantToHousehold()"
-                matTooltip="Add applicant as household member (Self)"
-                [disabled]="householdMembers.length >= 20 || hasSelfMember()">
-                Copy Applicant Info
-            </button>
             <span class="member-count" *ngIf="householdMembers.length">({{ householdMembers.length }} / 20)</span>
         </div>
         <div formArrayName="householdMembers">
