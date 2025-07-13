@@ -1,1 +1,28 @@
-<p>categorical-eligibility works!</p>
+<div class="form-container">
+    <h3>Categorical Eligibility</h3>
+    <p>
+        Please indicate if your household is currently receiving benefits from any of
+        the following programs.
+    </p>
+
+    <form [formGroup]="eligibilityForm">
+        <mat-card>
+            <mat-card-content>
+                <div class="checkbox-group">
+                    <mat-checkbox formControlName="tanf">TANF (Temporary Assistance for Needy Families)</mat-checkbox>
+                    <mat-checkbox formControlName="snap">SNAP (Supplemental Nutrition Assistance Program)</mat-checkbox>
+                    <mat-checkbox formControlName="liheap">LIHEAP (Low Income Home Energy Assistance
+                        Program)</mat-checkbox>
+                    <mat-checkbox formControlName="medicaid">Medicaid</mat-checkbox>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </form>
+
+    <div class="form-actions">
+        <button mat-stroked-button (click)="onBack()">Back</button>
+        <button mat-flat-button color="accent" (click)="onSaveAndContinue()" [disabled]="eligibilityForm.invalid">
+            Save and Continue
+        </button>
+    </div>
+</div>

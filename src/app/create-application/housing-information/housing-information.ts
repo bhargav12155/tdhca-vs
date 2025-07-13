@@ -1,30 +1,65 @@
 import { Component } from '@angular/core';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  ReactiveFormsModule,
+  FormsModule,
+} from '@angular/forms';
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
-import { MatListModule } from '@angular/material/list';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-housing-information',
   standalone: true,
   imports: [
+    CommonModule,
     ReactiveFormsModule,
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    MatCheckboxModule,
     MatButtonModule,
-    MatIconModule,
     MatCardModule,
-    MatListModule,
+    MatSnackBarModule,
   ],
   templateUrl: './housing-information.html',
   styleUrl: './housing-information.scss',
 })
-export class HousingInformationComponent {}
+export class HousingInformationComponent {
+  housingForm: FormGroup;
+
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) {
+    this.housingForm = this.fb.group({
+      housingType: ['', Validators.required],
+      monthlyPayment: ['', [Validators.required, Validators.min(0)]],
+    });
+  }
+
+  onBack(): void {
+    this.router.navigate(['/createapplication/declaration-income']);
+  }
+
+  onSaveAndContinue(): void {
+    if (this.housingForm.valid) {
+      console.log('Form Saved:', this.housingForm.value);
+      // In a real app, you would save the data to a service
+      this.router.navigate(['/createapplication/save-verification']);
+    } else {
+      this.snackBar.open('Please fill out all required fields.', 'Close', {
+        duration: 3000,
+      });
+    }
+  }
+}

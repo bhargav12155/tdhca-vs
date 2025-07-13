@@ -1,1 +1,20 @@
-<p>application-submission works!</p>
+<div class="form-container">
+    <h3>Application Submission</h3>
+    <p>
+        Review your application details and submit.
+    </p>
+
+    <mat-card>
+        <mat-card-content>
+            <p>You are about to submit your application. Please review all the information you have provided for
+                accuracy.</p>
+        </mat-card-content>
+    </mat-card>
+
+    <div class="form-actions">
+        <button mat-stroked-button (click)="onBack()">Back</button>
+        <button mat-flat-button color="accent" (click)="onSubmit()">
+            Submit Application
+        </button>
+    </div>
+</div>

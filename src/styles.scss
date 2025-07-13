@@ -46,3 +46,17 @@ body {
 .tdhca-sidenav .mdc-list-item__primary-text {
   color: var(--tdhca-white, #fff) !important;
 }
+
+/* You can add global styles to this file, and also import other style files */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding: 1rem;
+  position: sticky;
+  bottom: 0;
+  background-color: white;
+  z-index: 100;
+  border-top: 1px solid #e0e0e0;
+}

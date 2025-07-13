@@ -1,5 +1,13 @@
 import { Component } from '@angular/core';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  FormsModule,
+} from '@angular/forms';
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -8,11 +16,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-categorical-eligibility',
   standalone: true,
   imports: [
+    CommonModule,
     ReactiveFormsModule,
     FormsModule,
     MatFormFieldModule,
@@ -23,8 +33,40 @@ import { MatListModule } from '@angular/material/list';
     MatIconModule,
     MatCardModule,
     MatListModule,
+    MatSnackBarModule,
   ],
   templateUrl: './categorical-eligibility.html',
   styleUrl: './categorical-eligibility.scss',
 })
-export class CategoricalEligibilityComponent {}
+export class CategoricalEligibilityComponent {
+  eligibilityForm: FormGroup;
+
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) {
+    this.eligibilityForm = this.fb.group({
+      tanf: [false],
+      snap: [false],
+      liheap: [false],
+      medicaid: [false],
+    });
+  }
+
+  onBack(): void {
+    this.router.navigate(['/createapplication/household-members']);
+  }
+
+  onSaveAndContinue(): void {
+    if (this.eligibilityForm.valid) {
+      console.log('Form Saved:', this.eligibilityForm.value);
+      // In a real app, you would save the data to a service
+      this.router.navigate(['/createapplication/income-information']);
+    } else {
+      this.snackBar.open('Please fill out all required fields.', 'Close', {
+        duration: 3000,
+      });
+    }
+  }
+}

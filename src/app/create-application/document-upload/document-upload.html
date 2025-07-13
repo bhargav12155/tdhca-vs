@@ -1,1 +1,33 @@
-<p>document-upload works!</p>
+<div class="form-container">
+    <h3>Document Upload</h3>
+    <p>
+        Please upload the required documents.
+    </p>
+
+    <form [formGroup]="documentForm">
+        <mat-card>
+            <mat-card-content>
+                <div class="file-upload-container">
+                    <button mat-stroked-button color="primary" (click)="triggerFileInput()">
+                        <mat-icon>attach_file</mat-icon>
+                        Select Files
+                    </button>
+                    <input type="file" hidden #fileInput (change)="onFileSelected($event)" multiple>
+                    <div *ngIf="selectedFiles.length > 0" class="file-list">
+                        <h4>Selected Files:</h4>
+                        <ul>
+                            <li *ngFor="let file of selectedFiles">{{ file.name }}</li>
+                        </ul>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </form>
+
+    <div class="form-actions">
+        <button mat-stroked-button (click)="onBack()">Back</button>
+        <button mat-flat-button color="accent" (click)="onSaveAndContinue()" [disabled]="documentForm.invalid">
+            Save and Continue
+        </button>
+    </div>
+</div>

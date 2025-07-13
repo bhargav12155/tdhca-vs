@@ -1,1 +1,32 @@
-<p>declaration-income works!</p>
+<div class="form-container">
+    <h3>Declaration of Income Statement</h3>
+    <p>
+        Please read and sign the following declaration.
+    </p>
+
+    <form [formGroup]="declarationForm">
+        <mat-card>
+            <mat-card-content>
+                <p>
+                    I hereby certify that the information I have provided regarding my income is true and correct to the
+                    best of my knowledge. I understand that providing false information may result in the denial of my
+                    application or other penalties.
+                </p>
+                <mat-checkbox formControlName="agree">I agree to the terms and conditions.</mat-checkbox>
+                <div class="signature-pad">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Signature</mat-label>
+                        <input matInput formControlName="signature" required placeholder="Type your full name">
+                    </mat-form-field>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </form>
+
+    <div class="form-actions">
+        <button mat-stroked-button (click)="onBack()">Back</button>
+        <button mat-flat-button color="accent" (click)="onSaveAndContinue()" [disabled]="declarationForm.invalid">
+            Save and Continue
+        </button>
+    </div>
+</div>
