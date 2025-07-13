@@ -1,1 +1,34 @@
-<p>housing-information works!</p>
+<div class="form-container">
+    <h3>Housing Information</h3>
+    <p>
+        Please provide your current housing information.
+    </p>
+
+    <form [formGroup]="housingForm">
+        <mat-card>
+            <mat-card-content>
+                <div class="form-row">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Housing Type</mat-label>
+                        <mat-select formControlName="housingType" required>
+                            <mat-option value="rent">Rent</mat-option>
+                            <mat-option value="own">Own</mat-option>
+                            <mat-option value="other">Other</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Monthly Payment</mat-label>
+                        <input matInput type="number" formControlName="monthlyPayment" required placeholder="0.00">
+                    </mat-form-field>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </form>
+
+    <div class="form-actions">
+        <button mat-stroked-button (click)="onBack()">Back</button>
+        <button mat-flat-button color="accent" (click)="onSaveAndContinue()" [disabled]="housingForm.invalid">
+            Save and Continue
+        </button>
+    </div>
+</div>

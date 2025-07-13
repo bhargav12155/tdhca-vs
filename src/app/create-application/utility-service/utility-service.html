@@ -1,1 +1,30 @@
-<p>utility-service works!</p>
+<div class="form-container">
+    <h3>Utility Service Information</h3>
+    <p>
+        Please provide your utility service details.
+    </p>
+
+    <form [formGroup]="utilityForm">
+        <mat-card>
+            <mat-card-content>
+                <div class="form-row">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Utility Provider</mat-label>
+                        <input matInput formControlName="provider" required placeholder="e.g., City Electric">
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Account Number</mat-label>
+                        <input matInput formControlName="accountNumber" required placeholder="e.g., 12345-67890">
+                    </mat-form-field>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </form>
+
+    <div class="form-actions">
+        <button mat-stroked-button (click)="onBack()">Back</button>
+        <button mat-flat-button color="accent" (click)="onSaveAndContinue()" [disabled]="utilityForm.invalid">
+            Save and Continue
+        </button>
+    </div>
+</div>

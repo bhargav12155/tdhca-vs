@@ -46,10 +46,10 @@ export class CreateApplicationComponent {
     { label: 'Income Information', route: 'income-information' },
     {
       label: 'Declaration of Income Statement',
-      route: 'declaration-income-statement',
+      route: 'declaration-income',
     },
     { label: 'Housing Information', route: 'housing-information' },
-    { label: 'SAVE System Verification', route: 'save-system-verification' },
+    { label: 'SAVE System Verification', route: 'save-verification' },
     { label: 'Utility Service', route: 'utility-service' },
     { label: 'Document Upload', route: 'document-upload' },
     { label: 'Application Submission', route: 'application-submission' },

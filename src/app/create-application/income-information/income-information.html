@@ -1,1 +1,36 @@
-<p>income-information works!</p>
+<div class="form-container">
+    <h3>Income Information</h3>
+    <p>
+        Please provide income details for each household member.
+    </p>
+
+    <form [formGroup]="incomeForm">
+        <div formArrayName="householdIncomes">
+            <mat-card *ngFor="let member of householdIncomes.controls; let i = index" [formGroupName]="i">
+                <mat-card-header>
+                    <mat-card-title>Member {{ i + 1 }}: {{ getMemberName(i) }}</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <div class="form-row">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Income Source</mat-label>
+                            <input matInput formControlName="source" required
+                                placeholder="e.g., Employment, Self-Employment">
+                        </mat-form-field>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Monthly Amount</mat-label>
+                            <input matInput type="number" formControlName="amount" required placeholder="0.00">
+                        </mat-form-field>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </form>
+
+    <div class="form-actions">
+        <button mat-stroked-button (click)="onBack()">Back</button>
+        <button mat-flat-button color="accent" (click)="onSaveAndContinue()" [disabled]="incomeForm.invalid">
+            Save and Continue
+        </button>
+    </div>
+</div>
