@@ -69,6 +69,8 @@ export class PersonalInfoComponent {
       suffix: [''],
       dob: ['', [Validators.required, this.dateValidator()]],
       gender: ['', Validators.required],
+      legal_proof: ['', Validators.required],
+      legal_proof_doc: ['', Validators.required],
       phones: this.fb.array([this.createPhoneGroup()]),
       email: ['', [Validators.required, Validators.email]],
       mailingAddress: this.fb.group({
@@ -163,6 +165,81 @@ export class PersonalInfoComponent {
     return this.personalForm.get('billingAddress') as FormGroup;
   }
 
+  // --- Household Members Section ---
+  get householdMembers(): FormArray {
+    return this.personalForm.get('householdMembers') as FormArray;
+  }
+
+  relationshipOptions = [
+    { value: 'Self', label: 'Self' },
+    { value: 'Spouse', label: 'Spouse' },
+    { value: 'Child', label: 'Child' },
+    { value: 'Parent', label: 'Parent' },
+    { value: 'Sibling', label: 'Sibling' },
+    { value: 'Grandparent', label: 'Grandparent' },
+    { value: 'Other', label: 'Other' },
+  ];
+  raceOptions = [
+    { value: 'White', label: 'White' },
+    { value: 'Black', label: 'Black or African American' },
+    { value: 'Asian', label: 'Asian' },
+    { value: 'Native', label: 'American Indian or Alaska Native' },
+    { value: 'Pacific', label: 'Native Hawaiian or Other Pacific Islander' },
+    { value: 'Other', label: 'Other' },
+  ];
+  ethnicityOptions = [
+    { value: 'Hispanic', label: 'Hispanic or Latino' },
+    { value: 'NotHispanic', label: 'Not Hispanic or Latino' },
+  ];
+  educationOptions = [
+    { value: 'None', label: 'None' },
+    { value: 'SomeHighSchool', label: 'Some High School' },
+    { value: 'HighSchoolGrad', label: 'High School Graduate' },
+    { value: 'SomeCollege', label: 'Some College' },
+    { value: 'CollegeGrad', label: 'College Graduate' },
+    { value: 'PostGrad', label: 'Post Graduate' },
+  ];
+  employmentOptions = [
+    { value: 'Employed', label: 'Employed' },
+    { value: 'Unemployed', label: 'Unemployed' },
+    { value: 'Retired', label: 'Retired' },
+    { value: 'Student', label: 'Student' },
+    { value: 'Other', label: 'Other' },
+  ];
+  militaryOptions = [
+    { value: 'None', label: 'None' },
+    { value: 'Active', label: 'Active Duty' },
+    { value: 'Veteran', label: 'Veteran' },
+    { value: 'Reserve', label: 'Reserve/National Guard' },
+  ];
+
+  // --- Collapsible Household Members ---
+  expandedMembers: boolean[] = [];
+
+  // Call this after adding/removing members
+  syncExpandedMembers() {
+    const len = this.householdMembers.length;
+    while (this.expandedMembers.length < len) {
+      this.expandedMembers.push(true); // default to expanded
+    }
+    while (this.expandedMembers.length > len) {
+      this.expandedMembers.pop();
+    }
+  }
+
+  toggleMemberExpand(i: number) {
+    this.expandedMembers[i] = !this.expandedMembers[i];
+  }
+
+  ngOnInit() {
+    // Add householdMembers FormArray to the form if not present
+    if (!this.personalForm.contains('householdMembers')) {
+      this.personalForm.addControl('householdMembers', this.fb.array([]));
+    }
+    this.syncExpandedMembers();
+  }
+  // --- End Collapsible Household Members ---
+
   createPhoneGroup() {
     return this.fb.group({
       type: ['', Validators.required],
@@ -181,6 +258,116 @@ export class PersonalInfoComponent {
       this.phones.removeAt(index);
     }
   }
+
+  // --- Household Member Extra Fields and Actions ---
+  createHouseholdMemberGroup(data?: any): FormGroup {
+    const group = this.fb.group({
+      firstName: [data?.firstName || '', Validators.required],
+      middleName: [data?.middleName || ''],
+      lastName: [data?.lastName || '', Validators.required],
+      relationship: [data?.relationship || '', Validators.required],
+      gender: [data?.gender || '', Validators.required],
+      dob: [data?.dob || '', Validators.required],
+      age: [{ value: data?.age || '', disabled: true }],
+      race: [data?.race || '', Validators.required],
+      ethnicity: [data?.ethnicity || '', Validators.required],
+      educationStatus: [data?.educationStatus || ''],
+      employmentStatus: [data?.employmentStatus || ''],
+      militaryStatus: [data?.militaryStatus || ''],
+      seasonalWork: [data?.seasonalWork || false],
+      citizenship: [data?.citizenship || ''],
+      identity: [data?.identity || ''],
+      fileName: [data?.fileName || ''],
+      file: [data?.file || null],
+    });
+    group.get('dob')?.valueChanges.subscribe((dob) => {
+      group.get('age')?.setValue(this.calculateAge(dob), { emitEvent: false });
+    });
+    return group;
+  }
+
+  onMemberFileChange(event: any, i: number) {
+    const file: File = event.target.files[0];
+    if (file) {
+      this.householdMembers.at(i).patchValue({
+        fileName: file.name,
+        file: file,
+      });
+    }
+  }
+
+  saveHouseholdMember(i: number) {
+    // Implement save logic as needed (e.g., mark as saved, send to API, etc.)
+    // For now, just mark as touched
+    this.householdMembers.at(i).markAsTouched();
+  }
+
+  resetHouseholdMember(i: number) {
+    const member = this.householdMembers.at(i);
+    const initial = this.createHouseholdMemberGroup().value;
+    member.reset(initial);
+  }
+
+  addHouseholdMember() {
+    if (this.householdMembers.length < 20) {
+      this.householdMembers.push(this.createHouseholdMemberGroup());
+      this.syncExpandedMembers();
+    }
+  }
+
+  copyApplicantToHousehold() {
+    if (this.hasSelfMember() || this.householdMembers.length >= 20) return;
+    const applicant = {
+      firstName: this.personalForm.get('firstName')?.value,
+      middleName: this.personalForm.get('middleInitial')?.value,
+      lastName: this.personalForm.get('lastName')?.value,
+      relationship: 'Self',
+      gender: this.personalForm.get('gender')?.value,
+      dob: this.personalForm.get('dob')?.value,
+      age: this.calculateAge(this.personalForm.get('dob')?.value),
+      race: '',
+      ethnicity: '',
+      educationStatus: '',
+      employmentStatus: '',
+      militaryStatus: '',
+      seasonalWork: false,
+    };
+    this.householdMembers.insert(0, this.createHouseholdMemberGroup(applicant));
+    this.syncExpandedMembers();
+  }
+
+  removeHouseholdMember(index: number) {
+    if (!this.isSelfMember(index)) {
+      this.householdMembers.removeAt(index);
+      this.syncExpandedMembers();
+    }
+  }
+
+  hasSelfMember(): boolean {
+    return this.householdMembers.controls.some(
+      (ctrl) => ctrl.get('relationship')?.value === 'Self'
+    );
+  }
+
+  isSelfMember(index: number): boolean {
+    return (
+      this.householdMembers.at(index).get('relationship')?.value === 'Self'
+    );
+  }
+
+  calculateAge(dob: string): number | '' {
+    if (!dob) return '';
+    const birth = new Date(dob);
+    if (isNaN(birth.getTime())) return '';
+    const today = new Date();
+    let age = today.getFullYear() - birth.getFullYear();
+    const m = today.getMonth() - birth.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) {
+      age--;
+    }
+    return age >= 0 ? age : '';
+  }
+  // --- End Household Members Section ---
 
   onSubmit() {
     if (this.personalForm.valid) {
@@ -222,5 +409,23 @@ export class PersonalInfoComponent {
       return 'Age cannot exceed 100 years';
     }
     return '';
+  }
+
+  fileName = '';
+
+  onFileChange(event: any): void {
+    const file: File = event.target.files[0];
+    if (file) {
+      this.fileName = file.name;
+      this.personalForm.patchValue({
+        legal_proof_file: file,
+      });
+      this.personalForm.get('legal_proof_file')?.updateValueAndValidity();
+    }
+  }
+
+  triggerMemberFileInput(i: number) {
+    const el = document.getElementById('memberFileInput' + i) as HTMLElement;
+    if (el) el.click();
   }
 }
