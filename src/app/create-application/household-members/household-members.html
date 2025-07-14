@@ -2,9 +2,6 @@
     <!-- Household Members Section -->
     <h3>Household Members</h3>
     <div class="household-members-section">
-        <div class="household-members-actions">
-            <span class="member-count" *ngIf="householdMembers.length">({{ householdMembers.length }} / 20)</span>
-        </div>
         <div formArrayName="householdMembers">
             <div *ngFor="let member of householdMembers.controls; let i = index" [formGroupName]="i"
                 class="household-member-row">
