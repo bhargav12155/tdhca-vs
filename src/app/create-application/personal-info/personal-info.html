@@ -152,7 +152,7 @@
         <h3>Address Information</h3>
         <div class="address-section">
             <div [formGroup]="residentialAddress">
-                <h4>Residential Address</h4>
+                <h4 style="margin-left: 10px;">Residential Address</h4>
                 <mat-form-field appearance="fill" style="margin: 10px;"
                     matTooltip="Enter the first line of your residential address" matTooltipPosition="above">
                     <mat-label>Address Line 1</mat-label>
@@ -197,7 +197,7 @@
             <mat-checkbox formControlName="mailingSame">Mailing Address - Same as Residential?</mat-checkbox>
 
             <div [formGroup]="mailingAddress">
-                <h4>Mailing Address</h4>
+                <h4 style="margin-left: 10px;">Mailing Address</h4>
                 <mat-form-field appearance="fill" style="margin: 10px;"
                     matTooltip="Enter the first line of your mailing address" matTooltipPosition="above">
                     <mat-label>Address Line 1</mat-label>
@@ -239,8 +239,44 @@
             </div>
         </div>
 
+        <!-- Assistance Type Selection -->
+        <h3>Assistance Type</h3>
+        <div class="assistance-section">
+            <p style="margin-left: 10px;"> <strong>What type of assistance is requested?</strong></p>
+            <div class="assistance-options" style="margin-left: 10px;" role="group"
+                aria-labelledby="assistance-types-label">
+                <mat-slide-toggle style="margin: 0 20px 10px 0;" formControlName="energyAssistance"
+                    aria-label="Toggle Energy Assistance (CEAP)"
+                    matTooltip="Provides help with energy bills and utility costs" matTooltipPosition="above">
+                    <span class="assistance-title">Energy Assistance (CEAP)</span>
+                </mat-slide-toggle>
+
+                <mat-slide-toggle style="margin: 0 20px 10px 0;" formControlName="heatingCoolingAssistance"
+                    aria-label="Toggle Heating Cooling Unit Assistance (CEAP)"
+                    matTooltip="Provides help with heating and cooling equipment repairs or replacement"
+                    matTooltipPosition="above">
+                    <span class="assistance-title">Heating Cooling Unit Assistance (CEAP)</span>
+                </mat-slide-toggle>
+
+                <mat-slide-toggle style="margin: 0 20px 10px 0;" formControlName="supportiveServicesAssistance"
+                    aria-label="Toggle Supportive Services Assistance (CSBG)"
+                    matTooltip="Provides additional support services to help achieve self-sufficiency"
+                    matTooltipPosition="above">
+                    <span class="assistance-title">Supportive Services Assistance (CSBG)</span>
+                </mat-slide-toggle>
+
+                <mat-slide-toggle style="margin: 0 20px 10px 0;" formControlName="weatherizationAssistance"
+                    aria-label="Toggle Weatherization Assistance"
+                    matTooltip="Provides home improvements to reduce energy costs and improve efficiency"
+                    matTooltipPosition="above">
+                    <span class="assistance-title">Weatherization Assistance</span>
+                </mat-slide-toggle>
+            </div>
+        </div>
+
         <div class="form-actions">
-            <button mat-flat-button color="accent" type="button" (click)="onSaveAndContinue()">
+            <button mat-flat-button color="accent" type="button" (click)="onSaveAndContinue()"
+                [disabled]="!personalForm.valid">
                 Save & Continue
             </button>
         </div>

@@ -12,6 +12,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
@@ -23,6 +24,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { ApplicationDataService } from '../application-data.service';
 
 @Component({
   selector: 'app-personal-info',
@@ -37,6 +39,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatInputModule,
     MatSelectModule,
     MatCheckboxModule,
+    MatSlideToggleModule,
     MatButtonModule,
     MatIconModule,
     MatCardModule,
@@ -55,7 +58,8 @@ export class PersonalInfoComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private applicationDataService: ApplicationDataService
   ) {
     // Calculate min and max dates
     const today = new Date();
@@ -98,6 +102,11 @@ export class PersonalInfoComponent implements OnInit {
         zip: ['', Validators.required],
         county: ['', Validators.required],
       }),
+      // Assistance Type Selection
+      energyAssistance: [true], // Default checked
+      heatingCoolingAssistance: [true], // Default checked
+      supportiveServicesAssistance: [false], // Default unchecked
+      weatherizationAssistance: [false], // Default unchecked
     });
   }
 
@@ -202,7 +211,7 @@ export class PersonalInfoComponent implements OnInit {
 
   createPhoneGroup() {
     return this.fb.group({
-      type: ['', Validators.required],
+      type: ['Mobile', Validators.required], // Default to first option
       number: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
       extension: [''],
       isPrimary: [false],
@@ -236,7 +245,10 @@ export class PersonalInfoComponent implements OnInit {
 
   onSaveAndContinue() {
     if (this.personalForm.valid) {
-      // Save the form data to a service or state management if needed
+      // Save the form data to ApplicationDataService
+      if (this.applicationDataService) {
+        this.applicationDataService.setPersonalInfo(this.personalForm.value);
+      }
       // Navigate to the next step
       this.router.navigate(['/createapplication/household-members']);
     } else {

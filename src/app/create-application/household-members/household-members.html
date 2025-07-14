@@ -9,13 +9,16 @@
                     <div class="member-header" (click)="toggleMemberExpand(i)">
                         <span>Member {{ i + 1 }}: {{ member.value.firstName }}
                             {{ member.value.lastName }}</span>
-                        <button mat-icon-button type="button">
+                        <button mat-icon-button type="button"
+                            [attr.aria-label]="expandedMembers[i] ? 'Collapse member ' + (i + 1) + ' details' : 'Expand member ' + (i + 1) + ' details'"
+                            [attr.aria-expanded]="expandedMembers[i]">
                             <mat-icon>{{
                                 expandedMembers[i] ? 'expand_less' : 'expand_more'
                                 }}</mat-icon>
                         </button>
                         <button mat-icon-button color="warn" type="button"
-                            (click)="removeHouseholdMember(i); $event.stopPropagation()" *ngIf="!isSelfMember(i)">
+                            (click)="removeHouseholdMember(i); $event.stopPropagation()" *ngIf="!isSelfMember(i)"
+                            [attr.aria-label]="'Delete member ' + (i + 1)">
                             <mat-icon>delete</mat-icon>
                         </button>
                     </div>
@@ -55,21 +58,14 @@
                                     <mat-option value="Other">Other</mat-option>
                                 </mat-select>
                             </mat-form-field>
-                            <mat-form-field appearance="fill" matTooltip="Disability Status" matTooltipPosition="above">
-                                <mat-label>Disability Status</mat-label>
-                                <mat-select formControlName="disabilityStatus">
-                                    <mat-option value="">-- Select --</mat-option>
-                                    <mat-option value="None">None</mat-option>
-                                    <mat-option value="Physical">Physical Disability</mat-option>
-                                    <mat-option value="Developmental">Developmental Disability</mat-option>
-                                    <mat-option value="Intellectual">Intellectual Disability</mat-option>
-                                    <mat-option value="Mental Health">Mental Health Condition</mat-option>
-                                    <mat-option value="Other">Other</mat-option>
-                                </mat-select>
-                            </mat-form-field>
+
                             <mat-form-field appearance="fill" matTooltip="Date of Birth" matTooltipPosition="above">
                                 <mat-label>Date of Birth</mat-label>
-                                <input matInput type="date" formControlName="dob" required placeholder="YYYY-MM-DD" />
+                                <input matInput [matDatepicker]="picker" formControlName="dob" required
+                                    placeholder="MM/DD/YYYY">
+                                <mat-hint>MM/DD/YYYY</mat-hint>
+                                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker [startView]="'multi-year'"></mat-datepicker>
                             </mat-form-field>
                             <mat-form-field appearance="fill" matTooltip="Race" matTooltipPosition="above">
                                 <mat-label>Race</mat-label>
@@ -85,9 +81,9 @@
                                         }}</mat-option>
                                 </mat-select>
                             </mat-form-field>
-                        </div>
-                        <!-- Row 3: Education Status, Employment Status, Military Status, Seasonal Work -->
-                        <div class="form-row name-fields">
+                            <!-- </div> -->
+                            <!-- Row 3: Education Status, Employment Status, Military Status, Seasonal Work -->
+                            <!-- <div class="form-row name-fields"> -->
                             <mat-form-field appearance="fill" matTooltip="Education Status" matTooltipPosition="above">
                                 <mat-label>Education Status</mat-label>
                                 <mat-select formControlName="educationStatus">
@@ -109,33 +105,42 @@
                                         }}</mat-option>
                                 </mat-select>
                             </mat-form-field>
-                            <mat-checkbox formControlName="seasonalWork" matTooltip="Seasonal Work">Seasonal
-                                Work</mat-checkbox>
-                        </div>
-                        <!-- Row 4: Citizenship, Identity, Disability Status, Upload Document, Save/Reset Buttons -->
-                        <div class="form-row name-fields">
-                            <mat-form-field appearance="fill" matTooltip="Citizenship Status"
-                                matTooltipPosition="above">
-                                <mat-label>Citizenship</mat-label>
-                                <input matInput formControlName="citizenship" placeholder="Citizenship Status" />
-                            </mat-form-field>
-                            <mat-form-field appearance="fill" matTooltip="Identity Document Type"
-                                matTooltipPosition="above">
-                                <mat-label>Identity</mat-label>
-                                <input matInput formControlName="identity" placeholder="Identity Document Type" />
-                            </mat-form-field>
                             <mat-form-field appearance="fill" matTooltip="Disability Status" matTooltipPosition="above">
                                 <mat-label>Disability Status</mat-label>
                                 <mat-select formControlName="disabilityStatus">
-                                    <mat-option value="">-- Select --</mat-option>
-                                    <mat-option value="None">None</mat-option>
-                                    <mat-option value="Physical">Physical Disability</mat-option>
-                                    <mat-option value="Cognitive">Cognitive Disability</mat-option>
-                                    <mat-option value="Sensory">Sensory Disability</mat-option>
-                                    <mat-option value="Mental">Mental Health Disability</mat-option>
-                                    <mat-option value="Multiple">Multiple Disabilities</mat-option>
-                                    <mat-option value="Other">Other</mat-option>
-                                    <mat-option value="PreferNotToSay">Prefer Not to Say</mat-option>
+                                    <mat-option *ngFor="let disability of disabilityOptions" [value]="disability">{{
+                                        disability
+                                        }}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <!-- Row 4: Citizenship/Identity, Seasonal Work -->
+                        <div class="form-row name-fields">
+                            <mat-form-field appearance="fill" matTooltip="Citizenship and Identity Document"
+                                matTooltipPosition="above">
+                                <mat-label>Citizenship & Identity</mat-label>
+                                <mat-select formControlName="citizenshipIdentity">
+                                    <mat-option *ngFor="let option of citizenshipIdentityOptions" [value]="option">{{
+                                        option
+                                        }}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <mat-form-field appearance="fill" matTooltip="Seasonal Work" matTooltipPosition="above">
+                                <mat-label>Seasonal Work</mat-label>
+                                <mat-select formControlName="seasonalWork">
+                                    <mat-option value="Yes">Yes</mat-option>
+                                    <mat-option value="No">No</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <!-- Row 5: Document Type, Upload Document -->
+                        <div class="form-row name-fields">
+                            <mat-form-field appearance="fill" matTooltip="Document Type" matTooltipPosition="above">
+                                <mat-label>Document Type</mat-label>
+                                <mat-select formControlName="documentType">
+                                    <mat-option value="">-- Select Document Type --</mat-option>
+                                    <mat-option *ngFor="let docType of documentTypeOptions" [value]="docType">{{ docType
+                                        }}</mat-option>
                                 </mat-select>
                             </mat-form-field>
                             <mat-form-field appearance="fill" matTooltip="Upload Document" matTooltipPosition="above">
@@ -143,20 +148,13 @@
                                 <input type="file" hidden [id]="'memberFileInput' + i"
                                     (change)="onFileSelected($event, i)" accept=".pdf,.jpg,.jpeg,.png"
                                     aria-label="Upload Document" />
-                                <input matInput [value]="member.value.fileName || ''" placeholder="Choose file" readonly
+                                <input matInput [value]="getFileDisplayName(i)" placeholder="Choose file" readonly
                                     (click)="triggerMemberFileInput(i)" matTooltip="Click to select a file" />
-                                <button mat-icon-button matSuffix type="button" (click)="triggerMemberFileInput(i)">
+                                <button mat-icon-button matSuffix type="button" (click)="triggerMemberFileInput(i)"
+                                    [attr.aria-label]="'Upload document for member ' + (i + 1)">
                                     <mat-icon>attach_file</mat-icon>
                                 </button>
                             </mat-form-field>
-                        </div>
-                        <div class="member-actions">
-                            <button mat-flat-button color="accent" type="button" (click)="saveHouseholdMember(i)">
-                                Save
-                            </button>
-                            <button mat-stroked-button color="warn" type="button" (click)="resetHouseholdMember(i)">
-                                Reset
-                            </button>
                         </div>
                     </div>
                 </mat-card>
