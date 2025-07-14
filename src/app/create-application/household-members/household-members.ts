@@ -111,19 +111,35 @@ export class HouseholdMembersComponent implements OnInit {
   ngOnInit(): void {
     this.applicationDataService.currentPersonalInfo.subscribe(
       (applicantData) => {
-        if (applicantData && !this.hasSelfMember()) {
+        // Always clear and re-add the self member to avoid duplicates or empty state
+        this.householdMembers.clear();
+        this.expandedMembers = [];
+        if (applicantData) {
           const memberForm = this.createHouseholdMember();
           memberForm.patchValue({
             firstName: applicantData.firstName,
-            middleName: applicantData.middleInitial,
+            middleName: applicantData.middleName || applicantData.middleInitial,
             lastName: applicantData.lastName,
             relationship: 'Self',
             gender: applicantData.gender,
             dob: applicantData.dob,
+            disabilityStatus: applicantData.disabilityStatus,
+            race: applicantData.race,
+            ethnicity: applicantData.ethnicity,
+            educationStatus: applicantData.educationStatus,
+            employmentStatus: applicantData.employmentStatus,
+            militaryStatus: applicantData.militaryStatus,
+            seasonalWork: applicantData.seasonalWork,
+            citizenship: applicantData.citizenship,
+            identity: applicantData.identity,
+            fileName: applicantData.fileName,
+            file: applicantData.file,
             isSelf: true,
           });
-          this.householdMembers.insert(0, memberForm);
-          this.expandedMembers.unshift(true);
+          memberForm.disable(); // Grey out the form
+          memberForm.get('isSelf')?.enable({ emitEvent: false }); // Keep isSelf enabled if needed
+          this.householdMembers.push(memberForm);
+          this.expandedMembers.push(true);
           this.updateRelationshipOptions();
         }
       }
@@ -141,6 +157,7 @@ export class HouseholdMembersComponent implements OnInit {
       lastName: ['', Validators.required],
       relationship: ['', Validators.required],
       gender: ['', Validators.required],
+      disabilityStatus: [''],
       dob: ['', Validators.required],
       race: ['', Validators.required],
       ethnicity: ['', Validators.required],
@@ -150,7 +167,6 @@ export class HouseholdMembersComponent implements OnInit {
       seasonalWork: [false],
       citizenship: [''],
       identity: [''],
-      disabilityStatus: [''],
       fileName: [''],
       file: [null],
       isSelf: [false],
@@ -172,6 +188,10 @@ export class HouseholdMembersComponent implements OnInit {
   }
 
   removeHouseholdMember(index: number): void {
+    // Prevent deleting the first member if isSelf is true
+    if (index === 0 && this.householdMembers.at(0).get('isSelf')?.value) {
+      return;
+    }
     this.householdMembers.removeAt(index);
     this.expandedMembers.splice(index, 1);
   }

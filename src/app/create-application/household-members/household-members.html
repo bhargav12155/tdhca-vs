@@ -55,6 +55,18 @@
                                     <mat-option value="Other">Other</mat-option>
                                 </mat-select>
                             </mat-form-field>
+                            <mat-form-field appearance="fill" matTooltip="Disability Status" matTooltipPosition="above">
+                                <mat-label>Disability Status</mat-label>
+                                <mat-select formControlName="disabilityStatus">
+                                    <mat-option value="">-- Select --</mat-option>
+                                    <mat-option value="None">None</mat-option>
+                                    <mat-option value="Physical">Physical Disability</mat-option>
+                                    <mat-option value="Developmental">Developmental Disability</mat-option>
+                                    <mat-option value="Intellectual">Intellectual Disability</mat-option>
+                                    <mat-option value="Mental Health">Mental Health Condition</mat-option>
+                                    <mat-option value="Other">Other</mat-option>
+                                </mat-select>
+                            </mat-form-field>
                             <mat-form-field appearance="fill" matTooltip="Date of Birth" matTooltipPosition="above">
                                 <mat-label>Date of Birth</mat-label>
                                 <input matInput type="date" formControlName="dob" required placeholder="YYYY-MM-DD" />

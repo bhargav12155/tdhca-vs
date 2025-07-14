@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   Validators,
@@ -21,6 +21,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @Component({
   selector: 'app-personal-info',
@@ -41,9 +43,11 @@ import { Router } from '@angular/router';
     MatListModule,
     MatTooltipModule,
     MatSnackBarModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
 })
-export class PersonalInfoComponent {
+export class PersonalInfoComponent implements OnInit {
   personalForm: FormGroup;
   maxDate: string;
   minDate: string;
@@ -70,29 +74,43 @@ export class PersonalInfoComponent {
       firstName: ['', Validators.required],
       middleInitial: [''],
       lastName: ['', Validators.required],
-      prefix: [''],
-      suffix: [''],
+      prefix: ['Mr'], // Default to first option
+      suffix: ['Jr'], // Default to first option
       dob: ['', [Validators.required, this.dateValidator()]],
-      gender: ['', Validators.required],
+      gender: ['Male', Validators.required], // Default to first option
+      disabilityStatus: ['None'], // Default to first option
       phones: this.fb.array([this.createPhoneGroup()]),
       email: ['', [Validators.required, Validators.email]],
+      residentialAddress: this.fb.group({
+        address1: ['', Validators.required],
+        address2: [''],
+        city: ['', Validators.required],
+        state: ['TX', Validators.required], // Default to first option
+        zip: ['', Validators.required],
+        county: ['', Validators.required],
+      }),
+      mailingSame: [false],
       mailingAddress: this.fb.group({
         address1: ['', Validators.required],
         address2: [''],
         city: ['', Validators.required],
-        state: ['', Validators.required],
+        state: ['TX', Validators.required], // Default to first option
         zip: ['', Validators.required],
         county: ['', Validators.required],
       }),
-      billingSame: [false],
-      billingAddress: this.fb.group({
-        address1: ['', Validators.required],
-        address2: [''],
-        city: ['', Validators.required],
-        state: ['', Validators.required],
-        zip: ['', Validators.required],
-        county: ['', Validators.required],
-      }),
+    });
+  }
+
+  ngOnInit() {
+    this.personalForm.get('mailingSame')?.valueChanges.subscribe((checked) => {
+      if (checked) {
+        this.personalForm
+          .get('mailingAddress')
+          ?.patchValue(this.personalForm.get('residentialAddress')?.value);
+        this.personalForm.get('mailingAddress')?.disable({ emitEvent: false });
+      } else {
+        this.personalForm.get('mailingAddress')?.enable({ emitEvent: false });
+      }
     });
   }
 
@@ -104,12 +122,26 @@ export class PersonalInfoComponent {
       }
 
       // Enforce strict YYYY-MM-DD format and 4-digit year
-      const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
-      if (!dateRegex.test(control.value)) {
+      // Accepts MM/DD/YYYY, M/D/YYYY, MM/D/YYYY, M/DD/YYYY, and YYYY-MM-DD
+      let inputDate: Date;
+      if (control.value instanceof Date) {
+        inputDate = control.value;
+      } else if (typeof control.value === 'string') {
+        // Accepts MM/DD/YYYY, M/D/YYYY, MM/D/YYYY, M/DD/YYYY, and YYYY-MM-DD
+        const dateRegex = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$|^\d{4}-\d{2}-\d{2}$/;
+        if (!dateRegex.test(control.value)) {
+          return { invalidFormat: true };
+        }
+        if (/^\d{4}-\d{2}-\d{2}$/.test(control.value)) {
+          inputDate = new Date(control.value);
+        } else {
+          // MM/DD/YYYY or M/D/YYYY
+          const [month, day, year] = control.value.split('/').map(Number);
+          inputDate = new Date(year, month - 1, day);
+        }
+      } else {
         return { invalidFormat: true };
       }
-
-      const inputDate = new Date(control.value);
       const today = new Date();
       today.setHours(0, 0, 0, 0);
 
@@ -160,12 +192,12 @@ export class PersonalInfoComponent {
     return this.personalForm.get('phones') as FormArray;
   }
 
-  get mailingAddress(): FormGroup {
-    return this.personalForm.get('mailingAddress') as FormGroup;
+  get residentialAddress(): FormGroup {
+    return this.personalForm.get('residentialAddress') as FormGroup;
   }
 
-  get billingAddress(): FormGroup {
-    return this.personalForm.get('billingAddress') as FormGroup;
+  get mailingAddress(): FormGroup {
+    return this.personalForm.get('mailingAddress') as FormGroup;
   }
 
   createPhoneGroup() {
@@ -227,7 +259,7 @@ export class PersonalInfoComponent {
       return 'Date of Birth is required';
     }
     if (dobControl?.hasError('invalidFormat')) {
-      return 'Please use YYYY-MM-DD format with a 4-digit year';
+      return 'Please use MM/DD/YYYY format or pick a date from the calendar';
     }
     if (dobControl?.hasError('invalidDate')) {
       return 'Please enter a valid date';

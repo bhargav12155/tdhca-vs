@@ -56,15 +56,14 @@
                     <mat-option value="Rev">Rev.</mat-option>
                 </mat-select>
             </mat-form-field>
-        </div>
-
-        <div class="form-row">
-            <mat-form-field appearance="fill" style="margin: 10px;" matTooltip="Enter your date of birth"
+            <mat-form-field appearance="fill" style="margin: 10px; width: 211px;" matTooltip="Enter your date of birth"
                 matTooltipPosition="above">
                 <mat-label>Date of Birth</mat-label>
-                <input matInput type="date" formControlName="dob" [max]="maxDate" [min]="minDate" required
-                    pattern="\\d{4}-\\d{2}-\\d{2}" placeholder="YYYY-MM-DD">
-                <mat-hint>Must be 18 years or older</mat-hint>
+                <input matInput [matDatepicker]="picker" formControlName="dob" required placeholder="MM/DD/YYYY"
+                    [min]="minDate" [max]="maxDate">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker [startView]="'multi-year'" [startAt]="minDate"></mat-datepicker>
                 <mat-error>{{getDOBErrorMessage()}}</mat-error>
             </mat-form-field>
 
@@ -78,6 +77,20 @@
                     <mat-option value="Others">Others</mat-option>
                 </mat-select>
                 <mat-error *ngIf="personalForm.get('gender')?.hasError('required')">Gender is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" style="margin: 10px;" matTooltip="Select disability status (optional)"
+                matTooltipPosition="above">
+                <mat-label>Disability Status</mat-label>
+                <mat-select formControlName="disabilityStatus">
+                    <mat-option value="">-- Select --</mat-option>
+                    <mat-option value="None">None</mat-option>
+                    <mat-option value="Physical">Physical Disability</mat-option>
+                    <mat-option value="Developmental">Developmental Disability</mat-option>
+                    <mat-option value="Intellectual">Intellectual Disability</mat-option>
+                    <mat-option value="Mental Health">Mental Health Condition</mat-option>
+                    <mat-option value="Other">Other</mat-option>
+                </mat-select>
             </mat-form-field>
         </div>
 
@@ -138,16 +151,17 @@
         <!-- Addresses -->
         <h3>Address Information</h3>
         <div class="address-section">
-            <div [formGroup]="mailingAddress">
-                <h4>Mailing Address</h4>
+            <div [formGroup]="residentialAddress">
+                <h4>Residential Address</h4>
                 <mat-form-field appearance="fill" style="margin: 10px;"
-                    matTooltip="Enter the first line of your mailing address" matTooltipPosition="above">
+                    matTooltip="Enter the first line of your residential address" matTooltipPosition="above">
                     <mat-label>Address Line 1</mat-label>
                     <input matInput formControlName="address1" required placeholder="Address Line 1">
                 </mat-form-field>
 
                 <mat-form-field appearance="fill" style="margin: 10px;"
-                    matTooltip="Enter the second line of your mailing address (optional)" matTooltipPosition="above">
+                    matTooltip="Enter the second line of your residential address (optional)"
+                    matTooltipPosition="above">
                     <mat-label>Address Line 2</mat-label>
                     <input matInput formControlName="address2" placeholder="Address Line 2">
                 </mat-form-field>
@@ -180,18 +194,18 @@
                 </mat-form-field>
             </div>
 
-            <mat-checkbox formControlName="billingSame">Billing Address - Same as Mailing?</mat-checkbox>
+            <mat-checkbox formControlName="mailingSame">Mailing Address - Same as Residential?</mat-checkbox>
 
-            <div [formGroup]="billingAddress">
-                <h4>Billing Address</h4>
+            <div [formGroup]="mailingAddress">
+                <h4>Mailing Address</h4>
                 <mat-form-field appearance="fill" style="margin: 10px;"
-                    matTooltip="Enter the first line of your billing address" matTooltipPosition="above">
+                    matTooltip="Enter the first line of your mailing address" matTooltipPosition="above">
                     <mat-label>Address Line 1</mat-label>
                     <input matInput formControlName="address1" required placeholder="Address Line 1">
                 </mat-form-field>
 
                 <mat-form-field appearance="fill" style="margin: 10px;"
-                    matTooltip="Enter the second line of your billing address (optional)" matTooltipPosition="above">
+                    matTooltip="Enter the second line of your mailing address (optional)" matTooltipPosition="above">
                     <mat-label>Address Line 2</mat-label>
                     <input matInput formControlName="address2" placeholder="Address Line 2">
                 </mat-form-field>
