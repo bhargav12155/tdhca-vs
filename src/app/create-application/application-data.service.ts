@@ -37,9 +37,20 @@ export class ApplicationDataService {
   );
   currentPersonalInfo = this.personalInfoSource.asObservable();
 
+  private householdMembersSource = new BehaviorSubject<HouseholdMember[]>([]);
+  currentHouseholdMembers = this.householdMembersSource.asObservable();
+
   constructor() {}
 
   setPersonalInfo(info: HouseholdMember | null) {
     this.personalInfoSource.next(info);
+  }
+
+  setHouseholdMembers(members: HouseholdMember[]) {
+    this.householdMembersSource.next(members);
+  }
+
+  getHouseholdMembers(): HouseholdMember[] {
+    return this.householdMembersSource.value;
   }
 }

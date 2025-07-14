@@ -193,7 +193,7 @@ app-personal-info {
 
   // Assistance Type Section
   .assistance-section {
-    margin: 2rem 0;
+    margin-bottom: 2rem;
     padding: 2rem;
     background: linear-gradient(135deg, $gray-bg-light 0%, $white 100%);
     border-radius: 15px;
@@ -221,18 +221,26 @@ app-personal-info {
     }
 
     .assistance-options {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem !important;
       margin-top: 1.5rem;
 
+      .assistance-option {
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+
       mat-slide-toggle {
+        margin: 0 !important;
+        width: 100%;
         background: $white;
         padding: 1.25rem 1.5rem;
         border-radius: 12px;
         border: 2px solid $gray-border;
         transition: all 0.3s ease;
         box-shadow: 0 2px 8px rgba(0, 40, 85, 0.05);
+        display: block;
 
         &:hover {
           border-color: $tdhca-blue-light;
@@ -265,6 +273,7 @@ app-personal-info {
         .assistance-title {
           display: block;
           font-weight: inherit;
+          margin-left: 0.5rem;
         }
 
         .mat-slide-toggle-bar {
@@ -284,7 +293,6 @@ app-personal-info {
       padding: 1.5rem;
       
       .assistance-options {
-        grid-template-columns: 1fr;
         gap: 1rem;
         
         mat-slide-toggle {

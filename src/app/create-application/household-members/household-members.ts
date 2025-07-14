@@ -191,10 +191,11 @@ export class HouseholdMembersComponent implements OnInit, AfterViewInit {
       firstName: applicantData.firstName || '',
       middleName: applicantData.middleName || applicantData.middleInitial || '',
       lastName: applicantData.lastName || '',
-      relationship: 'Self',
+      relationship: 'Self', // Explicitly set to Self for head of household
       gender: applicantData.gender || this.genderOptions[0] || '',
       dob: dobValue,
-      disabilityStatus: applicantData.disabilityStatus || 'None',
+      disabilityStatus:
+        applicantData.disabilityStatus || this.disabilityOptions[0] || 'None',
       race: this.raceOptions[0] || '', // Default to first race option
       ethnicity: this.ethnicityOptions[0] || '', // Default to first ethnicity option
       educationStatus: this.educationOptions[0] || '',
@@ -202,15 +203,23 @@ export class HouseholdMembersComponent implements OnInit, AfterViewInit {
       militaryStatus: this.militaryOptions[0] || '',
       seasonalWork: 'No', // Default to No
       citizenshipIdentity: this.citizenshipIdentityOptions[0] || '',
-      documentType: '', // No default for document type
+      documentType: this.documentTypeOptions[0] || '', // Default to first document type
       fileName: '',
       file: null,
       isSelf: true,
     });
-    memberForm.disable(); // Grey out the form
+
     this.householdMembers.push(memberForm);
     this.expandedMembers.push(true);
     this.updateRelationshipOptions();
+
+    // Re-set the relationship to 'Self' after updating options to ensure it's properly set
+    memberForm.patchValue({
+      relationship: 'Self',
+    });
+
+    // Disable all fields for the head of household since they're auto-filled
+    memberForm.disable();
   }
 
   get householdMembers(): FormArray {
@@ -218,11 +227,26 @@ export class HouseholdMembersComponent implements OnInit, AfterViewInit {
   }
 
   createHouseholdMember(): FormGroup {
+    // Determine default relationship based on whether this is the first member
+    const isFirstMember = this.householdMembers.length === 0;
+
+    // For new members (not head of household), get the first non-Self relationship
+    let defaultRelationship = '';
+    if (isFirstMember) {
+      defaultRelationship = 'Self';
+    } else {
+      // Get available relationships excluding 'Self'
+      const availableRelationships = this.relationshipOptions.filter(
+        (rel) => rel !== 'Self'
+      );
+      defaultRelationship = availableRelationships[0] || '';
+    }
+
     return this.fb.group({
       firstName: ['', Validators.required],
       middleName: [''],
       lastName: ['', Validators.required],
-      relationship: ['', Validators.required],
+      relationship: [defaultRelationship, Validators.required], // Default to appropriate relationship
       gender: [this.genderOptions[0] || '', Validators.required], // Default to first option
       dob: ['', Validators.required],
       disabilityStatus: [this.disabilityOptions[0] || 'None'], // Default to first option (None)
@@ -233,10 +257,10 @@ export class HouseholdMembersComponent implements OnInit, AfterViewInit {
       militaryStatus: [this.militaryOptions[0] || ''], // Default to first option
       seasonalWork: ['No'], // Default to No
       citizenshipIdentity: [this.citizenshipIdentityOptions[0] || ''], // Default to first option
-      documentType: [''], // Document type selection
+      documentType: [this.documentTypeOptions[0] || ''], // Default to first document type
       fileName: [''],
       file: [null],
-      isSelf: [false],
+      isSelf: [isFirstMember],
     });
   }
 
@@ -276,6 +300,57 @@ export class HouseholdMembersComponent implements OnInit, AfterViewInit {
     if (savedCount > 0) {
       console.log(`Auto-saved ${savedCount} household member(s)`);
     }
+  }
+
+  saveMember(index: number): void {
+    const memberForm = this.householdMembers.at(index) as FormGroup;
+    if (memberForm.valid) {
+      const memberData = memberForm.value;
+      console.log(`Member ${index + 1} saved:`, memberData);
+
+      this.snackBar.open(`Member ${index + 1} saved successfully!`, 'Close', {
+        duration: 2000,
+      });
+    } else {
+      this.snackBar.open(
+        `Please fill out all required fields for Member ${index + 1}.`,
+        'Close',
+        {
+          duration: 3000,
+        }
+      );
+      memberForm.markAllAsTouched();
+    }
+  }
+
+  resetMember(index: number): void {
+    const memberForm = this.householdMembers.at(index) as FormGroup;
+
+    // Store the relationship value if it's the first member (head of household)
+    const isFirstMember = index === 0;
+    const originalRelationship = isFirstMember ? 'Self' : '';
+
+    // Reset the form controls
+    memberForm.reset();
+
+    // Restore relationship for head of household
+    if (isFirstMember) {
+      memberForm.patchValue({
+        relationship: 'Self',
+        isSelf: true,
+      });
+    }
+
+    this.snackBar.open(`Member ${index + 1} has been reset.`, 'Close', {
+      duration: 2000,
+    });
+
+    console.log(`Member ${index + 1} reset`);
+  }
+
+  isMemberValid(index: number): boolean {
+    const memberForm = this.householdMembers.at(index) as FormGroup;
+    return memberForm.valid;
   }
 
   removeHouseholdMember(index: number): void {
@@ -393,6 +468,55 @@ export class HouseholdMembersComponent implements OnInit, AfterViewInit {
 
   onBack(): void {
     this.router.navigate(['/createapplication/personal-info']);
+  }
+
+  onSave(): void {
+    if (this.householdForm.valid) {
+      // Save the form data to the application data service
+      this.applicationDataService.setHouseholdMembers(
+        this.householdForm.value.householdMembers
+      );
+
+      this.snackBar.open('Household members saved successfully!', 'Close', {
+        duration: 3000,
+      });
+
+      console.log(
+        'Household members saved:',
+        this.householdForm.value.householdMembers
+      );
+    } else {
+      this.snackBar.open(
+        'Please fill out all required fields before saving.',
+        'Close',
+        {
+          duration: 3000,
+        }
+      );
+      this.householdForm.markAllAsTouched();
+    }
+  }
+
+  onReset(): void {
+    // Reset the form to its initial state
+    this.householdForm.reset();
+
+    // Clear the FormArray and add back the initial member
+    while (this.householdMembers.length !== 0) {
+      this.householdMembers.removeAt(0);
+    }
+
+    // Add the initial household member back
+    this.addHouseholdMember();
+
+    // Reset expanded state
+    this.expandedMembers = [true];
+
+    this.snackBar.open('Form has been reset.', 'Close', {
+      duration: 2000,
+    });
+
+    console.log('Household members form reset');
   }
 
   onSaveAndContinue(): void {

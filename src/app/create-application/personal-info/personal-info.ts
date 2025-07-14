@@ -212,7 +212,10 @@ export class PersonalInfoComponent implements OnInit {
   createPhoneGroup() {
     return this.fb.group({
       type: ['Mobile', Validators.required], // Default to first option
-      number: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
+      number: [
+        '',
+        [Validators.required, Validators.pattern(/^\d{3}-\d{3}-\d{4}$/)],
+      ],
       extension: [''],
       isPrimary: [false],
     });
@@ -262,6 +265,26 @@ export class PersonalInfoComponent implements OnInit {
         }
       );
     }
+  }
+
+  formatPhoneNumber(event: any, index: number): void {
+    const input = event.target;
+    let value = input.value.replace(/\D/g, ''); // Remove all non-digits
+
+    if (value.length >= 6) {
+      value =
+        value.substring(0, 3) +
+        '-' +
+        value.substring(3, 6) +
+        '-' +
+        value.substring(6, 10);
+    } else if (value.length >= 3) {
+      value = value.substring(0, 3) + '-' + value.substring(3);
+    }
+
+    // Update both the input value and the form control
+    input.value = value;
+    this.phones.at(index).get('number')?.setValue(value, { emitEvent: false });
   }
 
   // Helper function to get error message
