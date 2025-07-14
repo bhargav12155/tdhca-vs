@@ -125,23 +125,7 @@
                                         }}</mat-option>
                                 </mat-select>
                             </mat-form-field>
-                            <mat-form-field appearance="fill" matTooltip="Seasonal Work" matTooltipPosition="above">
-                                <mat-label>Seasonal Work</mat-label>
-                                <mat-select formControlName="seasonalWork">
-                                    <mat-option value="Yes">Yes</mat-option>
-                                    <mat-option value="No">No</mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                        </div>
-                        <!-- Row 5: Document Type, Upload Document -->
-                        <div class="form-row name-fields">
-                            <mat-form-field appearance="fill" matTooltip="Document Type" matTooltipPosition="above">
-                                <mat-label>Document Type</mat-label>
-                                <mat-select formControlName="documentType">
-                                    <mat-option *ngFor="let docType of documentTypeOptions" [value]="docType">{{ docType
-                                        }}</mat-option>
-                                </mat-select>
-                            </mat-form-field>
+
                             <mat-form-field appearance="fill" matTooltip="Upload Document" matTooltipPosition="above">
                                 <mat-label>Upload Document</mat-label>
                                 <input type="file" hidden [id]="'memberFileInput' + i"
@@ -154,6 +138,14 @@
                                     <mat-icon>attach_file</mat-icon>
                                 </button>
                             </mat-form-field>
+                            <mat-form-field appearance="fill" matTooltip="Seasonal Work" matTooltipPosition="above">
+                                <mat-label>Seasonal Work</mat-label>
+                                <mat-select formControlName="seasonalWork">
+                                    <mat-option value="Yes">Yes</mat-option>
+                                    <mat-option value="No">No</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
                         </div>
 
                         <!-- Individual Member Actions -->
