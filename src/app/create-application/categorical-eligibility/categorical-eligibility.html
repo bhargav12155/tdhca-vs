@@ -8,19 +8,84 @@
     <form [formGroup]="eligibilityForm">
         <mat-card>
             <mat-card-content>
-                <div class="checkbox-group">
-                    <mat-checkbox formControlName="tanf">TANF (Temporary Assistance for Needy Families)</mat-checkbox>
-                    <mat-checkbox formControlName="snap">SNAP (Supplemental Nutrition Assistance Program)</mat-checkbox>
-                    <mat-checkbox formControlName="liheap">LIHEAP (Low Income Home Energy Assistance
-                        Program)</mat-checkbox>
-                    <mat-checkbox formControlName="medicaid">Medicaid</mat-checkbox>
+                <!-- Member-wise Categorical Eligibility Table -->
+                <div class="eligibility-table-container">
+                    <table class="eligibility-table">
+                        <thead>
+                            <tr>
+                                <th class="member-header">Member</th>
+                                <th class="category-header">SNAP</th>
+                                <th class="category-header">SSI</th>
+                                <th class="category-header">TANF</th>
+                                <th class="category-header">Means-Tested Veteran</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Naveen -->
+                            <tr>
+                                <td class="member-name">Naveen</td>
+                                <td class="checkbox-cell">
+                                    <mat-checkbox formControlName="naveen_snap"></mat-checkbox>
+                                </td>
+                                <td class="checkbox-cell">
+                                    <mat-checkbox formControlName="naveen_ssi"></mat-checkbox>
+                                </td>
+                                <td class="checkbox-cell">
+                                    <mat-checkbox formControlName="naveen_tanf"></mat-checkbox>
+                                </td>
+                                <td class="checkbox-cell">
+                                    <mat-checkbox formControlName="naveen_veteran"></mat-checkbox>
+                                </td>
+                            </tr>
+                            <!-- Uday -->
+                            <tr>
+                                <td class="member-name">Uday</td>
+                                <td class="checkbox-cell">
+                                    <mat-checkbox formControlName="uday_snap"></mat-checkbox>
+                                </td>
+                                <td class="checkbox-cell">
+                                    <mat-checkbox formControlName="uday_ssi"></mat-checkbox>
+                                </td>
+                                <td class="checkbox-cell">
+                                    <mat-checkbox formControlName="uday_tanf"></mat-checkbox>
+                                </td>
+                                <td class="checkbox-cell">
+                                    <mat-checkbox formControlName="uday_veteran"></mat-checkbox>
+                                </td>
+                            </tr>
+                            <!-- Lorriane -->
+                            <tr>
+                                <td class="member-name">Lorriane</td>
+                                <td class="checkbox-cell">
+                                    <mat-checkbox formControlName="lorriane_snap"></mat-checkbox>
+                                </td>
+                                <td class="checkbox-cell">
+                                    <mat-checkbox formControlName="lorriane_ssi"></mat-checkbox>
+                                </td>
+                                <td class="checkbox-cell">
+                                    <mat-checkbox formControlName="lorriane_tanf"></mat-checkbox>
+                                </td>
+                                <td class="checkbox-cell">
+                                    <mat-checkbox formControlName="lorriane_veteran"></mat-checkbox>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Note -->
+                <div class="note-section">
+                    <p class="eligibility-note">
+                        <mat-icon>info</mat-icon>
+                        x - means checkbox, each member can have multiple categorical eligibility
+                    </p>
                 </div>
             </mat-card-content>
         </mat-card>
     </form>
 
     <div class="form-actions">
-        <button mat-stroked-button (click)="onBack()">Back</button>
+        <button mat-stroked-button (click)="onCancel()">Cancel</button>
         <button mat-flat-button color="accent" (click)="onSaveAndContinue()" [disabled]="eligibilityForm.invalid">
             Save and Continue
         </button>

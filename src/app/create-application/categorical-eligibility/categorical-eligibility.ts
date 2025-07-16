@@ -17,6 +17,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-categorical-eligibility',
@@ -34,6 +35,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatCardModule,
     MatListModule,
     MatSnackBarModule,
+    MatTooltipModule,
   ],
   templateUrl: './categorical-eligibility.html',
   styleUrl: './categorical-eligibility.scss',
@@ -47,14 +49,27 @@ export class CategoricalEligibilityComponent {
     private snackBar: MatSnackBar
   ) {
     this.eligibilityForm = this.fb.group({
-      tanf: [false],
-      snap: [false],
-      liheap: [false],
-      medicaid: [false],
+      // Naveen's benefits
+      naveen_snap: [false],
+      naveen_ssi: [false],
+      naveen_tanf: [false],
+      naveen_veteran: [false],
+
+      // Uday's benefits
+      uday_snap: [false],
+      uday_ssi: [false],
+      uday_tanf: [false],
+      uday_veteran: [false],
+
+      // Lorriane's benefits
+      lorriane_snap: [false],
+      lorriane_ssi: [false],
+      lorriane_tanf: [false],
+      lorriane_veteran: [false],
     });
   }
 
-  onBack(): void {
+  onCancel(): void {
     this.router.navigate(['/createapplication/household-members']);
   }
 

@@ -4,6 +4,7 @@ import { PersonalInfoComponent } from './create-application/personal-info/person
 import { HouseholdMembersComponent } from './create-application/household-members/household-members';
 import { HomeComponent } from './home/home.component';
 import { HelpComponent } from './help/help.component';
+import { LoginComponent } from './login/login.component';
 import { CategoricalEligibilityComponent } from './create-application/categorical-eligibility/categorical-eligibility';
 import { DeclarationIncomeComponent } from './create-application/declaration-income/declaration-income';
 import { HousingInformationComponent } from './create-application/housing-information/housing-information';
@@ -16,8 +17,12 @@ import { IncomeInformationComponent } from './create-application/income-informat
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'login',
     pathMatch: 'full',
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
   },
   {
     path: 'home',
