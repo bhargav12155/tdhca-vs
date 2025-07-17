@@ -1,0 +1,343 @@
+@use '../_variables.scss' as *;
+
+.registration-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 2rem;
+  background: linear-gradient(135deg, rgba($tdhca-blue, 0.1) 0%, rgba($tdhca-blue-light, 0.05) 100%);
+}
+
+.registration-card {
+  width: 100%;
+  max-width: 600px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  overflow: hidden;
+
+  mat-card-header {
+    background: linear-gradient(135deg, $tdhca-blue 0%, $tdhca-blue-light 100%);
+    color: $white;
+    padding: 2rem;
+    text-align: center;
+
+    mat-card-title {
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    mat-card-subtitle {
+      font-size: 1rem;
+      color: rgba($white, 0.9);
+      font-weight: 400;
+    }
+  }
+
+  mat-card-content {
+    padding: 2rem;
+  }
+}
+
+.registration-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  .form-section {
+    margin-bottom: 2rem;
+
+    h3 {
+      color: $tdhca-blue;
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid $tdhca-blue;
+      padding-bottom: 0.5rem;
+    }
+
+    .section-description {
+      color: $font-color-secondary;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      line-height: 1.4;
+    }
+  }
+
+  .form-row {
+    display: flex;
+    gap: 1rem;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      gap: 0;
+    }
+  }
+
+  .full-width {
+    width: 100%;
+  }
+
+  .half-width {
+    flex: 1;
+  }
+
+  mat-form-field {
+    margin-bottom: 1rem;
+
+    .mat-mdc-form-field-subscript-wrapper {
+      margin-top: 0.5rem;
+    }
+
+    mat-label {
+      color: $font-color-primary;
+      font-weight: 500;
+    }
+
+    input {
+      color: $font-color-primary;
+      font-size: 1rem;
+    }
+
+    mat-icon {
+      color: $tdhca-blue;
+    }
+
+    mat-error {
+      color: $font-color-error;
+      font-size: 0.85rem;
+    }
+
+    mat-hint {
+      color: $font-color-secondary;
+      font-size: 0.8rem;
+    }
+
+    &.mat-focused {
+      mat-label {
+        color: $tdhca-blue;
+      }
+    }
+  }
+
+  .checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+
+    mat-checkbox {
+      color: $font-color-primary;
+
+      a {
+        color: $tdhca-blue;
+        text-decoration: none;
+        font-weight: 500;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      ::ng-deep {
+        .mdc-checkbox__checkmark {
+          color: $white;
+        }
+        
+        .mdc-checkbox--checked {
+          .mdc-checkbox__background {
+            background-color: $tdhca-blue;
+            border-color: $tdhca-blue;
+          }
+        }
+      }
+    }
+
+    mat-error {
+      color: $font-color-error;
+      font-size: 0.85rem;
+      margin-top: 0.25rem;
+    }
+  }
+
+  .form-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid $gray-border;
+
+    button {
+      flex: 1;
+      min-height: 48px;
+      font-weight: 500;
+      border-radius: 8px;
+      font-size: 1rem;
+
+      mat-icon {
+        margin-right: 0.5rem;
+      }
+
+      &.register-button {
+        background: linear-gradient(135deg, $tdhca-blue 0%, $tdhca-blue-light 100%);
+        color: $white;
+        
+        &:hover:not(:disabled) {
+          background: linear-gradient(135deg, $tdhca-blue-light 0%, $tdhca-blue 100%);
+          transform: translateY(-1px);
+          box-shadow: 0 4px 12px rgba($tdhca-blue, 0.3);
+        }
+
+        &:disabled {
+          background: $gray-bg;
+          color: $font-color-secondary;
+          transform: none;
+          box-shadow: none;
+        }
+      }
+      
+      &.cancel-button {
+        border: 2px solid $gray-border;
+        color: $font-color-secondary;
+        background: transparent;
+        
+        &:hover {
+          background: $gray-bg-light;
+          border-color: $tdhca-blue;
+          color: $tdhca-blue;
+          transform: translateY(-1px);
+        }
+      }
+    }
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      
+      button {
+        width: 100%;
+      }
+    }
+  }
+
+  .password-strength {
+    margin: 0.5rem 0 1rem 0;
+    
+    .strength-bar {
+      width: 100%;
+      height: 4px;
+      background: $gray-bg;
+      border-radius: 2px;
+      overflow: hidden;
+      margin-bottom: 0.5rem;
+      
+      .strength-fill {
+        height: 100%;
+        transition: all 0.3s ease;
+        border-radius: 2px;
+        
+        &.strength-none {
+          width: 0%;
+          background: transparent;
+        }
+        
+        &.strength-weak {
+          width: 25%;
+          background: #ff4444;
+        }
+        
+        &.strength-fair {
+          width: 50%;
+          background: #ff8800;
+        }
+        
+        &.strength-good {
+          width: 75%;
+          background: #ffaa00;
+        }
+        
+        &.strength-strong {
+          width: 100%;
+          background: #00cc44;
+        }
+      }
+    }
+    
+    .strength-text {
+      font-size: 0.8rem;
+      font-weight: 500;
+      
+      &.strength-none {
+        color: $font-color-secondary;
+      }
+      
+      &.strength-weak {
+        color: #ff4444;
+      }
+      
+      &.strength-fair {
+        color: #ff8800;
+      }
+      
+      &.strength-good {
+        color: #ffaa00;
+      }
+      
+      &.strength-strong {
+        color: #00cc44;
+      }
+    }
+  }
+}
+
+// Loading state
+.loading {
+  .registration-card {
+    pointer-events: none;
+    opacity: 0.7;
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .registration-container {
+    padding: 1rem;
+  }
+
+  .registration-card {
+    max-width: 100%;
+    
+    mat-card-header {
+      padding: 1.5rem;
+      
+      mat-card-title {
+        font-size: 1.5rem;
+      }
+    }
+    
+    mat-card-content {
+      padding: 1.5rem;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .registration-container {
+    padding: 0.5rem;
+  }
+  
+  .registration-card {
+    mat-card-header {
+      padding: 1rem;
+      
+      mat-card-title {
+        font-size: 1.25rem;
+      }
+    }
+    
+    mat-card-content {
+      padding: 1rem;
+    }
+  }
+}

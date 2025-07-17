@@ -143,6 +143,39 @@
   }
 }
 
+.registration-link {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba($gray-border, 0.5);
+  text-align: center;
+
+  p {
+    color: $font-color-secondary;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+  }
+
+  .register-button {
+    min-width: 180px;
+    height: 44px;
+    font-weight: 500;
+    border-radius: 6px;
+    border: 2px solid $tdhca-blue;
+    color: $tdhca-blue;
+    background: transparent;
+
+    &:hover {
+      background: rgba($tdhca-blue, 0.1);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba($tdhca-blue, 0.2);
+    }
+
+    mat-icon {
+      margin-right: 0.5rem;
+    }
+  }
+}
+
 // Responsive design
 @media (max-width: 768px) {
   .login-container {

@@ -37,9 +37,17 @@
                         Login
                     </button>
 
-                    <button mat-button type="button" class="forgot-password-button">
+                    <button mat-button type="button" (click)="onForgotPassword()" class="forgot-password-button">
                         <mat-icon>help_outline</mat-icon>
                         Forgot Password?
+                    </button>
+                </div>
+
+                <div class="registration-link">
+                    <p>Don't have an account?</p>
+                    <button mat-stroked-button type="button" (click)="goToRegistration()" class="register-button">
+                        <mat-icon>person_add</mat-icon>
+                        Create Account
                     </button>
                 </div>
             </form>

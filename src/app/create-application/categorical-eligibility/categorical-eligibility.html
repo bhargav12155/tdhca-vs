@@ -21,52 +21,33 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Naveen -->
-                            <tr>
-                                <td class="member-name">Naveen</td>
+                            <tr *ngFor="let member of householdMembers; let i = index">
+                                <td class="member-name">{{ getMemberDisplayName(member) }}</td>
                                 <td class="checkbox-cell">
-                                    <mat-checkbox formControlName="naveen_snap"></mat-checkbox>
+                                    <mat-checkbox [formControlName]="getMemberKey(member, i) + '_snap'"></mat-checkbox>
                                 </td>
                                 <td class="checkbox-cell">
-                                    <mat-checkbox formControlName="naveen_ssi"></mat-checkbox>
+                                    <mat-checkbox [formControlName]="getMemberKey(member, i) + '_ssi'"></mat-checkbox>
                                 </td>
                                 <td class="checkbox-cell">
-                                    <mat-checkbox formControlName="naveen_tanf"></mat-checkbox>
+                                    <mat-checkbox [formControlName]="getMemberKey(member, i) + '_tanf'"></mat-checkbox>
                                 </td>
                                 <td class="checkbox-cell">
-                                    <mat-checkbox formControlName="naveen_veteran"></mat-checkbox>
-                                </td>
-                            </tr>
-                            <!-- Uday -->
-                            <tr>
-                                <td class="member-name">Uday</td>
-                                <td class="checkbox-cell">
-                                    <mat-checkbox formControlName="uday_snap"></mat-checkbox>
-                                </td>
-                                <td class="checkbox-cell">
-                                    <mat-checkbox formControlName="uday_ssi"></mat-checkbox>
-                                </td>
-                                <td class="checkbox-cell">
-                                    <mat-checkbox formControlName="uday_tanf"></mat-checkbox>
-                                </td>
-                                <td class="checkbox-cell">
-                                    <mat-checkbox formControlName="uday_veteran"></mat-checkbox>
+                                    <mat-checkbox
+                                        [formControlName]="getMemberKey(member, i) + '_veteran'"></mat-checkbox>
                                 </td>
                             </tr>
-                            <!-- Lorriane -->
-                            <tr>
-                                <td class="member-name">Lorriane</td>
-                                <td class="checkbox-cell">
-                                    <mat-checkbox formControlName="lorriane_snap"></mat-checkbox>
-                                </td>
-                                <td class="checkbox-cell">
-                                    <mat-checkbox formControlName="lorriane_ssi"></mat-checkbox>
-                                </td>
-                                <td class="checkbox-cell">
-                                    <mat-checkbox formControlName="lorriane_tanf"></mat-checkbox>
-                                </td>
-                                <td class="checkbox-cell">
-                                    <mat-checkbox formControlName="lorriane_veteran"></mat-checkbox>
+                            <!-- Fallback message when no household members are available -->
+                            <tr *ngIf="householdMembers.length === 0">
+                                <td colspan="5" class="no-members-message">
+                                    <div class="no-members-container">
+                                        <mat-icon>info</mat-icon>
+                                        <p>No household members found. Please go back and add household members first.
+                                        </p>
+                                        <button mat-stroked-button (click)="goToHouseholdMembers()">
+                                            Add Household Members
+                                        </button>
+                                    </div>
                                 </td>
                             </tr>
                         </tbody>
@@ -77,7 +58,8 @@
                 <div class="note-section">
                     <p class="eligibility-note">
                         <mat-icon>info</mat-icon>
-                        x - means checkbox, each member can have multiple categorical eligibility
+                        Select the checkboxes to indicate which household members are currently receiving benefits from
+                        the respective programs. Each member can have multiple categorical eligibility benefits.
                     </p>
                 </div>
             </mat-card-content>

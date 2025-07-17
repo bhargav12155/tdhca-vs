@@ -522,8 +522,13 @@ export class HouseholdMembersComponent implements OnInit, AfterViewInit {
   onSaveAndContinue(): void {
     if (this.householdForm.valid) {
       console.log('Form Saved:', this.householdForm.value);
-      // In a real app, you would save the data to a service
-      this.router.navigate(['/createapplication/income-information']);
+
+      // Save household members to the service
+      const householdMembers =
+        this.householdForm.get('householdMembers')?.value || [];
+      this.applicationDataService.setHouseholdMembers(householdMembers);
+
+      this.router.navigate(['/createapplication/categorical-eligibility']);
     } else {
       this.snackBar.open('Please fill out all required fields.', 'Close', {
         duration: 3000,

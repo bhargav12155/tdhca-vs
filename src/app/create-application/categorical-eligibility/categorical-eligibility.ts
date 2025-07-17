@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -18,6 +18,10 @@ import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import {
+  ApplicationDataService,
+  HouseholdMember,
+} from '../application-data.service';
 
 @Component({
   selector: 'app-categorical-eligibility',
@@ -40,33 +44,64 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   templateUrl: './categorical-eligibility.html',
   styleUrl: './categorical-eligibility.scss',
 })
-export class CategoricalEligibilityComponent {
+export class CategoricalEligibilityComponent implements OnInit {
   eligibilityForm: FormGroup;
+  householdMembers: HouseholdMember[] = [];
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private applicationDataService: ApplicationDataService
   ) {
-    this.eligibilityForm = this.fb.group({
-      // Naveen's benefits
-      naveen_snap: [false],
-      naveen_ssi: [false],
-      naveen_tanf: [false],
-      naveen_veteran: [false],
+    this.eligibilityForm = this.fb.group({});
+  }
 
-      // Uday's benefits
-      uday_snap: [false],
-      uday_ssi: [false],
-      uday_tanf: [false],
-      uday_veteran: [false],
-
-      // Lorriane's benefits
-      lorriane_snap: [false],
-      lorriane_ssi: [false],
-      lorriane_tanf: [false],
-      lorriane_veteran: [false],
+  ngOnInit(): void {
+    this.applicationDataService.currentHouseholdMembers.subscribe((members) => {
+      this.householdMembers = members;
+      this.initializeForm();
     });
+  }
+
+  private initializeForm(): void {
+    const formControls: { [key: string]: boolean } = {};
+
+    this.householdMembers.forEach((member, index) => {
+      const memberKey = this.getMemberKey(member, index);
+      formControls[`${memberKey}_snap`] = false;
+      formControls[`${memberKey}_ssi`] = false;
+      formControls[`${memberKey}_tanf`] = false;
+      formControls[`${memberKey}_veteran`] = false;
+    });
+
+    this.eligibilityForm = this.fb.group(formControls);
+  }
+
+  getMemberKey(member: HouseholdMember, index: number): string {
+    // Generate a unique key for each member based on their name or index
+    const firstName = member.firstName || '';
+    const lastName = member.lastName || '';
+
+    if (firstName && lastName) {
+      return `${firstName.toLowerCase()}_${lastName.toLowerCase()}`;
+    } else if (firstName) {
+      return `${firstName.toLowerCase()}_${index}`;
+    } else {
+      return `member_${index}`;
+    }
+  }
+
+  getMemberDisplayName(member: HouseholdMember): string {
+    if (member.firstName && member.lastName) {
+      return `${member.firstName} ${member.lastName}`;
+    } else if (member.firstName) {
+      return member.firstName;
+    } else if (member.lastName) {
+      return member.lastName;
+    } else {
+      return 'Unknown Member';
+    }
   }
 
   onCancel(): void {
@@ -83,5 +118,9 @@ export class CategoricalEligibilityComponent {
         duration: 3000,
       });
     }
+  }
+
+  goToHouseholdMembers(): void {
+    this.router.navigate(['/createapplication/household-members']);
   }
 }

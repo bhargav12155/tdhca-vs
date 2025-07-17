@@ -81,6 +81,21 @@ export class LoginComponent {
     this.hidePassword = !this.hidePassword;
   }
 
+  goToRegistration(): void {
+    this.router.navigate(['/registration']);
+  }
+
+  onForgotPassword(): void {
+    this.snackBar.open(
+      'Password reset functionality is not implemented in this demo.',
+      'Close',
+      {
+        duration: 5000,
+        panelClass: ['info-snackbar'],
+      }
+    );
+  }
+
   // Getter methods for easy access to form controls
   get username() {
     return this.loginForm.get('username');

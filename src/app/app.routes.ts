@@ -5,6 +5,7 @@ import { HouseholdMembersComponent } from './create-application/household-member
 import { HomeComponent } from './home/home.component';
 import { HelpComponent } from './help/help.component';
 import { LoginComponent } from './login/login.component';
+import { RegistrationComponent } from './registration/registration.component';
 import { CategoricalEligibilityComponent } from './create-application/categorical-eligibility/categorical-eligibility';
 import { DeclarationIncomeComponent } from './create-application/declaration-income/declaration-income';
 import { HousingInformationComponent } from './create-application/housing-information/housing-information';
@@ -23,6 +24,10 @@ export const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+  },
+  {
+    path: 'registration',
+    component: RegistrationComponent,
   },
   {
     path: 'home',
