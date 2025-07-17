@@ -1,8 +1,8 @@
 <div class="form-container">
     <h3>Categorical Eligibility</h3>
     <p>
-        Please indicate if your household is currently receiving benefits from any of
-        the following programs.
+        Please indicate if any household members are currently receiving benefits from any of
+        the following programs. Members receiving these benefits may be categorically eligible for services.
     </p>
 
     <form [formGroup]="eligibilityForm">
@@ -12,8 +12,11 @@
                 <div class="eligibility-table-container">
                     <table class="eligibility-table">
                         <thead>
+                            <tr class="category-group-header">
+                                <th class="member-header" rowspan="2">Member</th>
+                                <th colspan="4" class="category-group-title">Categorical Eligibility</th>
+                            </tr>
                             <tr>
-                                <th class="member-header">Member</th>
                                 <th class="category-header">SNAP</th>
                                 <th class="category-header">SSI</th>
                                 <th class="category-header">TANF</th>
@@ -21,7 +24,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let member of householdMembers; let i = index">
+                            <tr *ngFor="let member of allMembers; let i = index">
                                 <td class="member-name">{{ getMemberDisplayName(member) }}</td>
                                 <td class="checkbox-cell">
                                     <mat-checkbox [formControlName]="getMemberKey(member, i) + '_snap'"></mat-checkbox>
@@ -38,12 +41,12 @@
                                 </td>
                             </tr>
                             <!-- Fallback message when no household members are available -->
-                            <tr *ngIf="householdMembers.length === 0">
+                            <tr *ngIf="allMembers.length === 0">
                                 <td colspan="5" class="no-members-message">
                                     <div class="no-members-container">
                                         <mat-icon>info</mat-icon>
-                                        <p>No household members found. Please go back and add household members first.
-                                        </p>
+                                        <p>No household members found. Please complete your personal information and add
+                                            household members first.</p>
                                         <button mat-stroked-button (click)="goToHouseholdMembers()">
                                             Add Household Members
                                         </button>
@@ -67,9 +70,12 @@
     </form>
 
     <div class="form-actions">
-        <button mat-stroked-button (click)="onCancel()">Cancel</button>
-        <button mat-flat-button color="accent" (click)="onSaveAndContinue()" [disabled]="eligibilityForm.invalid">
+        <button mat-stroked-button type="button" (click)="onBack()">Back</button>
+        <button mat-flat-button color="accent" type="button" (click)="onSaveAndContinue()"
+            [disabled]="eligibilityForm.invalid">
             Save and Continue
         </button>
     </div>
+
+
 </div>

@@ -47,6 +47,8 @@ import {
 export class CategoricalEligibilityComponent implements OnInit {
   eligibilityForm: FormGroup;
   householdMembers: HouseholdMember[] = [];
+  personalInfo: HouseholdMember | null = null;
+  allMembers: HouseholdMember[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -58,16 +60,47 @@ export class CategoricalEligibilityComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // Get personal info (first person)
+    this.applicationDataService.currentPersonalInfo.subscribe(
+      (personalInfo) => {
+        this.personalInfo = personalInfo;
+        this.updateAllMembers();
+      }
+    );
+
+    // Get household members
     this.applicationDataService.currentHouseholdMembers.subscribe((members) => {
       this.householdMembers = members;
-      this.initializeForm();
+      this.updateAllMembers();
     });
+  }
+
+  private updateAllMembers(): void {
+    this.allMembers = [];
+
+    // Add personal info as first member if available
+    if (this.personalInfo) {
+      this.allMembers.push({
+        ...this.personalInfo,
+        isSelf: true,
+      });
+    }
+
+    // Add household members (excluding the first one if it's marked as self)
+    if (this.householdMembers) {
+      const additionalMembers = this.householdMembers.filter(
+        (member) => !member.isSelf
+      );
+      this.allMembers.push(...additionalMembers);
+    }
+
+    this.initializeForm();
   }
 
   private initializeForm(): void {
     const formControls: { [key: string]: boolean } = {};
 
-    this.householdMembers.forEach((member, index) => {
+    this.allMembers.forEach((member, index) => {
       const memberKey = this.getMemberKey(member, index);
       formControls[`${memberKey}_snap`] = false;
       formControls[`${memberKey}_ssi`] = false;
@@ -93,31 +126,62 @@ export class CategoricalEligibilityComponent implements OnInit {
   }
 
   getMemberDisplayName(member: HouseholdMember): string {
-    if (member.firstName && member.lastName) {
-      return `${member.firstName} ${member.lastName}`;
-    } else if (member.firstName) {
-      return member.firstName;
-    } else if (member.lastName) {
-      return member.lastName;
-    } else {
-      return 'Unknown Member';
-    }
-  }
+    const firstName = member.firstName || '';
+    const lastName = member.lastName || '';
+    const relationship = member.relationship || '';
 
-  onCancel(): void {
-    this.router.navigate(['/createapplication/household-members']);
+    let displayName = '';
+    if (firstName && lastName) {
+      displayName = `${firstName} ${lastName}`;
+    } else if (firstName) {
+      displayName = firstName;
+    } else if (lastName) {
+      displayName = lastName;
+    } else {
+      displayName = 'Unknown Member';
+    }
+
+    // Add relationship information for clarity
+    if (relationship) {
+      displayName += ` (${relationship})`;
+    }
+
+    return displayName;
   }
 
   onSaveAndContinue(): void {
     if (this.eligibilityForm.valid) {
-      console.log('Form Saved:', this.eligibilityForm.value);
+      const formData = this.eligibilityForm.value;
+      console.log('Categorical Eligibility Data:', formData);
+
+      // Show success message
+      this.snackBar.open(
+        'Categorical eligibility information saved successfully!',
+        'Close',
+        {
+          duration: 3000,
+          panelClass: ['success-snackbar'],
+        }
+      );
+
       // In a real app, you would save the data to a service
+      // this.applicationDataService.setCategoricalEligibility(formData);
+
       this.router.navigate(['/createapplication/income-information']);
     } else {
-      this.snackBar.open('Please fill out all required fields.', 'Close', {
-        duration: 3000,
-      });
+      this.snackBar.open(
+        'Please review the form and correct any errors.',
+        'Close',
+        {
+          duration: 3000,
+          panelClass: ['error-snackbar'],
+        }
+      );
     }
+  }
+
+  onBack(): void {
+    this.router.navigate(['/createapplication/household-members']);
   }
 
   goToHouseholdMembers(): void {

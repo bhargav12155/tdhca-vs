@@ -39,6 +39,31 @@
   }
 
   thead {
+    .category-group-header {
+      th {
+        background: $tdhca-blue;
+        color: $white;
+        font-weight: 700;
+        font-size: 1.1rem;
+        padding: 1.2rem 1rem;
+        border-bottom: 2px solid rgba($white, 0.3);
+
+        &.member-header {
+          background: $tdhca-blue;
+          text-align: left;
+          border-right: 1px solid rgba($white, 0.2);
+        }
+
+        &.category-group-title {
+          background: $tdhca-blue;
+          text-align: center;
+          font-size: 1.2rem;
+          font-weight: 700;
+          letter-spacing: 0.5px;
+        }
+      }
+    }
+
     th {
       background: $tdhca-blue;
       color: $white;
@@ -143,36 +168,15 @@
 
 .form-actions {
   display: flex;
-  justify-content: space-between;
-  margin-top: 2rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid $gray-border;
+  gap: 1rem;
+  justify-content: flex-end;
+  padding: 1.5rem 0 0 0;
+  margin-top: 1.5rem;
+  border-top: 1px solid #e2e8f0;
 
   button {
     min-width: 120px;
-    height: 44px;
     font-weight: 500;
-    border-radius: 6px;
-    
-    &[color="accent"] {
-      background: $tdhca-blue;
-      color: $white;
-      
-      &:hover:not(:disabled) {
-        background: $tdhca-blue-light;
-      }
-    }
-    
-    &[mat-stroked-button] {
-      border-color: $gray-border;
-      color: $font-color-secondary;
-      
-      &:hover {
-        background: $gray-bg-light;
-        border-color: $tdhca-blue;
-        color: $tdhca-blue;
-      }
-    }
   }
 }
 
