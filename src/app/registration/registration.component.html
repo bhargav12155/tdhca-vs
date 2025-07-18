@@ -75,7 +75,7 @@
                 <!-- Security Information -->
                 <div class="form-section">
                     <h3>Security Information</h3>
-                    <div class="form-row security-row" *ngFor="let idx of [1,2,3]">
+                    <div class="form-row security-row responsive-row" *ngFor="let idx of [1,2,3]">
                         <mat-form-field appearance="fill" class="security-question-width">
                             <mat-label>Security Question {{idx}}</mat-label>
                             <mat-select [formControlName]="'securityQuestion' + idx">
