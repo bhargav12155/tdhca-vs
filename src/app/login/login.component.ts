@@ -86,14 +86,7 @@ export class LoginComponent {
   }
 
   onForgotPassword(): void {
-    this.snackBar.open(
-      'Password reset functionality is not implemented in this demo.',
-      'Close',
-      {
-        duration: 5000,
-        panelClass: ['info-snackbar'],
-      }
-    );
+    this.router.navigate(['/forgot-password']);
   }
 
   // Getter methods for easy access to form controls

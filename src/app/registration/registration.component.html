@@ -11,179 +11,83 @@
                 <!-- Personal Information Section -->
                 <div class="form-section">
                     <h3>Personal Information</h3>
-
                     <div class="form-row">
-                        <mat-form-field appearance="fill" class="half-width">
+                        <mat-form-field appearance="fill" class="prefix-width">
+                            <mat-label>Prefix</mat-label>
+                            <mat-select formControlName="prefix">
+                                <mat-option value="">-- Select --</mat-option>
+                                <mat-option value="Mr">Mr</mat-option>
+                                <mat-option value="Ms">Ms</mat-option>
+                                <mat-option value="Mrs">Mrs</mat-option>
+                                <mat-option value="Dr">Dr</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" class="first-width">
                             <mat-label>First Name</mat-label>
                             <input matInput formControlName="firstName" placeholder="Enter your first name">
-                            <mat-icon matSuffix>person</mat-icon>
-                            <mat-error *ngIf="firstName?.invalid && firstName?.touched">
-                                {{ getFirstNameErrorMessage() }}
-                            </mat-error>
                         </mat-form-field>
-
-                        <mat-form-field appearance="fill" class="half-width">
+                        <mat-form-field appearance="fill" class="mi-width">
+                            <mat-label>MI</mat-label>
+                            <input matInput formControlName="middleInitial" maxlength="1" placeholder="M">
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" class="last-width">
                             <mat-label>Last Name</mat-label>
                             <input matInput formControlName="lastName" placeholder="Enter your last name">
-                            <mat-icon matSuffix>person</mat-icon>
-                            <mat-error *ngIf="lastName?.invalid && lastName?.touched">
-                                {{ getLastNameErrorMessage() }}
-                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" class="suffix-width">
+                            <mat-label>Suffix</mat-label>
+                            <mat-select formControlName="suffix">
+                                <mat-option value="">-- Select --</mat-option>
+                                <mat-option value="Jr">Jr</mat-option>
+                                <mat-option value="Sr">Sr</mat-option>
+                                <mat-option value="II">II</mat-option>
+                                <mat-option value="III">III</mat-option>
+                            </mat-select>
                         </mat-form-field>
                     </div>
-
                     <mat-form-field appearance="fill" class="full-width">
                         <mat-label>Email Address</mat-label>
                         <input matInput formControlName="email" placeholder="Enter your email address" type="email">
-                        <mat-icon matSuffix>email</mat-icon>
-                        <mat-error *ngIf="email?.invalid && email?.touched">
-                            {{ getEmailErrorMessage() }}
-                        </mat-error>
                     </mat-form-field>
 
-                    <div class="form-row">
+                    <div class="form-row" style="gap: 2rem; margin-bottom: 0.5rem;">
                         <mat-form-field appearance="fill" class="half-width">
-                            <mat-label>Phone Number</mat-label>
-                            <input matInput formControlName="phone" placeholder="(XXX) XXX-XXXX"
-                                (input)="formatPhoneNumber($event)" maxlength="14">
-                            <mat-icon matSuffix>phone</mat-icon>
-                            <mat-error *ngIf="phone?.invalid && phone?.touched">
-                                {{ getPhoneErrorMessage() }}
-                            </mat-error>
+                            <mat-label>Password</mat-label>
+                            <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password"
+                                placeholder="Create a strong password">
+                            <button mat-icon-button matSuffix type="button" (click)="togglePasswordVisibility()"
+                                [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+                                <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+                            </button>
                         </mat-form-field>
-
                         <mat-form-field appearance="fill" class="half-width">
-                            <mat-label>Date of Birth</mat-label>
-                            <input matInput [matDatepicker]="picker" formControlName="dateOfBirth">
-                            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                            <mat-datepicker #picker></mat-datepicker>
-                            <mat-error *ngIf="dateOfBirth?.invalid && dateOfBirth?.touched">
-                                Date of birth is required
-                            </mat-error>
+                            <mat-label>Confirm Password</mat-label>
+                            <input matInput [type]="hideConfirmPassword ? 'password' : 'text'"
+                                formControlName="confirmPassword" placeholder="Confirm your password">
+                            <button mat-icon-button matSuffix type="button" (click)="toggleConfirmPasswordVisibility()"
+                                [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hideConfirmPassword">
+                                <mat-icon>{{ hideConfirmPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+                            </button>
                         </mat-form-field>
                     </div>
                 </div>
 
-                <!-- Account Information Section -->
+                <!-- Security Information -->
                 <div class="form-section">
-                    <h3>Account Information</h3>
-
-                    <mat-form-field appearance="fill" class="full-width">
-                        <mat-label>Username</mat-label>
-                        <input matInput formControlName="username" placeholder="Choose a username">
-                        <mat-icon matSuffix>account_circle</mat-icon>
-                        <mat-error *ngIf="username?.invalid && username?.touched">
-                            {{ getUsernameErrorMessage() }}
-                        </mat-error>
-                    </mat-form-field>
-
-                    <mat-form-field appearance="fill" class="full-width">
-                        <mat-label>Password</mat-label>
-                        <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password"
-                            placeholder="Create a strong password">
-                        <button mat-icon-button matSuffix type="button" (click)="togglePasswordVisibility()"
-                            [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
-                            <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
-                        </button>
-                        <mat-error *ngIf="password?.invalid && password?.touched">
-                            {{ getPasswordErrorMessage() }}
-                        </mat-error>
-                        <mat-hint>Password must contain uppercase, lowercase, numbers, and special characters</mat-hint>
-                    </mat-form-field>
-
-                    <!-- Password Strength Indicator -->
-                    <div class="password-strength" *ngIf="password?.value">
-                        <div class="strength-bar">
-                            <div class="strength-fill" [ngClass]="'strength-' + getPasswordStrength()"></div>
-                        </div>
-                        <span class="strength-text" [ngClass]="'strength-' + getPasswordStrength()">
-                            {{ getPasswordStrength() | titlecase }} Password
-                        </span>
-                    </div>
-
-                    <mat-form-field appearance="fill" class="full-width">
-                        <mat-label>Confirm Password</mat-label>
-                        <input matInput [type]="hideConfirmPassword ? 'password' : 'text'"
-                            formControlName="confirmPassword" placeholder="Confirm your password">
-                        <button mat-icon-button matSuffix type="button" (click)="toggleConfirmPasswordVisibility()"
-                            [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hideConfirmPassword">
-                            <mat-icon>{{ hideConfirmPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
-                        </button>
-                        <mat-error *ngIf="confirmPassword?.invalid && confirmPassword?.touched">
-                            {{ getConfirmPasswordErrorMessage() }}
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-
-                <!-- Security Questions Section -->
-                <div class="form-section">
-                    <h3>Security Questions</h3>
-                    <p class="section-description">Choose two security questions to help recover your account if needed.
-                    </p>
-
-                    <mat-form-field appearance="fill" class="full-width">
-                        <mat-label>Security Question 1</mat-label>
-                        <mat-select formControlName="securityQuestion1">
-                            <mat-option *ngFor="let question of getAvailableSecurityQuestions(securityQuestion2?.value)"
-                                [value]="question">
-                                {{ question }}
-                            </mat-option>
-                        </mat-select>
-                        <mat-error *ngIf="securityQuestion1?.invalid && securityQuestion1?.touched">
-                            Please select a security question
-                        </mat-error>
-                    </mat-form-field>
-
-                    <mat-form-field appearance="fill" class="full-width">
-                        <mat-label>Answer 1</mat-label>
-                        <input matInput formControlName="securityAnswer1" placeholder="Enter your answer">
-                        <mat-error *ngIf="securityAnswer1?.invalid && securityAnswer1?.touched">
-                            Please provide an answer
-                        </mat-error>
-                    </mat-form-field>
-
-                    <mat-form-field appearance="fill" class="full-width">
-                        <mat-label>Security Question 2</mat-label>
-                        <mat-select formControlName="securityQuestion2">
-                            <mat-option *ngFor="let question of getAvailableSecurityQuestions(securityQuestion1?.value)"
-                                [value]="question">
-                                {{ question }}
-                            </mat-option>
-                        </mat-select>
-                        <mat-error *ngIf="securityQuestion2?.invalid && securityQuestion2?.touched">
-                            Please select a security question
-                        </mat-error>
-                    </mat-form-field>
-
-                    <mat-form-field appearance="fill" class="full-width">
-                        <mat-label>Answer 2</mat-label>
-                        <input matInput formControlName="securityAnswer2" placeholder="Enter your answer">
-                        <mat-error *ngIf="securityAnswer2?.invalid && securityAnswer2?.touched">
-                            Please provide an answer
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-
-                <!-- Agreement Section -->
-                <div class="form-section">
-                    <h3>Terms and Conditions</h3>
-
-                    <div class="checkbox-group">
-                        <mat-checkbox formControlName="agreeToTerms">
-                            I agree to the <a href="#" target="_blank">Terms and Conditions</a>
-                        </mat-checkbox>
-                        <mat-error *ngIf="agreeToTerms?.invalid && agreeToTerms?.touched">
-                            You must agree to the Terms and Conditions
-                        </mat-error>
-                    </div>
-
-                    <div class="checkbox-group">
-                        <mat-checkbox formControlName="agreeToPrivacy">
-                            I agree to the <a href="#" target="_blank">Privacy Policy</a>
-                        </mat-checkbox>
-                        <mat-error *ngIf="agreeToPrivacy?.invalid && agreeToPrivacy?.touched">
-                            You must agree to the Privacy Policy
-                        </mat-error>
+                    <h3>Security Information</h3>
+                    <div class="form-row security-row responsive-row" *ngFor="let idx of [1,2,3]">
+                        <mat-form-field appearance="fill" class="security-question-width">
+                            <mat-label>Security Question {{idx}}</mat-label>
+                            <mat-select [formControlName]="'securityQuestion' + idx">
+                                <mat-option value="">-- Select --</mat-option>
+                                <mat-option *ngFor="let question of securityQuestions" [value]="question">{{ question
+                                    }}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" class="security-answer-width">
+                            <mat-label>Answer</mat-label>
+                            <input matInput [formControlName]="'securityAnswer' + idx" placeholder="Enter your answer">
+                        </mat-form-field>
                     </div>
                 </div>
 
@@ -196,7 +100,7 @@
                     <button mat-raised-button color="primary" type="submit" [disabled]="registrationForm.invalid"
                         class="register-button">
                         <mat-icon>person_add</mat-icon>
-                        Create Account
+                        Save
                     </button>
                 </div>
             </form>

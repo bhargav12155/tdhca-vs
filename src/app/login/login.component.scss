@@ -11,8 +11,8 @@
 
 .login-card {
   width: 100%;
-  max-width: 400px;
-  padding: 2rem;
+  max-width: 520px;
+  padding: 2.5rem 3rem;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   border-radius: 16px;
   background: rgba(255, 255, 255, 0.95);
@@ -144,9 +144,7 @@
 }
 
 .registration-link {
-  margin-top: 2rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid rgba($gray-border, 0.5);
+  border-top: 2px solid rgba($gray-border, 0.5);
   text-align: center;
 
   p {
@@ -177,20 +175,20 @@
 }
 
 // Responsive design
+@media (max-width: 900px) {
+  .login-card {
+    max-width: 400px;
+    padding: 1.5rem 1rem;
+  }
+}
+
 @media (max-width: 768px) {
   .login-container {
     padding: 0.5rem;
   }
-
   .login-card {
-    padding: 1.5rem;
-    max-width: 350px;
-
-    mat-card-header {
-      mat-card-title {
-        font-size: 1.5rem;
-      }
-    }
+    padding: 1rem;
+    max-width: 100%;
   }
 }
 

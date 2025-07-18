@@ -60,4 +60,11 @@ export const routes: Routes = [
       { path: 'income-information', component: IncomeInformationComponent },
     ],
   },
+  {
+    path: 'forgot-password',
+    loadComponent: () =>
+      import('./forgot-password/forgot-password.component').then(
+        (m) => m.ForgotPasswordComponent
+      ),
+  },
 ];

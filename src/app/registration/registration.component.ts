@@ -63,17 +63,14 @@ export class RegistrationComponent {
     this.registrationForm = this.fb.group(
       {
         // Personal Information
+        prefix: [''],
         firstName: ['', [Validators.required, Validators.minLength(2)]],
+        middleInitial: [''],
         lastName: ['', [Validators.required, Validators.minLength(2)]],
+        suffix: [''],
         email: ['', [Validators.required, Validators.email]],
-        phone: [
-          '',
-          [Validators.required, Validators.pattern(/^\(\d{3}\) \d{3}-\d{4}$/)],
-        ],
-        dateOfBirth: ['', Validators.required],
 
-        // Account Information
-        username: ['', [Validators.required, Validators.minLength(4)]],
+        // Password
         password: [
           '',
           [
@@ -89,6 +86,8 @@ export class RegistrationComponent {
         securityAnswer1: ['', Validators.required],
         securityQuestion2: ['', Validators.required],
         securityAnswer2: ['', Validators.required],
+        securityQuestion3: ['', Validators.required],
+        securityAnswer3: ['', Validators.required],
 
         // Agreement
         agreeToTerms: [false, Validators.requiredTrue],
@@ -142,15 +141,6 @@ export class RegistrationComponent {
   get email() {
     return this.registrationForm.get('email');
   }
-  get phone() {
-    return this.registrationForm.get('phone');
-  }
-  get dateOfBirth() {
-    return this.registrationForm.get('dateOfBirth');
-  }
-  get username() {
-    return this.registrationForm.get('username');
-  }
   get password() {
     return this.registrationForm.get('password');
   }
@@ -169,6 +159,21 @@ export class RegistrationComponent {
   get securityAnswer2() {
     return this.registrationForm.get('securityAnswer2');
   }
+  get middleInitial() {
+    return this.registrationForm.get('middleInitial');
+  }
+  get prefix() {
+    return this.registrationForm.get('prefix');
+  }
+  get suffix() {
+    return this.registrationForm.get('suffix');
+  }
+  get securityQuestion3() {
+    return this.registrationForm.get('securityQuestion3');
+  }
+  get securityAnswer3() {
+    return this.registrationForm.get('securityAnswer3');
+  }
   get agreeToTerms() {
     return this.registrationForm.get('agreeToTerms');
   }
@@ -182,23 +187,6 @@ export class RegistrationComponent {
 
   toggleConfirmPasswordVisibility(): void {
     this.hideConfirmPassword = !this.hideConfirmPassword;
-  }
-
-  formatPhoneNumber(event: any): void {
-    const input = event.target;
-    let value = input.value.replace(/\D/g, '');
-
-    if (value.length >= 6) {
-      value = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(
-        6,
-        10
-      )}`;
-    } else if (value.length >= 3) {
-      value = `(${value.slice(0, 3)}) ${value.slice(3)}`;
-    }
-
-    input.value = value;
-    this.registrationForm.patchValue({ phone: value });
   }
 
   getFirstNameErrorMessage(): string {
@@ -227,26 +215,6 @@ export class RegistrationComponent {
     }
     if (this.email?.hasError('email')) {
       return 'Please enter a valid email address';
-    }
-    return '';
-  }
-
-  getPhoneErrorMessage(): string {
-    if (this.phone?.hasError('required')) {
-      return 'Phone number is required';
-    }
-    if (this.phone?.hasError('pattern')) {
-      return 'Please enter a valid phone number (XXX) XXX-XXXX';
-    }
-    return '';
-  }
-
-  getUsernameErrorMessage(): string {
-    if (this.username?.hasError('required')) {
-      return 'Username is required';
-    }
-    if (this.username?.hasError('minlength')) {
-      return 'Username must be at least 4 characters long';
     }
     return '';
   }
