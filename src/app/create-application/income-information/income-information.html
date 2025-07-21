@@ -1,36 +1,313 @@
-<div class="form-container">
-    <h3>Income Information</h3>
-    <p>
-        Please provide income details for each household member.
-    </p>
+<div class="income-container">
+    <div class="header-section">
+        <h2>Income Information</h2>
+        <p class="instructions">
+            Provide income details for each household member. Click to expand and enter information.
+        </p>
+    </div>
 
-    <form [formGroup]="incomeForm">
-        <div formArrayName="householdIncomes">
-            <mat-card *ngFor="let member of householdIncomes.controls; let i = index" [formGroupName]="i">
-                <mat-card-header>
-                    <mat-card-title>Member {{ i + 1 }}: {{ getMemberName(i) }}</mat-card-title>
-                </mat-card-header>
-                <mat-card-content>
-                    <div class="form-row">
-                        <mat-form-field appearance="fill">
-                            <mat-label>Income Source</mat-label>
-                            <input matInput formControlName="source" required
-                                placeholder="e.g., Employment, Self-Employment">
-                        </mat-form-field>
-                        <mat-form-field appearance="fill">
-                            <mat-label>Monthly Amount</mat-label>
-                            <input matInput type="number" formControlName="amount" required placeholder="0.00">
-                        </mat-form-field>
+    <div class="example-action-buttons">
+        <button mat-button (click)="expandAll()">Expand All</button>
+        <button mat-button (click)="collapseAll()">Collapse All</button>
+        <button mat-stroked-button color="primary" (click)="addNewHouseholdMember()" class="add-member-btn">
+            <mat-icon>person_add</mat-icon>
+            Add Household Member
+        </button>
+    </div>
+
+    <mat-accordion class="example-headers-align" multi #accordion>
+        <form [formGroup]="incomeForm">
+            <div formArrayName="householdMembers">
+                <mat-expansion-panel *ngFor="let memberGroup of householdIncomes.controls; let i = index"
+                    [formGroupName]="i" [expanded]="isMemberExpanded(i)">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{ getMemberDisplayName(i) }}
+                            <button mat-icon-button color="warn"
+                                (click)="removeHouseholdMember(i); $event.stopPropagation()"
+                                *ngIf="householdIncomes.length > 1" class="remove-member-btn"
+                                title="Remove Household Member">
+                                <mat-icon>person_remove</mat-icon>
+                            </button>
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            DOB: {{ getMemberDOB(i) }} | Age: {{ getMemberAge(i) }} | Total Income: ${{
+                            getMemberTotalIncome(i) | number:'1.2-2' }}
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+
+                    <div class="member-form-section">
+                        <div class="compact-form-row">
+                            <mat-form-field appearance="outline" class="compact-field">
+                                <mat-label>First Name</mat-label>
+                                <input matInput formControlName="firstName" required>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="compact-field">
+                                <mat-label>Last Name</mat-label>
+                                <input matInput formControlName="lastName" required>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="compact-field">
+                                <mat-label>Date of Birth</mat-label>
+                                <input matInput formControlName="dateOfBirth" (input)="onDOBInput($event, i)"
+                                    (blur)="onDateOfBirthChange(i)" required placeholder="MM/DD/YYYY" maxlength="10"
+                                    appDateFormat>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="compact-field age-field">
+                                <mat-label>Age</mat-label>
+                                <input matInput formControlName="age" readonly>
+                            </mat-form-field>
+                        </div>
                     </div>
-                </mat-card-content>
-            </mat-card>
-        </div>
-    </form>
+
+                    <div class="pay-details-section">
+                        <div formArrayName="payDetails">
+                            <div *ngFor="let payGroup of getPayDetails(i).controls; let j = index" [formGroupName]="j"
+                                class="compact-pay-entry">
+                                <div class="compact-pay-header">
+                                    <span class="entry-number">Entry {{ j + 1 }}</span>
+                                    <span class="entry-total">Total: ${{ payGroup.get('totalIncome')?.value |
+                                        number:'1.2-2' }}</span>
+                                    <div class="header-actions">
+                                        <button mat-button color="primary" (click)="addNewPayDetails(i)"
+                                            class="compact-add-btn" *ngIf="j === getPayDetails(i).length - 1"
+                                            title="Add New Pay Entry">
+                                            <mat-icon>add</mat-icon>
+                                        </button>
+                                        <button mat-icon-button color="warn" (click)="removePayDetail(i, j)"
+                                            *ngIf="getPayDetails(i).length > 1" title="Remove Pay Entry"
+                                            class="compact-delete-btn">
+                                            <mat-icon>delete</mat-icon>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="compact-pay-content">
+                                    <!-- Desktop/Tablet: Structured layout with pay row + date row -->
+                                    <div class="structured-pay-layout">
+                                        <!-- First row: Frequency + Pay amounts -->
+                                        <div class="pay-amounts-row">
+                                            <mat-form-field appearance="outline" class="frequency-field">
+                                                <mat-label>Frequency</mat-label>
+                                                <mat-select formControlName="frequency"
+                                                    (selectionChange)="onFrequencyChange(i, j)" required>
+                                                    <mat-option *ngFor="let freq of frequencyOptions"
+                                                        [value]="freq.value">
+                                                        {{ freq.label }}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+
+                                            <mat-form-field appearance="outline" class="pay-field"
+                                                *ngIf="payGroup.get('pay1')">
+                                                <mat-label>Pay 1</mat-label>
+                                                <input matInput type="number" formControlName="pay1"
+                                                    (input)="onPayInput($event, i, j, 'pay1')"
+                                                    (focus)="onPayFocus($event)"
+                                                    (blur)="onPayBlur($event, i, j, 'pay1')" placeholder="0.00"
+                                                    step="0.01" min="0">
+                                                <span matPrefix>$&nbsp;</span>
+                                            </mat-form-field>
+
+                                            <mat-form-field appearance="outline" class="pay-field"
+                                                *ngIf="payGroup.get('pay2')">
+                                                <mat-label>Pay 2</mat-label>
+                                                <input matInput type="number" formControlName="pay2"
+                                                    (input)="onPayInput($event, i, j, 'pay2')"
+                                                    (focus)="onPayFocus($event)"
+                                                    (blur)="onPayBlur($event, i, j, 'pay2')" placeholder="0.00"
+                                                    step="0.01" min="0">
+                                                <span matPrefix>$&nbsp;</span>
+                                            </mat-form-field>
+
+                                            <mat-form-field appearance="outline" class="pay-field"
+                                                *ngIf="payGroup.get('pay3')">
+                                                <mat-label>Pay 3</mat-label>
+                                                <input matInput type="number" formControlName="pay3"
+                                                    (input)="onPayInput($event, i, j, 'pay3')"
+                                                    (focus)="onPayFocus($event)"
+                                                    (blur)="onPayBlur($event, i, j, 'pay3')" placeholder="0.00"
+                                                    step="0.01" min="0">
+                                                <span matPrefix>$&nbsp;</span>
+                                            </mat-form-field>
+
+                                            <mat-form-field appearance="outline" class="pay-field"
+                                                *ngIf="payGroup.get('pay4')">
+                                                <mat-label>Pay 4</mat-label>
+                                                <input matInput type="number" formControlName="pay4"
+                                                    (input)="onPayInput($event, i, j, 'pay4')"
+                                                    (focus)="onPayFocus($event)"
+                                                    (blur)="onPayBlur($event, i, j, 'pay4')" placeholder="0.00"
+                                                    step="0.01" min="0">
+                                                <span matPrefix>$&nbsp;</span>
+                                            </mat-form-field>
+                                        </div>
+
+                                        <!-- Second row: Date fields aligned with pay fields above -->
+                                        <div class="date-fields-row">
+                                            <div class="frequency-spacer"></div>
+
+                                            <mat-form-field appearance="outline" class="date-field"
+                                                *ngIf="payGroup.get('date1')">
+                                                <mat-label>Date 1</mat-label>
+                                                <input matInput formControlName="date1"
+                                                    (input)="onPayDateInput($event, i, j, 'date1')"
+                                                    placeholder="MM/DD/YYYY" maxlength="10">
+                                            </mat-form-field>
+
+                                            <mat-form-field appearance="outline" class="date-field"
+                                                *ngIf="payGroup.get('date2')">
+                                                <mat-label>Date 2</mat-label>
+                                                <input matInput formControlName="date2"
+                                                    (input)="onPayDateInput($event, i, j, 'date2')"
+                                                    placeholder="MM/DD/YYYY" maxlength="10">
+                                            </mat-form-field>
+
+                                            <mat-form-field appearance="outline" class="date-field"
+                                                *ngIf="payGroup.get('date3')">
+                                                <mat-label>Date 3</mat-label>
+                                                <input matInput formControlName="date3"
+                                                    (input)="onPayDateInput($event, i, j, 'date3')"
+                                                    placeholder="MM/DD/YYYY" maxlength="10">
+                                            </mat-form-field>
+
+                                            <mat-form-field appearance="outline" class="date-field"
+                                                *ngIf="payGroup.get('date4')">
+                                                <mat-label>Date 4</mat-label>
+                                                <input matInput formControlName="date4"
+                                                    (input)="onPayDateInput($event, i, j, 'date4')"
+                                                    placeholder="MM/DD/YYYY" maxlength="10">
+                                            </mat-form-field>
+                                        </div>
+
+                                        <!-- Mobile: Pay-Date pairs layout -->
+                                        <div class="mobile-pay-pairs">
+                                            <!-- Frequency field for mobile -->
+                                            <mat-form-field appearance="outline" class="mobile-frequency">
+                                                <mat-label>Frequency</mat-label>
+                                                <mat-select formControlName="frequency"
+                                                    (selectionChange)="onFrequencyChange(i, j)" required>
+                                                    <mat-option *ngFor="let freq of frequencyOptions"
+                                                        [value]="freq.value">
+                                                        {{ freq.label }}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+
+                                            <!-- Pay 1 + Date 1 pair -->
+                                            <div class="mobile-pay-pair" *ngIf="payGroup.get('pay1')">
+                                                <mat-form-field appearance="outline" class="mobile-pay-field">
+                                                    <mat-label>Pay 1</mat-label>
+                                                    <input matInput type="number" formControlName="pay1"
+                                                        (input)="onPayInput($event, i, j, 'pay1')"
+                                                        (focus)="onPayFocus($event)"
+                                                        (blur)="onPayBlur($event, i, j, 'pay1')" placeholder="0.00"
+                                                        step="0.01" min="0">
+                                                    <span matPrefix>$&nbsp;</span>
+                                                </mat-form-field>
+                                                <mat-form-field appearance="outline" class="mobile-date-field"
+                                                    *ngIf="payGroup.get('date1')">
+                                                    <mat-label>Date 1</mat-label>
+                                                    <input matInput formControlName="date1"
+                                                        (input)="onPayDateInput($event, i, j, 'date1')"
+                                                        placeholder="MM/DD/YYYY" maxlength="10">
+                                                </mat-form-field>
+                                            </div>
+
+                                            <!-- Pay 2 + Date 2 pair -->
+                                            <div class="mobile-pay-pair" *ngIf="payGroup.get('pay2')">
+                                                <mat-form-field appearance="outline" class="mobile-pay-field">
+                                                    <mat-label>Pay 2</mat-label>
+                                                    <input matInput type="number" formControlName="pay2"
+                                                        (input)="onPayInput($event, i, j, 'pay2')"
+                                                        (focus)="onPayFocus($event)"
+                                                        (blur)="onPayBlur($event, i, j, 'pay2')" placeholder="0.00"
+                                                        step="0.01" min="0">
+                                                    <span matPrefix>$&nbsp;</span>
+                                                </mat-form-field>
+                                                <mat-form-field appearance="outline" class="mobile-date-field"
+                                                    *ngIf="payGroup.get('date2')">
+                                                    <mat-label>Date 2</mat-label>
+                                                    <input matInput formControlName="date2"
+                                                        (input)="onPayDateInput($event, i, j, 'date2')"
+                                                        placeholder="MM/DD/YYYY" maxlength="10">
+                                                </mat-form-field>
+                                            </div>
+
+                                            <!-- Pay 3 + Date 3 pair -->
+                                            <div class="mobile-pay-pair" *ngIf="payGroup.get('pay3')">
+                                                <mat-form-field appearance="outline" class="mobile-pay-field">
+                                                    <mat-label>Pay 3</mat-label>
+                                                    <input matInput type="number" formControlName="pay3"
+                                                        (input)="onPayInput($event, i, j, 'pay3')"
+                                                        (focus)="onPayFocus($event)"
+                                                        (blur)="onPayBlur($event, i, j, 'pay3')" placeholder="0.00"
+                                                        step="0.01" min="0">
+                                                    <span matPrefix>$&nbsp;</span>
+                                                </mat-form-field>
+                                                <mat-form-field appearance="outline" class="mobile-date-field"
+                                                    *ngIf="payGroup.get('date3')">
+                                                    <mat-label>Date 3</mat-label>
+                                                    <input matInput formControlName="date3"
+                                                        (input)="onPayDateInput($event, i, j, 'date3')"
+                                                        placeholder="MM/DD/YYYY" maxlength="10">
+                                                </mat-form-field>
+                                            </div>
+
+                                            <!-- Pay 4 + Date 4 pair -->
+                                            <div class="mobile-pay-pair" *ngIf="payGroup.get('pay4')">
+                                                <mat-form-field appearance="outline" class="mobile-pay-field">
+                                                    <mat-label>Pay 4</mat-label>
+                                                    <input matInput type="number" formControlName="pay4"
+                                                        (input)="onPayInput($event, i, j, 'pay4')"
+                                                        (focus)="onPayFocus($event)"
+                                                        (blur)="onPayBlur($event, i, j, 'pay4')" placeholder="0.00"
+                                                        step="0.01" min="0">
+                                                    <span matPrefix>$&nbsp;</span>
+                                                </mat-form-field>
+                                                <mat-form-field appearance="outline" class="mobile-date-field"
+                                                    *ngIf="payGroup.get('date4')">
+                                                    <mat-label>Date 4</mat-label>
+                                                    <input matInput formControlName="date4"
+                                                        (input)="onPayDateInput($event, i, j, 'date4')"
+                                                        placeholder="MM/DD/YYYY" maxlength="10">
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </mat-expansion-panel>
+            </div>
+        </form>
+    </mat-accordion>
+
+    <div class="instructions-section">
+        <mat-card class="compact-notes-card">
+            <mat-card-content>
+                <div class="notes-header">
+                    <mat-icon>info</mat-icon>
+                    <span>Quick Tips</span>
+                </div>
+                <ul class="compact-instruction-list">
+                    <li><strong>Frequency:</strong> Select 1-4 times per month to enable corresponding pay fields.</li>
+                    <li><strong>Total:</strong> Automatically calculated from pay entries.</li>
+                    <li><strong>Multiple Sources:</strong> Add new pay details for different income sources.</li>
+                </ul>
+            </mat-card-content>
+        </mat-card>
+    </div>
 
     <div class="form-actions">
-        <button mat-stroked-button (click)="onBack()">Back</button>
-        <button mat-flat-button color="accent" (click)="onSaveAndContinue()" [disabled]="incomeForm.invalid">
+        <button mat-stroked-button (click)="onBack()" class="back-btn">
+            <mat-icon>arrow_back</mat-icon>
+            Back
+        </button>
+        <button mat-raised-button color="accent" (click)="onSaveAndContinue()" [disabled]="incomeForm.invalid"
+            class="continue-btn">
             Save and Continue
+            <mat-icon>arrow_forward</mat-icon>
         </button>
     </div>
 </div>

@@ -1,22 +1,30 @@
 <div class="layout">
-    <nav class="side-nav stepper-nav">
-        <h2>Application Steps</h2>
-        <ul>
-            <li *ngFor="let step of steps; let i = index">
-                <a [routerLink]="step.route" routerLinkActive="active"
-                    [ngClass]="{'active': isActiveStep(step.route), 'completed': isStepCompleted(i)}">
-                    <div class="step-1">
-                        <div class="step-icon1">
-                            <span *ngIf="isStepCompleted(i)" class="step-check">&#10003;</span>
-                            <span *ngIf="!isStepCompleted(i)">{{ i + 1 }}</span>
-                        </div>
-                        <div class="step-label1">{{ step.label }}</div>
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <h2>Application Steps</h2>
+            <p class="step-counter">Step {{ getCurrentStepNumber() }} of {{ steps.length }}</p>
+        </div>
+        <ul class="steps-list">
+            <li *ngFor="let step of steps; let i = index" class="step-item">
+                <a [routerLink]="step.route" [class.active]="isActiveStep(step.route)"
+                    [class.completed]="isStepCompleted(i)">
+                    <div class="step-number">
+                        <span *ngIf="isStepCompleted(i)">✓</span>
+                        <span *ngIf="!isStepCompleted(i)">{{ i + 1 }}</span>
                     </div>
-                </a><span *ngIf="i < steps.length - 1" class="step-connector"></span>
+                    <span class="step-title">{{ step.label }}</span>
+                </a>
             </li>
         </ul>
     </nav>
-    <main>
-        <router-outlet></router-outlet>
+
+    <main class="content">
+        <header class="content-header">
+            <h1>{{ getCurrentStepLabel() }}</h1>
+            <p class="current-step-info">Currently viewing step {{ getCurrentStepNumber() }} of your application</p>
+        </header>
+        <div class="content-body">
+            <router-outlet></router-outlet>
+        </div>
     </main>
 </div>

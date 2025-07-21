@@ -7,6 +7,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
 import {
   FormsModule,
   ReactiveFormsModule,
@@ -27,6 +28,7 @@ import {
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
+    MatIconModule,
     FormsModule,
     ReactiveFormsModule,
   ],
@@ -75,5 +77,19 @@ export class CreateApplicationComponent {
       this.isActiveStep(step.route)
     );
     return index < currentIndex;
+  }
+
+  getCurrentStepNumber(): number {
+    const currentIndex = this.steps.findIndex((step) =>
+      this.isActiveStep(step.route)
+    );
+    return currentIndex >= 0 ? currentIndex + 1 : 1;
+  }
+
+  getCurrentStepLabel(): string {
+    const currentStep = this.steps.find((step) =>
+      this.isActiveStep(step.route)
+    );
+    return currentStep ? currentStep.label : this.steps[0].label;
   }
 }

@@ -61,11 +61,8 @@
 
                             <mat-form-field appearance="fill" matTooltip="Date of Birth" matTooltipPosition="above">
                                 <mat-label>Date of Birth</mat-label>
-                                <input matInput [matDatepicker]="picker" formControlName="dob" required
-                                    placeholder="MM/DD/YYYY">
+                                <input matInput formControlName="dob" required placeholder="MM/DD/YYYY" appDateFormat>
                                 <mat-hint>MM/DD/YYYY</mat-hint>
-                                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                                <mat-datepicker #picker [startView]="'multi-year'"></mat-datepicker>
                             </mat-form-field>
                             <mat-form-field appearance="fill" matTooltip="Race" matTooltipPosition="above">
                                 <mat-label>Race</mat-label>
