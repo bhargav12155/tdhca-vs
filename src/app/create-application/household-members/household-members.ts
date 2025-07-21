@@ -26,9 +26,9 @@ import { MatListModule } from '@angular/material/list';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
 import { ApplicationDataService } from '../application-data.service';
+import { DateUtilService } from '../../shared/services/date-util.service';
+import { DateFormatDirective } from '../../shared/directives/date-format.directive';
 import { log } from 'console';
 
 @Component({
@@ -49,8 +49,7 @@ import { log } from 'console';
     MatTooltipModule,
     MatSnackBarModule,
     MatDialogModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
+    DateFormatDirective,
   ],
   templateUrl: './household-members.html',
   styleUrl: './household-members.scss',
@@ -139,7 +138,8 @@ export class HouseholdMembersComponent implements OnInit, AfterViewInit {
     private router: Router,
     private snackBar: MatSnackBar,
     private dialog: MatDialog,
-    private applicationDataService: ApplicationDataService
+    private applicationDataService: ApplicationDataService,
+    private dateUtilService: DateUtilService
   ) {
     this.householdForm = this.fb.group({
       householdMembers: this.fb.array([]),

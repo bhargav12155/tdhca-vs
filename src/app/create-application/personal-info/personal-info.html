@@ -59,11 +59,9 @@
             <mat-form-field appearance="fill" style="margin: 10px; width: 211px;" matTooltip="Enter your date of birth"
                 matTooltipPosition="above">
                 <mat-label>Date of Birth</mat-label>
-                <input matInput [matDatepicker]="picker" formControlName="dob" required placeholder="MM/DD/YYYY"
-                    [min]="minDate" [max]="maxDate">
+                <input matInput formControlName="dob" required placeholder="MM/DD/YYYY" (input)="onDOBInput($event)"
+                    appDateFormat>
                 <mat-hint>MM/DD/YYYY</mat-hint>
-                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker [startView]="'multi-year'" [startAt]="minDate"></mat-datepicker>
                 <mat-error>{{getDOBErrorMessage()}}</mat-error>
             </mat-form-field>
 

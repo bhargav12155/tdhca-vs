@@ -1,0 +1,1272 @@
+@use '../../_variables.scss' as variable;
+
+// Compact layout container
+.income-container {
+  padding: 1rem;
+  max-width: 100%;
+  
+  @media (max-width: 768px) {
+    padding: 0.5rem;
+  }
+}
+
+.header-section {
+  margin-bottom: 1rem;
+  
+  h2 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.5rem;
+    font-weight: 500;
+    
+    @media (max-width: 768px) {
+      font-size: 1.25rem;
+    }
+  }
+  
+  .instructions {
+    margin: 0;
+    color: #666;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+}
+
+// --- CSS Improvements ---
+.pay-entry-card {
+  margin-bottom: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  background: #fff;
+  padding: 1.2rem 1.5rem;
+}
+.pay-entry-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+.pay-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-top: 1rem;
+  
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+}
+
+.pay-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  
+  &.disabled {
+    display: none; /* Hide instead of disable */
+  }
+}
+
+.pay-row {
+  width: 100%;
+}
+
+.date-row {
+  width: 100%;
+}
+
+.pay-amount, .pay-date {
+  width: 100%;
+}
+
+/* Responsive pay fields layout */
+.pay-fields-container {
+  display: grid;
+  grid-template-rows: auto auto;
+  gap: 1rem;
+}
+
+.pay-amounts-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+}
+
+.pay-dates-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+}
+.pay-entry-content {
+  margin-top: 0.5rem;
+}
+.frequency-section {
+  margin-bottom: 1rem;
+}
+.add-pay-btn {
+  margin-left: 1rem;
+}
+.entry-total {
+  font-weight: 600;
+  color: #1976d2;
+}
+.pay-entry-header .mat-icon {
+  color: #e53935;
+}
+
+.income-container {
+  padding: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+  min-height: 100vh;
+  
+  @media (max-width: 768px) {
+    padding: 0.5rem;
+  }
+}
+
+.header-section {
+  margin-bottom: 1.5rem;
+  text-align: center;
+  background: variable.$white;
+  padding: 1.25rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 40, 85, 0.08);
+  border: 1px solid rgba(variable.$tdhca-blue, 0.1);
+
+  h2 {
+    color: variable.$tdhca-blue;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 0.6rem;
+    
+    @media (max-width: 768px) {
+      font-size: 1.2rem;
+    }
+  }
+
+  .instructions {
+    color: #64748b;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    max-width: 500px;
+    margin: 0 auto;
+    font-weight: 400;
+    
+    @media (max-width: 768px) {
+      font-size: 0.9rem;
+    }
+  }
+}
+
+.example-action-buttons {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  justify-content: center;
+
+  button {
+    background: linear-gradient(135deg, variable.$tdhca-blue 0%, variable.$tdhca-blue-light 100%);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(variable.$tdhca-blue, 0.3);
+    }
+  }
+}
+
+mat-accordion {
+  .mat-expansion-panel {
+    margin-bottom: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0, 40, 85, 0.08);
+    border: 1px solid variable.$gray-border;
+    overflow: hidden;
+    transition: all 0.3s ease;
+
+    &:hover {
+      box-shadow: 0 4px 20px rgba(0, 40, 85, 0.12);
+      transform: translateY(-1px);
+    }
+
+    .mat-expansion-panel-header {
+      background: linear-gradient(135deg, variable.$gray-bg-light 0%, variable.$white 100%);
+      border-bottom: 1px solid variable.$gray-border;
+      min-height: 52px;
+      padding: 0 1.25rem;
+
+      .mat-panel-title {
+        font-size: 1rem;
+        font-weight: 600;
+        color: variable.$tdhca-blue;
+      }
+
+      .mat-panel-description {
+        color: variable.$font-color-secondary;
+        font-size: 0.875rem;
+        font-weight: 400;
+      }
+
+      &:hover {
+        background: linear-gradient(135deg, #f1f5f9 0%, variable.$white 100%);
+      }
+    }
+
+    .mat-expansion-panel-body {
+      padding: 0;
+    }
+  }
+}
+
+.member-form-section {
+  background: variable.$white;
+  padding: 1.25rem;
+  border-bottom: 1px solid variable.$gray-border;
+
+  h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: variable.$tdhca-blue;
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+
+    &::before {
+      content: '';
+      width: 4px;
+      height: 1rem;
+      background: linear-gradient(135deg, variable.$tdhca-blue 0%, variable.$tdhca-blue-light 100%);
+      margin-right: 0.5rem;
+      border-radius: 2px;
+    }
+  }
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.form-field, .form-field-wide, .frequency-field, .pay-amount, .pay-date {
+  margin: 0;
+
+  .mat-mdc-form-field {
+    width: 100%;
+  }
+
+  .mat-mdc-text-field-wrapper {
+    background: #f8fafc;
+    border-radius: 8px;
+
+    &:hover {
+      background: #f1f5f9;
+    }
+
+    &.mdc-text-field--focused {
+      background: variable.$white;
+    }
+  }
+}
+
+.form-field-wide {
+  grid-column: span 2;
+}
+
+.pay-details-section {
+  background: #f8fafc;
+  padding: 1.25rem;
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+
+    h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: variable.$tdhca-blue;
+      margin: 0;
+      display: flex;
+      align-items: center;
+
+      &::before {
+        content: '';
+        width: 4px;
+        height: 1rem;
+        background: linear-gradient(135deg, variable.$success-green 0%, variable.$success-green-light 100%);
+        margin-right: 0.5rem;
+        border-radius: 2px;
+      }
+    }
+
+    .add-pay-btn {
+      background: linear-gradient(135deg, variable.$success-green 0%, variable.$success-green-light 100%);
+      color: white;
+      border: none;
+      padding: 0.4rem 0.75rem;
+      border-radius: 8px;
+      font-weight: 500;
+      font-size: 0.875rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.3s ease;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(variable.$success-green, 0.3);
+      }
+
+      mat-icon {
+        font-size: 1.1rem;
+        width: 1.1rem;
+        height: 1.1rem;
+      }
+    }
+  }
+}
+
+.pay-entry-card {
+  background: variable.$white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 40, 85, 0.05);
+  border: 1px solid variable.$gray-border;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  transition: all 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 4px 16px rgba(0, 40, 85, 0.1);
+    transform: translateY(-1px);
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.pay-entry-header {
+  background: linear-gradient(135deg, variable.$gray-bg-light 0%, variable.$white 100%);
+  padding: 0.75rem 1.25rem;
+  border-bottom: 1px solid variable.$gray-border;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .entry-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: variable.$tdhca-blue;
+  }
+
+  .entry-total {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: variable.$success-green;
+    background: linear-gradient(135deg, rgba(variable.$success-green, 0.1) 0%, rgba(variable.$success-green, 0.05) 100%);
+    padding: 0.2rem 0.6rem;
+    border-radius: 16px;
+    border: 1px solid rgba(variable.$success-green, 0.2);
+    font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+    
+    &:hover {
+      background: linear-gradient(135deg, rgba(variable.$success-green, 0.15) 0%, rgba(variable.$success-green, 0.08) 100%);
+      border-color: rgba(variable.$success-green, 0.3);
+    }
+  }
+
+  button[mat-icon-button] {
+    color: variable.$error-red;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: rgba(variable.$error-red, 0.1);
+      transform: scale(1.1);
+    }
+  }
+}
+
+.pay-entry-content {
+  padding: 1.25rem;
+}
+
+.frequency-section {
+  margin-bottom: 1rem;
+
+  .frequency-field {
+    max-width: 280px;
+  }
+}
+
+.pay-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.pay-item {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+  align-items: start;
+  padding: 0.75rem;
+  background: #f8fafc;
+  border-radius: 8px;
+  border: 1px solid variable.$gray-border;
+  transition: all 0.3s ease;
+
+  &:hover:not(.disabled) {
+    background: #f1f5f9;
+    border-color: variable.$tdhca-blue-light;
+  }
+
+  &.disabled {
+    opacity: 0.4;
+    background: #f9fafb;
+    border-color: #e5e7eb;
+    
+    .mat-mdc-form-field {
+      pointer-events: none;
+      
+      .mat-mdc-text-field-wrapper {
+        background: #f3f4f6 !important;
+        
+        .mat-mdc-form-field-input-control input {
+          color: #9ca3af !important;
+          cursor: not-allowed;
+        }
+      }
+      
+      .mat-mdc-form-field-label {
+        color: #9ca3af !important;
+      }
+      
+      .mat-mdc-form-field-outline {
+        color: #d1d5db !important;
+      }
+      
+      .mat-prefix {
+        color: #9ca3af !important;
+      }
+      
+      .mat-datepicker-toggle {
+        color: #9ca3af !important;
+        pointer-events: none;
+      }
+    }
+  }
+}
+
+.pay-amount, .pay-date {
+  .mat-mdc-form-field {
+    width: 100%;
+  }
+  
+  &.pay-amount {
+    .mat-mdc-text-field-wrapper {
+      .mat-mdc-form-field-input-control input {
+        text-align: right;
+        font-weight: 500;
+        font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+        
+        &:focus {
+          background: variable.$white;
+          font-weight: 600;
+        }
+        
+        &::selection {
+          background: rgba(variable.$tdhca-blue, 0.2);
+        }
+      }
+      
+      .mat-prefix {
+        font-weight: 600;
+        color: variable.$success-green;
+        margin-right: 0.25rem;
+        font-size: 1rem;
+      }
+    }
+    
+    &:hover .mat-mdc-text-field-wrapper .mat-prefix {
+      color: variable.$tdhca-blue;
+    }
+    
+    &:focus-within {
+      .mat-mdc-text-field-wrapper {
+        box-shadow: 0 0 0 2px rgba(variable.$tdhca-blue, 0.2);
+        border-radius: 8px;
+        
+        .mat-prefix {
+          color: variable.$tdhca-blue;
+        }
+      }
+    }
+  }
+}
+
+.instructions-section {
+  margin: 1.5rem 0 1rem 0;
+
+  .notes-card {
+    background: linear-gradient(135deg, variable.$gray-bg-light 0%, variable.$white 100%);
+    border: 1px solid rgba(variable.$tdhca-blue, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0, 40, 85, 0.05);
+
+    mat-card-header {
+      background: rgba(variable.$tdhca-blue, 0.05);
+      padding: 0.75rem 1.25rem;
+      border-bottom: 1px solid variable.$gray-border;
+
+      mat-card-title {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: variable.$tdhca-blue;
+        font-weight: 600;
+        font-size: 0.95rem;
+
+        mat-icon {
+          color: variable.$tdhca-blue;
+          font-size: 1.1rem;
+        }
+      }
+    }
+
+    mat-card-content {
+      padding: 1.25rem;
+    }
+
+    .instruction-list {
+      margin: 0;
+      padding-left: 1.25rem;
+      color: variable.$font-color-primary;
+      font-size: 0.875rem;
+      line-height: 1.4;
+
+      li {
+        margin-bottom: 0.5rem;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+
+        strong {
+          color: variable.$tdhca-blue;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+}
+
+.form-actions {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem;
+  background: variable.$white;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 40, 85, 0.05);
+  border: 1px solid variable.$gray-border;
+
+  button {
+    font-size: 0.95rem;
+    font-weight: 500;
+    padding: 0.6rem 1.5rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+
+    &.back-btn {
+      border: 2px solid variable.$gray-border;
+      color: variable.$font-color-secondary;
+
+      &:hover {
+        border-color: variable.$tdhca-blue;
+        color: variable.$tdhca-blue;
+        transform: translateY(-2px);
+      }
+    }
+
+    &.continue-btn {
+      background: linear-gradient(135deg, variable.$accent-color 0%, variable.$success-green 100%);
+      color: white;
+      border: none;
+
+      &:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 16px rgba(variable.$accent-color, 0.3);
+      }
+
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+    }
+
+    mat-icon {
+      font-size: 1.2rem;
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .income-container {
+    padding: 1rem;
+  }
+
+  .header-section {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+
+    h2 {
+      font-size: 1.3rem;
+    }
+
+    .instructions {
+      font-size: 0.95rem;
+    }
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .form-field-wide {
+    grid-column: span 1;
+  }
+
+  .pay-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pay-item {
+    grid-template-columns: 1fr;
+  }
+
+  .pay-entry-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+
+    .entry-total {
+      align-self: stretch;
+      text-align: center;
+    }
+  }
+
+  .form-actions {
+    flex-direction: column;
+
+    button {
+      width: 100%;
+    }
+  }
+}
+
+/* Responsive form improvements */
+.member-form-section {
+  margin-bottom: 1.5rem;
+  
+  h3 {
+    color: variable.$tdhca-blue;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    
+    @media (max-width: 768px) {
+      font-size: 1rem;
+    }
+  }
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+}
+
+.pay-details-section {
+  margin-top: 1.5rem;
+  
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    
+    h3 {
+      color: variable.$tdhca-blue;
+      font-size: 1.1rem;
+      margin: 0;
+      
+      @media (max-width: 768px) {
+        font-size: 1rem;
+      }
+    }
+    
+    .add-pay-btn {
+      @media (max-width: 768px) {
+        width: 100%;
+        margin-left: 0;
+      }
+    }
+  }
+}
+
+.frequency-section {
+  margin-bottom: 1rem;
+  
+  .frequency-field {
+    max-width: 250px;
+    
+    @media (max-width: 768px) {
+      max-width: 100%;
+    }
+  }
+}
+
+/* Expansion panel improvements */
+.mat-expansion-panel {
+  margin-bottom: 1rem !important;
+  border-radius: 8px !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important;
+  
+  .mat-expansion-panel-header {
+    padding: 1rem 1.5rem !important;
+    
+    @media (max-width: 768px) {
+      padding: 0.75rem 1rem !important;
+    }
+  }
+  
+  .mat-expansion-panel-content {
+    .mat-expansion-panel-body {
+      padding: 1.5rem !important;
+      
+      @media (max-width: 768px) {
+        padding: 1rem !important;
+      }
+    }
+  }
+}
+
+// Household member management styles
+.add-member-btn {
+  margin-left: 1rem;
+  
+  .mat-icon {
+    margin-right: 0.5rem;
+  }
+}
+
+.remove-member-btn {
+  margin-left: auto;
+  margin-right: 0.5rem;
+  
+  &:hover {
+    background-color: rgba(244, 67, 54, 0.1);
+  }
+}
+
+.example-action-buttons {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: stretch;
+    
+    button {
+      width: 100%;
+      margin-bottom: 0.5rem;
+    }
+  }
+}
+
+// Compact layout styles
+.compact-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 100px;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+  
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+}
+
+.compact-field {
+  flex: 1;
+  min-width: 0;
+  
+  ::ng-deep .mat-mdc-form-field-infix {
+    min-height: 48px;
+  }
+  
+  ::ng-deep .mat-mdc-text-field-wrapper {
+    padding: 0;
+  }
+}
+
+.age-field {
+  max-width: 100px;
+}
+
+.compact-pay-entry {
+  margin-bottom: 1rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 0.75rem;
+  background: #fafafa;
+}
+
+.compact-pay-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+  
+  .entry-number {
+    font-weight: 600;
+    color: #1976d2;
+    font-size: 14px;
+  }
+  
+  .entry-total {
+    font-weight: 500;
+    color: #2e7d32;
+    font-size: 14px;
+  }
+  
+  .header-actions {
+    display: flex;
+    gap: 0.25rem;
+    align-items: center;
+  }
+}
+
+.compact-add-btn {
+  min-width: auto;
+  padding: 0 8px;
+  height: 32px;
+  line-height: 32px;
+  
+  .mat-icon {
+    margin: 0;
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.compact-delete-btn {
+  width: 32px;
+  height: 32px;
+  
+  .mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.compact-pay-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.structured-pay-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+// Desktop/Tablet layout - show structured rows
+@media (min-width: 769px) {
+  .structured-pay-layout {
+    .pay-amounts-row,
+    .date-fields-row {
+      display: grid;
+      gap: 0.5rem;
+      align-items: start;
+    }
+    
+    .mobile-pay-pairs {
+      display: none; // Hide mobile layout on desktop/tablet
+    }
+  }
+  
+  // Desktop: frequency + pay1|pay2|pay3|pay4
+  @media (min-width: 1201px) {
+    .structured-pay-layout {
+      .pay-amounts-row,
+      .date-fields-row {
+        grid-template-columns: 150px repeat(4, 1fr);
+      }
+    }
+  }
+  
+  // Tablet: frequency + pay1|pay2 (2 columns)
+  @media (min-width: 769px) and (max-width: 1200px) {
+    .structured-pay-layout {
+      .pay-amounts-row,
+      .date-fields-row {
+        grid-template-columns: 150px repeat(2, 1fr);
+      }
+    }
+  }
+}
+
+// Mobile Layout (768px and below) - Pay/Date pairs only
+@media (max-width: 768px) {
+  .structured-pay-layout {
+    .pay-amounts-row,
+    .date-fields-row {
+      display: none !important; // Force hide desktop/tablet structure
+    }
+    
+    .mobile-pay-pairs {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+  }
+}
+
+// Desktop and Tablet field styling
+.frequency-field {
+  min-width: 150px;
+  
+  ::ng-deep .mat-mdc-form-field-infix {
+    min-height: 44px;
+  }
+  
+  ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+    display: none;
+  }
+}
+
+.frequency-spacer {
+  width: 150px;
+  
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+
+.pay-field,
+.date-field {
+  min-width: 0;
+  
+  ::ng-deep .mat-mdc-form-field-infix {
+    min-height: 44px;
+  }
+  
+  ::ng-deep .mat-mdc-text-field-wrapper {
+    padding: 0;
+  }
+  
+  ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+    display: none;
+  }
+}
+
+.pay-field {
+  ::ng-deep .mat-mdc-form-field-flex {
+    background-color: #f8f9fa;
+  }
+  
+  // Fix $ symbol positioning and add padding
+  ::ng-deep .mat-mdc-form-field-text-prefix {
+    padding-left: 8px;
+    padding-right: 4px;
+    color: #666;
+    font-weight: 500;
+  }
+  
+  ::ng-deep .mat-mdc-text-field-wrapper .mat-mdc-form-field-infix {
+    padding-left: 0;
+  }
+  
+  ::ng-deep input {
+    padding-left: 4px;
+  }
+}
+
+.date-field {
+  ::ng-deep .mat-mdc-form-field-flex {
+    background-color: #f0f8ff;
+  }
+}
+
+.frequency-field {
+  min-width: 150px;
+  
+  @media (max-width: 768px) {
+    min-width: auto;
+  }
+  
+  ::ng-deep .mat-mdc-form-field-infix {
+    min-height: 44px;
+  }
+  
+  ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+    display: none;
+  }
+}
+
+.frequency-spacer {
+  width: 150px;
+  
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+
+.pay-field,
+.date-field {
+  min-width: 0;
+  
+  ::ng-deep .mat-mdc-form-field-infix {
+    min-height: 44px;
+  }
+  
+  ::ng-deep .mat-mdc-text-field-wrapper {
+    padding: 0;
+  }
+  
+  ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+    display: none;
+  }
+}
+
+.pay-field {
+  ::ng-deep .mat-mdc-form-field-flex {
+    background-color: #f8f9fa;
+  }
+  
+  // Fix $ symbol positioning and add padding
+  ::ng-deep .mat-mdc-form-field-text-prefix {
+    padding-left: 8px;
+    padding-right: 4px;
+    color: #666;
+    font-weight: 500;
+  }
+  
+  ::ng-deep .mat-mdc-text-field-wrapper .mat-mdc-form-field-infix {
+    padding-left: 0;
+  }
+  
+  ::ng-deep input {
+    padding-left: 4px;
+  }
+}
+
+.date-field {
+  ::ng-deep .mat-mdc-form-field-flex {
+    background-color: #f0f8ff;
+  }
+}
+
+// Override accordion padding for more compact layout
+::ng-deep .mat-expansion-panel-body {
+  padding: 12px 16px !important;
+  
+  @media (max-width: 768px) {
+    padding: 8px 12px !important;
+  }
+}
+
+// Reduce header padding
+::ng-deep .mat-expansion-panel-header {
+  padding: 8px 16px !important;
+  min-height: 56px !important;
+  
+  @media (max-width: 768px) {
+    padding: 6px 12px !important;
+    min-height: 48px !important;
+  }
+}
+
+// Make panel title more compact
+::ng-deep .mat-expansion-panel-header-title {
+  margin-right: 8px;
+  font-size: 16px;
+  
+  @media (max-width: 768px) {
+    font-size: 14px;
+  }
+}
+
+::ng-deep .mat-expansion-panel-header-description {
+  font-size: 14px;
+  
+  @media (max-width: 768px) {
+    font-size: 12px;
+  }
+}
+
+// Compact instructions section
+.instructions-section {
+  margin: 1rem 0;
+}
+
+.compact-notes-card {
+  margin: 0;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  
+  ::ng-deep .mat-mdc-card-content {
+    padding: 12px 16px;
+  }
+  
+  .notes-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #1976d2;
+    font-size: 14px;
+    
+    mat-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+    }
+  }
+  
+  .compact-instruction-list {
+    margin: 0;
+    padding-left: 1rem;
+    font-size: 13px;
+    line-height: 1.4;
+    
+    li {
+      margin-bottom: 0.25rem;
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+    
+    strong {
+      color: #333;
+    }
+  }
+}
+
+// Default: hide mobile layout, will be shown only on mobile
+.mobile-pay-pairs {
+  display: none;
+}
+
+// Mobile pay-date pair styling
+@media (max-width: 768px) {
+  .mobile-frequency {
+    width: 100%;
+    margin-bottom: 1rem;
+    
+    ::ng-deep .mat-mdc-form-field-infix {
+      min-height: 44px;
+    }
+  }
+  
+  .mobile-pay-pair {
+    display: flex;
+    gap: 0.5rem;
+    align-items: flex-start;
+    
+    .mobile-pay-field,
+    .mobile-date-field {
+      flex: 1;
+      min-width: 0;
+      
+      ::ng-deep .mat-mdc-form-field-infix {
+        min-height: 40px;
+      }
+      
+      ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+        display: none;
+      }
+    }
+    
+    .mobile-pay-field {
+      ::ng-deep .mat-mdc-form-field-flex {
+        background-color: #f8f9fa;
+      }
+      
+      ::ng-deep .mat-mdc-form-field-text-prefix {
+        padding-left: 6px;
+        padding-right: 2px;
+        color: #666;
+        font-size: 14px;
+      }
+    }
+    
+    .mobile-date-field {
+      ::ng-deep .mat-mdc-form-field-flex {
+        background-color: #f0f8ff;
+      }
+    }
+  }
+}

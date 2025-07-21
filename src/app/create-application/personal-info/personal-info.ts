@@ -22,9 +22,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
 import { ApplicationDataService } from '../application-data.service';
+import { DateUtilService } from '../../shared/services/date-util.service';
+import { DateFormatDirective } from '../../shared/directives/date-format.directive';
 
 @Component({
   selector: 'app-personal-info',
@@ -46,8 +46,7 @@ import { ApplicationDataService } from '../application-data.service';
     MatListModule,
     MatTooltipModule,
     MatSnackBarModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
+    DateFormatDirective,
   ],
 })
 export class PersonalInfoComponent implements OnInit {
@@ -59,7 +58,8 @@ export class PersonalInfoComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private snackBar: MatSnackBar,
-    private applicationDataService: ApplicationDataService
+    private applicationDataService: ApplicationDataService,
+    private dateUtilService: DateUtilService
   ) {
     // Calculate min and max dates
     const today = new Date();
@@ -316,5 +316,14 @@ export class PersonalInfoComponent implements OnInit {
 
   onBack(): void {
     this.router.navigate(['/createapplication/personal-info']);
+  }
+
+  onDOBInput(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const formattedValue = this.dateUtilService.formatDateInput(input.value);
+    input.value = formattedValue;
+    this.personalForm
+      .get('dob')
+      ?.setValue(formattedValue, { emitEvent: false });
   }
 }
