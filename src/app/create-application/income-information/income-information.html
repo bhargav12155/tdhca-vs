@@ -1,87 +1,88 @@
 <div class="income-container">
-  <div class="header-section">
-    <h2>Income Information</h2>
-    <p class="instructions">
-      Provide income details for each household member. Select a pay frequency to enter income.
-    </p>
-  </div>
+    <div class="header-section">
+        <h2>Income Information</h2>
+        <p class="instructions">
+            Provide income details for each household member. Select a pay frequency to enter income.
+        </p>
+    </div>
 
-  <div class="example-action-buttons">
-    <button mat-button (click)="expandAll()">Expand All</button>
-    <button mat-button (click)="collapseAll()">Collapse All</button>
-  </div>
+    <div class="example-action-buttons">
+        <button mat-button (click)="expandAll()">Expand All</button>
+        <button mat-button (click)="collapseAll()">Collapse All</button>
+    </div>
 
-  <mat-accordion class="example-headers-align" multi #accordion>
-    <form [formGroup]="incomeForm">
-      <div formArrayName="householdMembers">
-        <mat-expansion-panel *ngFor="let memberGroup of householdIncomes.controls; let i = index" [formGroupName]="i">
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              {{ getMemberDisplayName(i) }}
-            </mat-panel-title>
-            <mat-panel-description>
-              DOB: {{ getMemberDOB(i) }} | Age: {{ getMemberAge(i) }} | Total Income: {{
-                getMemberTotalIncome(i) | currency:'USD':'symbol':'1.2-2' }}
-            </mat-panel-description>
-          </mat-expansion-panel-header>
+    <mat-accordion class="example-headers-align" multi #accordion>
+        <form [formGroup]="incomeForm">
+            <div formArrayName="householdMembers">
+                <mat-expansion-panel *ngFor="let memberGroup of householdIncomes.controls; let i = index"
+                    [formGroupName]="i">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{ getMemberDisplayName(i) }}
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            DOB: {{ getMemberDOB(i) }} | Age: {{ getMemberAge(i) }} | Total Income: {{
+                            getMemberTotalIncome(i) | currency:'USD':'symbol':'1.2-2' }}
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
 
-          <div class="income-entry-grid">
-            <!-- Pay Frequency Dropdown -->
-            <mat-form-field appearance="outline" class="frequency-field">
-              <mat-label>Pay Frequency</mat-label>
-              <mat-select formControlName="payFrequency">
-                <mat-option *ngFor="let freq of payFrequencies" [value]="freq.value">
-                  {{ freq.viewValue }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
+                    <div class="income-entry-grid">
+                        <!-- Pay Frequency Dropdown -->
+                        <mat-form-field appearance="outline" class="frequency-field">
+                            <mat-label>Pay Frequency</mat-label>
+                            <mat-select formControlName="payFrequency">
+                                <mat-option *ngFor="let freq of payFrequencies" [value]="freq.value">
+                                    {{ freq.viewValue }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
 
-            <!-- Pay Input Fields -->
-            <mat-form-field appearance="outline" class="pay-field" *ngIf="isPayFieldVisible(i, 1)">
-              <mat-label>Pay 1</mat-label>
-              <span matPrefix>$</span>
-              <input matInput type="number" formControlName="pay1" placeholder="0.00">
-            </mat-form-field>
+                        <!-- Pay Input Fields -->
+                        <mat-form-field appearance="outline" class="pay-field" *ngIf="isPayFieldVisible(i, 1)">
+                            <mat-label>Pay 1</mat-label>
+                            <span matPrefix style="padding-left: 8px;">$</span>
+                            <input matInput type="number" formControlName="pay1" placeholder="0.00">
+                        </mat-form-field>
 
-            <mat-form-field appearance="outline" class="pay-field" *ngIf="isPayFieldVisible(i, 2)">
-              <mat-label>Pay 2</mat-label>
-              <span matPrefix>$</span>
-              <input matInput type="number" formControlName="pay2" placeholder="0.00">
-            </mat-form-field>
+                        <mat-form-field appearance="outline" class="pay-field" *ngIf="isPayFieldVisible(i, 2)">
+                            <mat-label>Pay 2</mat-label>
+                            <span matPrefix style="padding-left: 8px;">$</span>
+                            <input matInput type="number" formControlName="pay2" placeholder="0.00">
+                        </mat-form-field>
 
-            <mat-form-field appearance="outline" class="pay-field" *ngIf="isPayFieldVisible(i, 3)">
-              <mat-label>Pay 3</mat-label>
-              <span matPrefix>$</span>
-              <input matInput type="number" formControlName="pay3" placeholder="0.00">
-            </mat-form-field>
+                        <mat-form-field appearance="outline" class="pay-field" *ngIf="isPayFieldVisible(i, 3)">
+                            <mat-label>Pay 3</mat-label>
+                            <span matPrefix style="padding-left: 8px;">$</span>
+                            <input matInput type="number" formControlName="pay3" placeholder="0.00">
+                        </mat-form-field>
 
-            <mat-form-field appearance="outline" class="pay-field" *ngIf="isPayFieldVisible(i, 4)">
-              <mat-label>Pay 4</mat-label>
-              <span matPrefix>$</span>
-              <input matInput type="number" formControlName="pay4" placeholder="0.00">
-            </mat-form-field>
+                        <mat-form-field appearance="outline" class="pay-field" *ngIf="isPayFieldVisible(i, 4)">
+                            <mat-label>Pay 4</mat-label>
+                            <span matPrefix style="padding-left: 8px;">$</span>
+                            <input matInput type="number" formControlName="pay4" placeholder="0.00">
+                        </mat-form-field>
 
-            <mat-form-field appearance="outline" class="pay-field" *ngIf="isPayFieldVisible(i, 5)">
-              <mat-label>Pay 5</mat-label>
-              <span matPrefix>$</span>
-              <input matInput type="number" formControlName="pay5" placeholder="0.00">
-            </mat-form-field>
-          </div>
+                        <mat-form-field appearance="outline" class="pay-field" *ngIf="isPayFieldVisible(i, 5)">
+                            <mat-label>Pay 5</mat-label>
+                            <span matPrefix style="padding-left: 8px;">$</span>
+                            <input matInput type="number" formControlName="pay5" placeholder="0.00">
+                        </mat-form-field>
+                    </div>
 
-        </mat-expansion-panel>
-      </div>
-    </form>
-  </mat-accordion>
+                </mat-expansion-panel>
+            </div>
+        </form>
+    </mat-accordion>
 
-  <div class="form-actions">
-    <button mat-stroked-button (click)="onBack()" class="back-btn">
-      <mat-icon>arrow_back</mat-icon>
-      Back
-    </button>
-    <button mat-raised-button color="accent" (click)="onSaveAndContinue()" [disabled]="incomeForm.invalid"
-      class="continue-btn">
-      Save and Continue
-      <mat-icon>arrow_forward</mat-icon>
-    </button>
-  </div>
+    <div class="form-actions">
+        <button mat-stroked-button (click)="onBack()" class="back-btn">
+            <mat-icon>arrow_back</mat-icon>
+            Back
+        </button>
+        <button mat-raised-button color="accent" (click)="onSaveAndContinue()" [disabled]="incomeForm.invalid"
+            class="continue-btn">
+            Save and Continue
+            <mat-icon>arrow_forward</mat-icon>
+        </button>
+    </div>
 </div>
