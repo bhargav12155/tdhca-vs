@@ -1,1 +1,8 @@
-<p>popup-messages works!</p>
+<div id="popup-messages">
+  <div *ngFor="let msg of messages" class="popup-message {{ msg.message.type }}">
+    <div class="message-content">
+      <span class="message-text">{{ msg.message.message }}</span>
+    </div>
+    <span class="close-btn" (click)="removeMessage(msg.message)">×</span>
+  </div>
+</div>

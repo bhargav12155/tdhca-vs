@@ -7,6 +7,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateAccountModal } from './create-account-modal/create-account-modal';
+import { PopupMessagesComponent } from './popup-messages/popup-messages.component';
+
 
 @Component({
   selector: 'app-root',
@@ -19,6 +21,7 @@ import { CreateAccountModal } from './create-account-modal/create-account-modal'
     MainContent,
     MatSidenavModule,
     MatListModule,
+    PopupMessagesComponent,
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss',

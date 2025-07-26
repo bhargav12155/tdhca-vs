@@ -21,6 +21,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { PopupMessageService } from '../../shared/services/popup-message.service';
 import { Router } from '@angular/router';
 import { ApplicationDataService } from '../application-data.service';
 import { DateUtilService } from '../../shared/services/date-util.service';
@@ -58,6 +59,7 @@ export class PersonalInfoComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private snackBar: MatSnackBar,
+    private popupMessageService: PopupMessageService,
     private applicationDataService: ApplicationDataService,
     private dateUtilService: DateUtilService
   ) {
@@ -240,10 +242,7 @@ export class PersonalInfoComponent implements OnInit {
   }
 
   onCancel() {
-    this.snackBar.open('Changes canceled', 'Close', {
-      duration: 2500,
-      verticalPosition: 'top',
-    });
+    this.popupMessageService.info('Changes canceled');
   }
 
   onSaveAndContinue() {
@@ -256,14 +255,7 @@ export class PersonalInfoComponent implements OnInit {
       this.router.navigate(['/createapplication/household-members']);
     } else {
       this.personalForm.markAllAsTouched();
-      this.snackBar.open(
-        'Please fill out all required fields before continuing.',
-        'Close',
-        {
-          duration: 3000,
-          verticalPosition: 'top',
-        }
-      );
+      this.popupMessageService.error('Please fill out all required fields before continuing.');
     }
   }
 

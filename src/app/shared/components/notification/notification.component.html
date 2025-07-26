@@ -1,0 +1,14 @@
+<div class="notification-container">
+  <div *ngFor="let item of notifications; let i = index" 
+       class="notification-item" 
+       [class]="item.notification.type"
+       [@notificationState]="item.state">
+    <div class="notification-content">
+      <mat-icon class="notification-icon">{{ getIcon(item.notification.type) }}</mat-icon>
+      <span class="notification-message">{{ item.notification.message }}</span>
+    </div>
+    <button class="notification-close" (click)="closeNotification(i)">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+</div>

@@ -10,6 +10,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { PopupMessageService } from '../../shared/services/popup-message.service';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -69,6 +70,7 @@ export class IncomeInformationComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private snackBar: MatSnackBar,
+    private popupMessageService: PopupMessageService,
     private applicationDataService: ApplicationDataService,
     private dateUtilService: DateUtilService,
     private cdr: ChangeDetectorRef
@@ -193,18 +195,14 @@ export class IncomeInformationComponent implements OnInit {
 
   onSaveAndContinue(): void {
     if (this.incomeForm.invalid) {
-      this.snackBar.open('Please fill out all required fields.', 'Close', {
-        duration: 3000,
-      });
+      this.popupMessageService.error('Please fill out all required fields.');
       return;
     }
 
     const incomeData = this.incomeForm.getRawValue();
     this.applicationDataService.setIncomeInformation(incomeData.householdMembers);
 
-    this.snackBar.open('Income information saved successfully!', 'Close', {
-      duration: 2000,
-    });
+    this.popupMessageService.success('Income information saved successfully!');
 
     this.router.navigate(['/createapplication/declaration-income']);
   }

@@ -8,7 +8,7 @@ import {
   FormsModule,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { PopupMessageService } from '../../shared/services/popup-message.service';
 import {
   MatDialog,
   MatDialogRef,
@@ -24,7 +24,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ApplicationDataService } from '../application-data.service';
 import { DateUtilService } from '../../shared/services/date-util.service';
@@ -47,7 +46,6 @@ import { log } from 'console';
     MatCardModule,
     MatListModule,
     MatTooltipModule,
-    MatSnackBarModule,
     MatDialogModule,
     DateFormatDirective,
   ],
@@ -136,7 +134,7 @@ export class HouseholdMembersComponent implements OnInit, AfterViewInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private snackBar: MatSnackBar,
+    private popupMessageService: PopupMessageService,
     private dialog: MatDialog,
     private applicationDataService: ApplicationDataService,
     private dateUtilService: DateUtilService
@@ -275,14 +273,12 @@ export class HouseholdMembersComponent implements OnInit, AfterViewInit {
         this.autoSaveAllMembers();
       });
 
-      this.snackBar.open('New household member added successfully!', 'Close', {
-        duration: 3000,
-      });
+      this.popupMessageService.success(
+        'New household member added successfully!'
+      );
     } else {
-      this.snackBar.open(
-        'You have reached the maximum of 20 household members.',
-        'Close',
-        { duration: 3000 }
+      this.popupMessageService.warning(
+        'You have reached the maximum of 20 household members.'
       );
     }
   }
@@ -308,16 +304,12 @@ export class HouseholdMembersComponent implements OnInit, AfterViewInit {
       const memberData = memberForm.value;
       console.log(`Member ${index + 1} saved:`, memberData);
 
-      this.snackBar.open(`Member ${index + 1} saved successfully!`, 'Close', {
-        duration: 2000,
-      });
+      this.popupMessageService.success(
+        `Member ${index + 1} saved successfully!`
+      );
     } else {
-      this.snackBar.open(
-        `Please fill out all required fields for Member ${index + 1}.`,
-        'Close',
-        {
-          duration: 3000,
-        }
+      this.popupMessageService.error(
+        `Please fill out all required fields for Member ${index + 1}.`
       );
       memberForm.markAllAsTouched();
     }
@@ -341,9 +333,7 @@ export class HouseholdMembersComponent implements OnInit, AfterViewInit {
       });
     }
 
-    this.snackBar.open(`Member ${index + 1} has been reset.`, 'Close', {
-      duration: 2000,
-    });
+    this.popupMessageService.info(`Member ${index + 1} has been reset.`);
 
     console.log(`Member ${index + 1} reset`);
   }
@@ -391,12 +381,8 @@ export class HouseholdMembersComponent implements OnInit, AfterViewInit {
           this.expandedMembers.splice(index, 1);
           // Defer snackbar to avoid change detection issues
           setTimeout(() => {
-            this.snackBar.open(
-              'Household member deleted successfully.',
-              'Close',
-              {
-                duration: 3000,
-              }
+            this.popupMessageService.success(
+              'Household member deleted successfully.'
             );
           });
         }
@@ -477,21 +463,15 @@ export class HouseholdMembersComponent implements OnInit, AfterViewInit {
         this.householdForm.value.householdMembers
       );
 
-      this.snackBar.open('Household members saved successfully!', 'Close', {
-        duration: 3000,
-      });
+      this.popupMessageService.success('Household members saved successfully!');
 
       console.log(
         'Household members saved:',
         this.householdForm.value.householdMembers
       );
     } else {
-      this.snackBar.open(
-        'Please fill out all required fields before saving.',
-        'Close',
-        {
-          duration: 3000,
-        }
+      this.popupMessageService.error(
+        'Please fill out all required fields before saving.'
       );
       this.householdForm.markAllAsTouched();
     }
@@ -512,9 +492,7 @@ export class HouseholdMembersComponent implements OnInit, AfterViewInit {
     // Reset expanded state
     this.expandedMembers = [true];
 
-    this.snackBar.open('Form has been reset.', 'Close', {
-      duration: 2000,
-    });
+    this.popupMessageService.info('Form has been reset.');
 
     console.log('Household members form reset');
   }
@@ -530,9 +508,7 @@ export class HouseholdMembersComponent implements OnInit, AfterViewInit {
 
       this.router.navigate(['/createapplication/categorical-eligibility']);
     } else {
-      this.snackBar.open('Please fill out all required fields.', 'Close', {
-        duration: 3000,
-      });
+      this.popupMessageService.error('Please fill out all required fields.');
       this.householdForm.markAllAsTouched();
     }
   }

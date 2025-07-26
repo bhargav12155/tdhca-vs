@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { PopupMessageService } from '../../shared/services/popup-message.service';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -54,6 +55,7 @@ export class CategoricalEligibilityComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private snackBar: MatSnackBar,
+    private popupMessageService: PopupMessageService,
     private applicationDataService: ApplicationDataService
   ) {
     this.eligibilityForm = this.fb.group({});
@@ -155,28 +157,14 @@ export class CategoricalEligibilityComponent implements OnInit {
       console.log('Categorical Eligibility Data:', formData);
 
       // Show success message
-      this.snackBar.open(
-        'Categorical eligibility information saved successfully!',
-        'Close',
-        {
-          duration: 3000,
-          panelClass: ['success-snackbar'],
-        }
-      );
+      this.popupMessageService.success('Categorical eligibility information saved successfully!');
 
       // In a real app, you would save the data to a service
       // this.applicationDataService.setCategoricalEligibility(formData);
 
       this.router.navigate(['/createapplication/income-information']);
     } else {
-      this.snackBar.open(
-        'Please review the form and correct any errors.',
-        'Close',
-        {
-          duration: 3000,
-          panelClass: ['error-snackbar'],
-        }
-      );
+      this.popupMessageService.error('Please review the form and correct any errors.');
     }
   }
 

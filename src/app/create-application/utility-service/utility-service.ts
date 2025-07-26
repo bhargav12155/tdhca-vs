@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { PopupMessageService } from '../../shared/services/popup-message.service';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -37,7 +38,8 @@ export class UtilityServiceComponent {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private popupMessageService: PopupMessageService
   ) {
     this.utilityForm = this.fb.group({
       provider: ['', Validators.required],
@@ -55,9 +57,7 @@ export class UtilityServiceComponent {
       // In a real app, you would save the data to a service
       this.router.navigate(['/createapplication/document-upload']);
     } else {
-      this.snackBar.open('Please fill out all required fields.', 'Close', {
-        duration: 3000,
-      });
+      this.popupMessageService.error('Please fill out all required fields.');
     }
   }
 }

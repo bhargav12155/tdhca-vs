@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { PopupMessageService } from '../shared/services/popup-message.service';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -58,7 +59,8 @@ export class RegistrationComponent {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private popupMessageService: PopupMessageService
   ) {
     this.registrationForm = this.fb.group(
       {
@@ -267,14 +269,7 @@ export class RegistrationComponent {
       const formData = this.registrationForm.value;
 
       // Simulate registration success
-      this.snackBar.open(
-        'Registration successful! Please login with your credentials.',
-        'Close',
-        {
-          duration: 5000,
-          panelClass: ['success-snackbar'],
-        }
-      );
+      this.popupMessageService.success('Registration successful! Please login with your credentials.');
 
       console.log('Registration Data:', formData);
 
@@ -283,14 +278,7 @@ export class RegistrationComponent {
         this.router.navigate(['/login']);
       }, 1000);
     } else {
-      this.snackBar.open(
-        'Please fill out all required fields correctly.',
-        'Close',
-        {
-          duration: 3000,
-          panelClass: ['error-snackbar'],
-        }
-      );
+      this.popupMessageService.error('Please fill out all required fields correctly.');
       this.registrationForm.markAllAsTouched();
     }
   }

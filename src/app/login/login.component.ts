@@ -13,6 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
+import { PopupMessageService } from '../shared/services/popup-message.service';
 import { AuthService } from './auth.service';
 
 @Component({
@@ -39,6 +40,7 @@ export class LoginComponent {
     private fb: FormBuilder,
     private router: Router,
     private snackBar: MatSnackBar,
+    private popupMessageService: PopupMessageService,
     private authService: AuthService
   ) {
     this.loginForm = this.fb.group({
@@ -53,27 +55,18 @@ export class LoginComponent {
 
       // Use auth service for authentication
       if (this.authService.login(username, password)) {
-        this.snackBar.open('Login successful!', 'Close', {
-          duration: 3000,
-          panelClass: ['success-snackbar'],
-        });
+        this.popupMessageService.success('Login successful!');
 
         // Navigate to the application
         this.router.navigate(['/createapplication']);
       } else {
-        this.snackBar.open('Invalid username or password', 'Close', {
-          duration: 3000,
-          panelClass: ['error-snackbar'],
-        });
+        this.popupMessageService.error('Invalid username or password');
 
         // Clear form on failed login
         this.loginForm.patchValue({ password: '' });
       }
     } else {
-      this.snackBar.open('Please fill in all required fields', 'Close', {
-        duration: 3000,
-        panelClass: ['warning-snackbar'],
-      });
+      this.popupMessageService.warning('Please fill in all required fields');
     }
   }
 

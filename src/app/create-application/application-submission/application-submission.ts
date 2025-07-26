@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { PopupMessageService } from '../../shared/services/popup-message.service';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -34,7 +35,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
   styleUrl: './application-submission.scss',
 })
 export class ApplicationSubmissionComponent {
-  constructor(private router: Router, private snackBar: MatSnackBar) {}
+  constructor(private router: Router, private snackBar: MatSnackBar, private popupMessageService: PopupMessageService) {}
 
   onBack(): void {
     this.router.navigate(['/createapplication/document-upload']);
@@ -42,9 +43,7 @@ export class ApplicationSubmissionComponent {
 
   onSubmit(): void {
     // In a real app, you would submit the application data to a server.
-    this.snackBar.open('Application submitted successfully!', 'Close', {
-      duration: 3000,
-    });
+    this.popupMessageService.success('Application submitted successfully!');
     this.router.navigate(['/home']);
   }
 }
