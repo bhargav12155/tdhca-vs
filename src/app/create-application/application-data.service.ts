@@ -40,6 +40,8 @@ export interface PayDetails {
   date3: string;
   pay4: number;
   date4: string;
+  pay5?: number;
+  date5?: string;
   totalIncome: number;
 }
 

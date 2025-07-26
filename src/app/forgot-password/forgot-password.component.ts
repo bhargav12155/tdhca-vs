@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { PopupMessageService } from '../shared/services/popup-message.service';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -36,7 +37,8 @@ export class ForgotPasswordComponent {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private popupMessageService: PopupMessageService
   ) {
     this.forgotForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -50,14 +52,7 @@ export class ForgotPasswordComponent {
   onSubmit() {
     this.submitted = true;
     if (this.forgotForm.valid) {
-      this.snackBar.open(
-        'If your email is registered, you will receive a password reset link.',
-        'Close',
-        {
-          duration: 5000,
-          panelClass: ['success-snackbar'],
-        }
-      );
+      this.popupMessageService.success('If your email is registered, you will receive a password reset link.');
       setTimeout(() => {
         this.router.navigate(['/login']);
       }, 1500);

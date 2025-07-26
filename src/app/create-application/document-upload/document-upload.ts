@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { PopupMessageService } from '../../shared/services/popup-message.service';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -43,7 +44,8 @@ export class DocumentUploadComponent {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private popupMessageService: PopupMessageService
   ) {
     this.documentForm = this.fb.group({
       documents: [null, Validators.required],
@@ -69,9 +71,7 @@ export class DocumentUploadComponent {
       // In a real app, you would save the data to a service
       this.router.navigate(['/createapplication/application-submission']);
     } else {
-      this.snackBar.open('Please upload the required documents.', 'Close', {
-        duration: 3000,
-      });
+      this.popupMessageService.error('Please upload the required documents.');
     }
   }
 }

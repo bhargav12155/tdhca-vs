@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { PopupMessageService } from '../../shared/services/popup-message.service';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -39,7 +40,8 @@ export class DeclarationIncomeComponent {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private popupMessageService: PopupMessageService
   ) {
     this.declarationForm = this.fb.group({
       agree: [false, Validators.requiredTrue],
@@ -57,13 +59,7 @@ export class DeclarationIncomeComponent {
       // In a real app, you would save the data to a service
       this.router.navigate(['/createapplication/housing-information']);
     } else {
-      this.snackBar.open(
-        'Please agree to the terms and provide a signature.',
-        'Close',
-        {
-          duration: 3000,
-        }
-      );
+      this.popupMessageService.error('Please agree to the terms and provide a signature.');
     }
   }
 }
