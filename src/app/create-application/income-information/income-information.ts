@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { combineLatest } from 'rxjs';
 import {
   FormBuilder,
   FormGroup,
@@ -53,17 +54,15 @@ export class IncomeInformationComponent implements OnInit {
   householdMembers: HouseholdMember[] = [];
 
   payFrequencies = [
-    { value: 'monthly', viewValue: 'Once a month' },
-    { value: 'bi-monthly', viewValue: 'Twice a month' },
-    { value: 'bi-weekly', viewValue: 'Every two weeks' },
     { value: 'weekly', viewValue: 'Weekly' },
+    { value: 'bi-weekly', viewValue: 'Bi-weekly' },
+    { value: 'monthly', viewValue: 'Monthly' },
   ];
 
   private frequencyFieldsMap: { [key: string]: number } = {
-    monthly: 1,
-    'bi-monthly': 2,
+    weekly: 5, // Should show 5 fields
     'bi-weekly': 2,
-    weekly: 5, // As requested, up to 5 weeks for a month
+    monthly: 1,
   };
 
   constructor(
@@ -80,32 +79,49 @@ export class IncomeInformationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.applicationDataService.currentHouseholdMembers.subscribe((members) => {
-      this.householdMembers = members;
-      const memberFGs = members.map((member) => this.createMemberIncomeGroup(member));
+    combineLatest([
+      this.applicationDataService.currentPersonalInfo,
+      this.applicationDataService.currentHouseholdMembers,
+    ]).subscribe(([personalInfo, householdMembers]) => {
+      const allMembers: HouseholdMember[] = [];
+
+      if (personalInfo) {
+        allMembers.push(personalInfo);
+      }
+
+      allMembers.push(...householdMembers);
+
+      this.householdMembers = allMembers;
+      const memberFGs = allMembers.map((member) => this.createMemberIncomeGroup(member));
       this.incomeForm.setControl('householdMembers', this.fb.array(memberFGs));
       this.cdr.detectChanges();
     });
   }
 
   createMemberIncomeGroup(member: HouseholdMember): FormGroup {
+    // Always create all 5 pay and date fields, regardless of frequency
     const group = this.fb.group({
       // Member details from previous step (read-only)
       firstName: [member.firstName, Validators.required],
       lastName: [member.lastName, Validators.required],
       dob: [this.dateUtilService.formatDate(new Date(member.dob || ''))],
 
-      // Income details
+      // Income details - always include all 5 pay fields
       payFrequency: ['weekly', Validators.required],
       pay1: [null],
+      date1: [null],
       pay2: [null],
+      date2: [null],
       pay3: [null],
+      date3: [null],
       pay4: [null],
+      date4: [null],
       pay5: [null],
+      date5: [null],
       totalIncome: [{ value: 0, disabled: true }],
     });
 
-    // Add listeners to update total income when pay values or frequency change
+    // Add listeners to update total income when pay values change
     const payControls = ['pay1', 'pay2', 'pay3', 'pay4', 'pay5'];
     payControls.forEach((controlName) => {
       group.get(controlName)?.valueChanges.subscribe(() => {
@@ -113,6 +129,7 @@ export class IncomeInformationComponent implements OnInit {
       });
     });
 
+    // Update total income when frequency changes
     group.get('payFrequency')?.valueChanges.subscribe(() => {
       this.updateTotalIncome(group);
     });
@@ -142,6 +159,8 @@ export class IncomeInformationComponent implements OnInit {
     return this.householdIncomes.at(index).get('totalIncome')?.value || 0;
   }
 
+  // This function now simply checks if the field number is less than or equal to
+  // the number of fields required by the currently selected frequency
   isPayFieldVisible(memberIndex: number, fieldNumber: number): boolean {
     const memberGroup = this.householdIncomes.at(memberIndex) as FormGroup;
     const frequency = memberGroup.get('payFrequency')?.value;
@@ -153,12 +172,14 @@ export class IncomeInformationComponent implements OnInit {
     const frequency = memberGroup.get('payFrequency')?.value;
     const numberOfFields = this.frequencyFieldsMap[frequency] || 0;
     let total = 0;
+    
     for (let i = 1; i <= numberOfFields; i++) {
       const payValue = memberGroup.get(`pay${i}`)?.value;
       if (typeof payValue === 'number' && !isNaN(payValue)) {
         total += payValue;
       }
     }
+    
     memberGroup.get('totalIncome')?.setValue(total);
   }
 
@@ -185,10 +206,10 @@ export class IncomeInformationComponent implements OnInit {
       duration: 2000,
     });
 
-    this.router.navigate(['/create-application/additional-income']);
+    this.router.navigate(['/createapplication/declaration-income']);
   }
 
   onBack(): void {
-    this.router.navigate(['/create-application/contact-information']);
+    this.router.navigate(['/createapplication/household-members']);
   }
 }
