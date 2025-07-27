@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -16,6 +16,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatRadioModule } from '@angular/material/radio';
 
 @Component({
   selector: 'app-housing-information',
@@ -30,11 +31,12 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatButtonModule,
     MatCardModule,
     MatSnackBarModule,
+    MatRadioModule,
   ],
   templateUrl: './housing-information.html',
   styleUrl: './housing-information.scss',
 })
-export class HousingInformationComponent {
+export class HousingInformationComponent implements OnInit {
   housingForm: FormGroup;
 
   constructor(
@@ -44,8 +46,38 @@ export class HousingInformationComponent {
     private popupMessageService: PopupMessageService
   ) {
     this.housingForm = this.fb.group({
-      housingType: ['', Validators.required],
-      monthlyPayment: ['', [Validators.required, Validators.min(0)]],
+      address1: ['', Validators.required],
+      address2: [''],
+      city: ['', Validators.required],
+      state: ['', Validators.required],
+      zipCode: ['', Validators.required],
+      county: ['', Validators.required],
+      homeStatus: ['', Validators.required],
+      rentIncludesUtilities: [''],
+      landlordName: [''],
+      landlordAddress: [''],
+      landlordPhone: [''],
+      landlordEmail: ['', [Validators.email]],
+      dwellingType: ['', Validators.required],
+      weatherizationInterest: ['', Validators.required],
+    });
+  }
+
+  ngOnInit(): void {
+    this.housingForm.get('homeStatus')?.valueChanges.subscribe(value => {
+      const rentFields = ['rentIncludesUtilities', 'landlordName', 'landlordAddress', 'landlordPhone', 'landlordEmail'];
+
+      if (value === 'rent') {
+        rentFields.forEach(fieldName => {
+          this.housingForm.get(fieldName)?.setValidators([Validators.required]);
+          this.housingForm.get(fieldName)?.updateValueAndValidity();
+        });
+      } else {
+        rentFields.forEach(fieldName => {
+          this.housingForm.get(fieldName)?.clearValidators();
+          this.housingForm.get(fieldName)?.updateValueAndValidity();
+        });
+      }
     });
   }
 
@@ -56,7 +88,6 @@ export class HousingInformationComponent {
   onSaveAndContinue(): void {
     if (this.housingForm.valid) {
       console.log('Form Saved:', this.housingForm.value);
-      // In a real app, you would save the data to a service
       this.router.navigate(['/createapplication/save-verification']);
     } else {
       this.popupMessageService.error('Please fill out all required fields.');

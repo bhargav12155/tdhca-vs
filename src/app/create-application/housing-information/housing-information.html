@@ -1,26 +1,126 @@
 <div class="form-container">
-    <h3>Housing Information</h3>
-    <p>
-        Please provide your current housing information.
-    </p>
+    <p>Please provide your current housing information.</p>
 
     <form [formGroup]="housingForm">
         <mat-card>
             <mat-card-content>
-                <div class="form-row">
-                    <mat-form-field appearance="fill">
-                        <mat-label>Housing Type</mat-label>
-                        <mat-select formControlName="housingType" required>
-                            <mat-option value="rent">Rent</mat-option>
-                            <mat-option value="own">Own</mat-option>
-                            <mat-option value="other">Other</mat-option>
-                        </mat-select>
+                <!-- Current Residence Address -->
+                <h4>Current Residence Address</h4>
+                <div class="address-fields">
+                    <mat-form-field appearance="fill" class="full-width">
+                        <mat-label>Address Line 1</mat-label>
+                        <input matInput formControlName="address1" required placeholder="Street Address, P.O. Box">
+                        <mat-error *ngIf="housingForm.get('address1')?.hasError('required')">Address is
+                            required</mat-error>
                     </mat-form-field>
-                    <mat-form-field appearance="fill">
-                        <mat-label>Monthly Payment</mat-label>
-                        <input matInput type="number" formControlName="monthlyPayment" required placeholder="0.00">
+
+                    <mat-form-field appearance="fill" class="full-width">
+                        <mat-label>Address Line 2</mat-label>
+                        <input matInput formControlName="address2" placeholder="Apartment, Suite, Unit">
+                    </mat-form-field>
+
+                    <div class="city-state-zip">
+                        <mat-form-field appearance="fill">
+                            <mat-label>City</mat-label>
+                            <input matInput formControlName="city" required>
+                            <mat-error *ngIf="housingForm.get('city')?.hasError('required')">City is
+                                required</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="fill">
+                            <mat-label>State</mat-label>
+                            <input matInput formControlName="state" required>
+                            <mat-error *ngIf="housingForm.get('state')?.hasError('required')">State is
+                                required</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="fill">
+                            <mat-label>Zip Code</mat-label>
+                            <input matInput formControlName="zipCode" required>
+                            <mat-error *ngIf="housingForm.get('zipCode')?.hasError('required')">Zip is
+                                required</mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <mat-form-field appearance="fill" class="full-width">
+                        <mat-label>County</mat-label>
+                        <input matInput formControlName="county" required>
+                        <mat-error *ngIf="housingForm.get('county')?.hasError('required')">County is
+                            required</mat-error>
                     </mat-form-field>
                 </div>
+
+                <!-- Home Status -->
+                <div class="form-row radio-group-container">
+                    <label id="home-status-label" class="radio-group-label">Home Status</label>
+                    <mat-radio-group aria-labelledby="home-status-label" formControlName="homeStatus"
+                        class="radio-group">
+                        <mat-radio-button value="own">Own</mat-radio-button>
+                        <mat-radio-button value="rent">Rent</mat-radio-button>
+                        <mat-radio-button value="homeless">Homeless</mat-radio-button>
+                        <mat-radio-button value="roommate">Roommate/Boarder</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+
+                <!-- Conditional Fields for Rent -->
+                <div *ngIf="housingForm.get('homeStatus')?.value === 'rent'" class="conditional-section">
+                    <h4>Rental Information</h4>
+                    <div class="form-row radio-group-container">
+                        <label id="utilities-label" class="radio-group-label">Utilities</label>
+                        <mat-radio-group aria-labelledby="utilities-label" formControlName="rentIncludesUtilities"
+                            class="radio-group">
+                            <mat-radio-button [value]="false">Billed separately</mat-radio-button>
+                            <mat-radio-button [value]="true">Included in rent</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+
+                    <mat-form-field appearance="fill" class="full-width">
+                        <mat-label>Name of Landlord/Company/Agent</mat-label>
+                        <input matInput formControlName="landlordName">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill" class="full-width">
+                        <mat-label>Address</mat-label>
+                        <input matInput formControlName="landlordAddress">
+                    </mat-form-field>
+
+                    <div class="city-state-zip">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Phone Number</mat-label>
+                            <input matInput formControlName="landlordPhone">
+                        </mat-form-field>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Email Address</mat-label>
+                            <input matInput formControlName="landlordEmail">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <!-- Dwelling Type -->
+                <div class="form-row radio-group-container">
+                    <label id="dwelling-type-label" class="radio-group-label">Dwelling Type</label>
+                    <mat-radio-group aria-labelledby="dwelling-type-label" formControlName="dwellingType"
+                        class="radio-group wrap">
+                        <mat-radio-button value="single_family">Single Family Home</mat-radio-button>
+                        <mat-radio-button value="adu">Accessory Dwelling Unit</mat-radio-button>
+                        <mat-radio-button value="multi_family">Multi-Family</mat-radio-button>
+                        <mat-radio-button value="townhouse">Townhouse</mat-radio-button>
+                        <mat-radio-button value="apartment">Apartment</mat-radio-button>
+                        <mat-radio-button value="mobile_home">Mobile Home</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+
+                <!-- Weatherization Services -->
+                <div class="form-row radio-group-container">
+                    <label id="weatherization-label" class="radio-group-label">Interested in Weatherization
+                        Services?</label>
+                    <mat-radio-group aria-labelledby="weatherization-label" formControlName="weatherizationInterest"
+                        class="radio-group">
+                        <mat-radio-button value="yes">Yes</mat-radio-button>
+                        <mat-radio-button value="no">No</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+
             </mat-card-content>
         </mat-card>
     </form>
@@ -28,7 +128,7 @@
     <div class="form-actions">
         <button mat-stroked-button (click)="onBack()">Back</button>
         <button mat-flat-button color="accent" (click)="onSaveAndContinue()" [disabled]="housingForm.invalid">
-            Save and Continue
+            Save & Continue
         </button>
     </div>
 </div>
