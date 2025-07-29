@@ -1,0 +1,63 @@
+.form-container {
+  border-radius: 8px;
+}
+
+.address-fields,
+.conditional-section {
+  margin-bottom: 1.5rem;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.city-state-zip {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+
+  mat-form-field {
+    flex: 1;
+  }
+}
+
+.radio-group-container {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.radio-group-label {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.radio-group {
+  display: flex;
+  gap: 1rem;
+  padding: 0.5rem 0;
+
+  &.wrap {
+    flex-wrap: wrap;
+  }
+
+  mat-radio-button {
+    margin-right: 1rem;
+  }
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 2rem;
+  gap: 1rem;
+}
+
+h4 {
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.5rem;
+}
